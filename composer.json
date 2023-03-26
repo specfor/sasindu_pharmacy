@@ -1,0 +1,19 @@
+{
+    "name": "logic_leap/sasindu_pharmacy",
+    "type": "project",
+    "autoload": {
+        "psr-4": {
+            "LogicLeap\\SasinduPharmacy\\": "./"
+        }
+    },
+    "authors": [
+        {
+            "name": "vihanga",
+            "email": "vihanga2003nimsara@gmail.com"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {
+        "vlucas/phpdotenv": "^5.5@dev"
+    }
+}
