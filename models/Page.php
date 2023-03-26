@@ -99,6 +99,8 @@ class Page
                 echo $message;
             }
         }
+        echo $_SESSION['role'] ?? 'ageagg';
+        echo $_SESSION['userId'] ?? 'ageagg';
         include_once $this->getBodyPath();
         include_once $this->getFooterPath();
         return ob_get_clean();

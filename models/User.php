@@ -81,7 +81,7 @@ class User extends DbModel
         $params['password'] = self::generatePasswordHash($params['password']);
 
         //For now set user role to 1
-        $params['role'] = 1;
+        $params['role'] = User::ROLE_ADMINISTRATOR;
 
         // Filter user passed variables against actual database available columns.
         foreach ($params as $key => $value){

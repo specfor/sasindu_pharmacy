@@ -14,7 +14,6 @@ class Application
     public static Application $app;
     public Database $db;
     public Router $router;
-    public User $user;
     public Request $request;
     public Response $response;
     public Renderer $renderer;

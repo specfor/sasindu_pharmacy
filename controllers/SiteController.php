@@ -59,6 +59,20 @@ class SiteController
         Application::$app->renderer->renderPage($page, $placeholderValues);
     }
 
+    /**
+     * Render the "Page not Found" page.
+     */
+    public static function pageNotFound(): void
+    {
+        $page = new Page(Page::DEFAULT_HEADER_WITH_MENU, Page::DEFAULT_FOOTER,
+            'errorPage', "Page not Found");
+        $placeholderValues = [
+            'errorPage:err-code' => 404,
+            'errorPage:err-message' => 'Page not Found'
+        ];
+        Application::$app->renderer->renderPage($page, $placeholderValues);
+    }
+
     public function login(): void
     {
         if (Application::$app->request->isGet()) {
@@ -75,7 +89,7 @@ class SiteController
             }
 
             $user = new User();
-            if (!isset($params['username']) || !isset($params['password'])){
+            if (!isset($params['username']) || !isset($params['password'])) {
                 Application::$app->session->setFlashMessage('loginError',
                     'Required fields were empty', Page::ALERT_TYPE_ERROR);
                 Application::$app->response->redirect('/');
@@ -83,6 +97,8 @@ class SiteController
             }
             if ($user->validateUser($params['username'], $params['password'])) {
                 $_SESSION['userId'] = $user->userId;
+                $user->loadUserData($user->userId);
+                $_SESSION['role'] = $user->role;
                 Application::$app->response->redirect('/dashboard');
             } else {
                 Application::$app->session->setFlashMessage('loginError',
@@ -118,6 +134,22 @@ class SiteController
                     $status, Page::ALERT_TYPE_ERROR);
                 Application::$app->response->redirect('/register');
             }
+        }
+    }
+
+    public function stocks(): void
+    {
+        if (Application::$app->request->isGet()) {
+            if (!isset($_SESSION['role']) || !isset($_SESSION['userId'])) {
+                self::pageNotFound();
+                exit();
+            }
+            if ($_SESSION['role'] != User::ROLE_SUPER_ADMINISTRATOR && $_SESSION['role'] != User::ROLE_ADMINISTRATOR){
+                self::pageNotFound();
+                exit();
+            }
+                $page = new Page(Page::DEFAULT_HEADER_WITH_MENU, Page::DEFAULT_FOOTER, 'stocks', 'Stock');
+            Application::$app->renderer->renderPage($page);
         }
     }
 }
