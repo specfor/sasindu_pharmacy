@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login Page</title>
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-aFq/bzH65dt+w6FI2ooMVUpc+21e0SRygnTpmBvdBgSdnuTN7QbdgL+OapgHtvPp" crossorigin="anonymous">  <!-- Custom CSS -->
+  <style>
+    body{
+        background-image: url("./background.jpg");
+        background-size: cover;
+        background-repeat: no-repeat;
+    }
+    .border {
+        border: 1px solid black;
+    }
+    .border_s{
+        margin-top: 20vh;
+        justify-content: center;
+        align-items: center;
+        align-self: center;
+    }
+    .form {
+        margin: 0 auto;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        max-width: 60vh;
+    }
+  </style>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+<body>
+  <div class="container  p-5 justify-content-center border_s align-items-center">
+    <div class="col-12 col-md-12 justify-content-center align-items-center p-5  " >
+        <form class="col-12 col-md-12 col-xl-12 justify-content-center align-items-center form bg-white p-5 rounded ">   <!-- i want to center this div-->
+            <div class="mb-3" style="min-width:150px">
+              <label for="exampleInputEmail1" class="form-label">Email address</label>
+              <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"  style="width: 40vh; min-width: 10vh;>
+            </div>
+            <div class="mb-3">
+              <label for="exampleInputPassword1" class="form-label">Password</label>
+              <input type="password" class="form-control" id="exampleInputPassword1" style="width: 40vh; min-width: 10vh;">
+            </div>
+            <div class="mb-3 form-check">
+              <input type="checkbox" class="form-check-input" id="exampleCheck1" >
+              <label class="form-check-label" for="exampleCheck1">Remember me</label>
+            </div>
+            <div class="d-grid gap-2 mx-auto">
+                <button class="col-12 btn btn-primary shadow justify-content-center align-items-center" type="submit" style="text-align:center; min-width: 30vh; justify-content: center;">Log in</button>
+            </div>
+        </form>
+    </div>
+
+  </div>
+  <!-- Bootstrap JS -->
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js" integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha2/dist/js/bootstrap.min.js" integrity="sha384-heAjqF+bCxXpCWLa6Zhcp4fu20XoNIA98ecBC1YkdXhszjoejr5y9Q77hIrv8R9i" crossorigin="anonymous"></script>
+</body>
