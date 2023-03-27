@@ -74,9 +74,9 @@
     <div class="row text-center mt-5">
         <h3>Manage Access of System Users</h3>
     </div>
-    <div class="row">
-        <div class="col-12 overflow-auto">
-            <div class="container-fluid m-2">
+    <div class="row ">
+        <div class="col-12 ">
+            <div class="container-fluid overflow-auto m-2">
                 <table class="table table-striped-columns table-hover">
                     <thead class="table-dark">
                     <tr>
