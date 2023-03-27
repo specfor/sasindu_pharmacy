@@ -10,6 +10,7 @@ class Page
 {
     public const HEADER_DEFAULT_WITH_MENU = 'default';
     public const HEADER_BLANK = 'blank';
+    public const HEADER_STOCKS_PAGE = 'stocks_header';
     public const FOOTER_DEFAULT = 'default';
     public const FOOTER_BLANK = 'blank';
     public const ERROR_PAGE = 'errorPage';

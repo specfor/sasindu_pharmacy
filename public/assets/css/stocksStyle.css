@@ -23,12 +23,12 @@
 #priceInput{
   width: 20vw;
   display: none;
-  margin-left: none;
+  margin-left: 0;
 }
 #removeRetailPrice{
   display: none;
   position: relative;
   right: -.4%;
   margin-bottom:.4vh ;
-  margin-right:none;
+  margin-right:0;
 }

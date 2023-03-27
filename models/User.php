@@ -84,12 +84,12 @@ class User extends DbModel
         $params['role'] = User::ROLE_ADMINISTRATOR;
 
         // Filter user passed variables against actual database available columns.
-        foreach ($params as $key => $value){
-            if (!in_array($key, self::TABLE_COLUMNS)){
+        foreach ($params as $key => $value) {
+            if (!in_array($key, self::TABLE_COLUMNS)) {
                 unset($params[$key]);
             }
         }
-        if(self::insertIntoTable(self::TABLE_NAME, $params)){
+        if (self::insertIntoTable(self::TABLE_NAME, $params)) {
             return 'user created.';
         }
         return 'Unknown error occured.';
@@ -122,7 +122,7 @@ class User extends DbModel
      * @param string $password Password of the user.
      * @return bool Return true if user exists, false if not.
      */
-    public function validateUser(string $username, string $password):bool
+    public function validateUser(string $username, string $password): bool
     {
         $sql = "SELECT id, password FROM " . self::TABLE_NAME . " WHERE username=:username OR email=:username";
         $statement = self::prepare($sql);
@@ -144,11 +144,24 @@ class User extends DbModel
      */
     public function getUserRoleText(): string
     {
-        if ($this->userId == User::ROLE_ADMINISTRATOR)
+        if ($this->role == User::ROLE_ADMINISTRATOR)
             return 'admin';
-        elseif ($this->userId == User::ROLE_USER)
+        elseif ($this->role == User::ROLE_USER)
             return 'user';
         else
             return 'none';
+    }
+
+    /**
+     * @param int $userId User id of the user.
+     * @param int $role Role id of the User.
+     * @return bool Return true if user is an admin, false otherwise.
+     */
+    public static function isAdmin(int $userId, int $role): bool
+    {
+        if ($role != User::ROLE_SUPER_ADMINISTRATOR && $userId != User::ROLE_ADMINISTRATOR) {
+            return false;
+        }
+        return true;
     }
 }

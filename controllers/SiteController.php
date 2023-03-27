@@ -50,7 +50,7 @@ class SiteController
 
     public static function httpError(\Exception $exception): void
     {
-        $page = new Page(Page::DEFAULT_HEADER_WITH_MENU, Page::DEFAULT_FOOTER,
+        $page = new Page(Page::HEADER_DEFAULT_WITH_MENU, Page::FOOTER_DEFAULT,
             'errorPage', $exception->getMessage());
         $placeholderValues = [
             'errorPage:err-code' => $exception->getCode(),
@@ -64,7 +64,7 @@ class SiteController
      */
     public static function pageNotFound(): void
     {
-        $page = new Page(Page::DEFAULT_HEADER_WITH_MENU, Page::DEFAULT_FOOTER,
+        $page = new Page(Page::HEADER_DEFAULT_WITH_MENU, Page::FOOTER_DEFAULT,
             'errorPage', "Page not Found");
         $placeholderValues = [
             'errorPage:err-code' => 404,
@@ -76,7 +76,7 @@ class SiteController
     public function login(): void
     {
         if (Application::$app->request->isGet()) {
-            $page = new Page(Page::BLANK_HEADER, Page::BLANK_FOOTER, 'forms/login', 'Login');
+            $page = new Page(Page::HEADER_BLANK, Page::FOOTER_BLANK, 'forms/login', 'Login');
             $params = ['login:csrf-token' => CSRF_Token::generateToken('/')];
             Application::$app->renderer->renderPage($page, $params);
         } elseif (Application::$app->request->isPost()) {
@@ -111,7 +111,7 @@ class SiteController
     public function register(): void
     {
         if (Application::$app->request->isGet()) {
-            $page = new Page(Page::BLANK_HEADER, Page::BLANK_FOOTER, 'forms/register', 'Register');
+            $page = new Page(Page::HEADER_BLANK, Page::FOOTER_BLANK, 'forms/register', 'Register');
             $params = ['register:csrf-token' => CSRF_Token::generateToken('/register')];
             Application::$app->renderer->renderPage($page, $params);
         } elseif (Application::$app->request->isPost()) {
@@ -137,19 +137,51 @@ class SiteController
         }
     }
 
+    /**
+     * Check if the user making the request has admin privileges. If user does not have,
+     * then render PageNotFound and exit. If user does have admin privileges, then does nothing.
+     */
+    private function checkAdmin(): void
+    {
+        if (!isset($_SESSION['role']) || !isset($_SESSION['userId'])) {
+            self::pageNotFound();
+            exit();
+        }
+        if (!User::isAdmin($_SESSION['userId'], $_SESSION['role'])) {
+            self::pageNotFound();
+            exit();
+        }
+    }
+
+    public function dashboard(): void
+    {
+        if (Application::$app->request->isGet()) {
+            $this->checkAdmin();
+
+            $page = new Page(Page::HEADER_DEFAULT_WITH_MENU, Page::FOOTER_DEFAULT, 'dashboard', 'Dashboard');
+            Application::$app->renderer->renderPage($page);
+        }
+    }
+
     public function stocks(): void
     {
         if (Application::$app->request->isGet()) {
-            if (!isset($_SESSION['role']) || !isset($_SESSION['userId'])) {
-                self::pageNotFound();
-                exit();
-            }
-            if ($_SESSION['role'] != User::ROLE_SUPER_ADMINISTRATOR && $_SESSION['role'] != User::ROLE_ADMINISTRATOR){
-                self::pageNotFound();
-                exit();
-            }
-                $page = new Page(Page::DEFAULT_HEADER_WITH_MENU, Page::DEFAULT_FOOTER, 'stocks', 'Stock');
+            $this->checkAdmin();
+
+            $page = new Page(Page::HEADER_STOCKS_PAGE, Page::FOOTER_DEFAULT, 'stocks', 'Stock');
             Application::$app->renderer->renderPage($page);
+        }
+    }
+
+    public function users(): void
+    {
+        if (Application::$app->request->isGet()) {
+            $this->checkAdmin();
+
+            $page = new Page(Page::HEADER_DEFAULT_WITH_MENU, Page::FOOTER_DEFAULT, 'users', 'Users');
+            Application::$app->renderer->renderPage($page);
+        } elseif (Application::$app->request->isPost()) {
+
         }
     }
 }
