@@ -55,6 +55,10 @@
             <span class="input-group-text" id="basic-addon1">New Password</span>
             <input type="password" class="form-control" aria-describedby="basic-addon1" id="newUserPassword">
         </div>
+        <div class="input-group mb-3">
+            <span class="input-group-text" id="basic-addon1">Confirm Password</span>
+            <input type="password" class="form-control" aria-describedby="basic-addon1" id="newUserPasswordConfirm">
+        </div>        
         </div>
       </div>
       <div class="modal-footer">
