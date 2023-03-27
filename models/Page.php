@@ -8,11 +8,10 @@ use LogicLeap\SasinduPharmacy\core\Session;
 
 class Page
 {
-    public const DEFAULT_HEADER_WITH_MENU = 'default';
-    public const BLANK_HEADER = 'blank';
-    public const DEFAULT_FOOTER = 'default';
-    public const BLANK_FOOTER = 'blank';
-    public const DEFAULT_BODY = 'home';
+    public const HEADER_DEFAULT_WITH_MENU = 'default';
+    public const HEADER_BLANK = 'blank';
+    public const FOOTER_DEFAULT = 'default';
+    public const FOOTER_BLANK = 'blank';
     public const ERROR_PAGE = 'errorPage';
 
     private string $header;
@@ -99,8 +98,6 @@ class Page
                 echo $message;
             }
         }
-        echo $_SESSION['role'] ?? 'ageagg';
-        echo $_SESSION['userId'] ?? 'ageagg';
         include_once $this->getBodyPath();
         include_once $this->getFooterPath();
         return ob_get_clean();

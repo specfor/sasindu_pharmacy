@@ -29,7 +29,7 @@ class Database
             // Try to connect to mysql service.
             $this->pdo = new PDO("mysql:host=$servername", $username, $password);
         }catch (PDOException $e) {
-            $errPage = new Page(Page::BLANK_HEADER, Page::BLANK_FOOTER,
+            $errPage = new Page(Page::HEADER_BLANK, Page::FOOTER_BLANK,
                 Page::ERROR_PAGE, 'Internal Server Error');
             Application::$app->renderer->renderPage($errPage,
                 ['errorPage:err-message' => 'Internal Server Error occurred.']);
@@ -93,6 +93,23 @@ class Database
                     )";
         $this->pdo->exec($sql);
 
+        $sql = "CREATE TABLE companies (
+                    id int NOT NULL AUTO_INCREMENT PRIMARY KEY,
+                    name varchar(255) NOT NULL,
+                    medical_ref varchar(255) NOT NULL,
+                    contact_number int(15) NOT NULL                    
+                    )";
+        $this->pdo->exec($sql);
+
+        $sql = "CREATE TABLE payments (
+                    id int NOT NULL AUTO_INCREMENT PRIMARY KEY,
+                    method varchar(255) NOT NULL,
+                    check_number int,
+                    amount float(2) NOT NULL,
+                    payment_date date NOT NULL,
+                    company_id int NOT NULL                  
+                    )";
+        $this->pdo->exec($sql);
 
     }
 }
