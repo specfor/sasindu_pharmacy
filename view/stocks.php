@@ -1,3 +1,46 @@
+<div class="modal fade" id="changeProductDetails" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Edit Product Details</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+</div>
+      <div class="row text-center  ps-4 pe-4">
+        <div class="input-group mb-3">
+            <span class="input-group-text" id="basic-addon1">Product Name</span>
+            <input type="text" class="form-control" aria-describedby="basic-addon1">
+        </div>
+        <div class="input-group mb-3">
+            <span class="input-group-text" id="basic-addon2">Quantity</span>
+            <input type="number" class="form-control " aria-describedby="basic-addon2">
+        </div>
+        <div class="input-group mb-3">
+            <span class="input-group-text" id="basic-addon3">Buying Date</span>
+            <input type="date" class="form-control" aria-describedby="basic-addon3">
+        </div>
+        <div class="input-group mb-3">
+            <span class="input-group-text" id="basic-addon4">Expiry Date</span>
+            <input type="date" class="form-control" aria-describedby="basic-addon4">
+        </div>
+        <div class="input-group mb-3">
+            <span class="input-group-text" id="inputGroupSelect01">Company Name</span>
+            <input type="text" class="form-control" aria-describedby="basic-addon4">           
+        </div>
+        <div class="input-group mb-3">
+            <span class="input-group-text" id="basic-addon4">Price</span>
+            <input type="number" class="form-control" aria-describedby="basic-addon4">
+        </div>        
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary">Save changes</button>
+      </div>
+    </div>
+  </div>
+</div>
+
 <div class="container-fluid mt-5">
     <h2 class="mb-5">All Medical Items</h2>
 
@@ -56,7 +99,7 @@
             <td>500</td>
             <td>
                 <div class="input-group mb-3">
-                    <button class="btn btn-primary fw-bold" type="button">Edit Details</button>
+                    <button class="btn btn-primary fw-bold" type="button" data-bs-toggle="modal" data-bs-target="#changeProductDetails">Edit Details</button>
                     <button class="btn btn-danger fw-bold" type="button">Delete</button>
                 </div>
             </td>
