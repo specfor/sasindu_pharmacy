@@ -1,0 +1,34 @@
+
+.searchDiv{
+  margin-top: 2vh;
+}
+
+.searchInput{
+  width: 40vw;
+}
+
+.searchButton{
+  padding: 3px 10px;
+  background: #ddd;
+  font-size: 17px;
+  border: none;
+  cursor: pointer;
+}
+
+
+.dropdown {
+  position: relative;
+  display: inline-block;}
+
+#priceInput{
+  width: 20vw;
+  display: none;
+  margin-left: none;
+}
+#removeRetailPrice{
+  display: none;
+  position: relative;
+  right: -.4%;
+  margin-bottom:.4vh ;
+  margin-right:none;
+}
