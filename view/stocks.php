@@ -1,52 +1,74 @@
-<div class="searchDiv dropdown container-fluid">
-  <form action="#">
-    <input type="text" placeholder="Search.." name="search" class="searchInput">
-    <button type="submit" class="searchButton"><i class="fa fa-search"></i></button>
-    <button type="button" class="btn btn-info" id="removeRetailPrice">-</button>
-    <input type="text" class="form-control" id="priceInput" placeholder="Retail Price">
-    <div class="dropdown" style="display: none;" id="companyFilter">
-      <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown"
-              aria-haspopup="true" aria-expanded="false">
-        Company Name
-      </button>
-      <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-        <a class="dropdown-item" href="#" id="removeFilter">Remove Filter</a>
-        <a class="dropdown-item" href="#">+ </a>
-        <a class="dropdown-item" href="#">+ </a>
-      </div>
-    </div>
-    <div class="dropdown">
-      <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown"
-              aria-haspopup="true" aria-expanded="false">
-        Filters
-      </button>
-      <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-        <a class="dropdown-item" href="#" id="companyName">+ Company Name</a>
-        <a class="dropdown-item" href="#" id="retailPrice">+ Retail Price</a>
-      </div>
-    </div>
-  </form>
+<div class="container-fluid mt-5">
+    <h2 class="mb-5">All Medical Items</h2>
 
-</div>
-<div class="container-fluid" style="margin-top:5vh;">
-<h2>All medical items</h2>
-<p>This table is about all medicine</p>
-<table class=" table table-striped">
-  <thead>
-  <tr>
-    <th>Product Name</th>
-    <th>Id</th>
-    <th>Quantity</th>
-    <th>Production Date</th>
-    <th>Expiry Date</th>
-    <th>Company Name</th>
-    <th>Price</th>
-    <th>Edit</th>
-  </tr>
-  </thead>
-  <tbody>
+    <div class="row">
+        <h4>Filter results</h4>
+    </div>
+    <div class="row">
+        <div class="col-md-6">
+            <div class="input-group mb-3">
+                <input type="text" class="form-control" placeholder="Product Name" aria-label="Product Name"
+                       aria-describedby="button-addon1">
+                <button class="btn btn-danger fw-bold" type="button" id="button-addon1">clear</button>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="input-group mb-3">
+                <input type="text" class="form-control" placeholder="Retail Price" aria-label="Retail Price"
+                       aria-describedby="button-addon2">
+                <button class="btn btn-danger fw-bold" type="button" id="button-addon2">clear</button>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="input-group mb-3">
+                <select class="form-select" aria-label="Select Company">
+                    <option selected>Supplier Company</option>
+                    <option value="1">One</option>
+                    <option value="2">Two</option>
+                    <option value="3">Three</option>
+                </select>
+                <button class="btn btn-danger fw-bold" type="button" id="button-addon2">clear</button>
+            </div>
+        </div>
+    </div>
 
-  </tbody>
-</table>
+    <table class="table table-striped-columns ">
+        <thead class="table-dark">
+        <tr>
+            <th>Id</th>
+            <th>Product Name</th>
+            <th>Quantity</th>
+            <th>Buying Date</th>
+            <th>Expiry Date</th>
+            <th>Company Name</th>
+            <th>Price</th>
+            <th>Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td>1</td>
+            <td>Injection 1</td>
+            <td>5</td>
+            <td>2023-03-20</td>
+            <td>2023-06-20</td>
+            <td>Bla Enterprise</td>
+            <td>500</td>
+            <td>
+                <div class="input-group mb-3">
+                    <button class="btn btn-primary fw-bold" type="button">Edit Details</button>
+                    <button class="btn btn-danger fw-bold" type="button">Delete</button>
+                </div>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+    <nav aria-label="Page navigation">
+        <ul class="pagination pagination-sm justify-content-center">
+            <li class="page-item active"><a class="page-link" href="">1</a></li>
+            <li class="page-item"><a class="page-link" href="">2</a></li>
+            <li class="page-item"><a class="page-link" href="">3</a></li>
+        </ul>
+    </nav>
 </div>
 
