@@ -4,6 +4,7 @@ namespace LogicLeap\SasinduPharmacy\controllers;
 
 use LogicLeap\SasinduPharmacy\core\Application;
 use LogicLeap\SasinduPharmacy\core\CSRF_Token;
+use LogicLeap\SasinduPharmacy\core\Response;
 use LogicLeap\SasinduPharmacy\core\Session;
 use LogicLeap\SasinduPharmacy\models\Page;
 use LogicLeap\SasinduPharmacy\models\User;
@@ -50,6 +51,7 @@ class SiteController
 
     public static function httpError(\Exception $exception): void
     {
+        Application::$app->response->setStatusCode($exception->getCode());
         $page = new Page(Page::HEADER_DEFAULT_WITH_MENU, Page::FOOTER_DEFAULT,
             'errorPage', $exception->getMessage());
         $placeholderValues = [
@@ -59,23 +61,41 @@ class SiteController
         Application::$app->renderer->renderPage($page, $placeholderValues);
     }
 
-    /**
-     * Render the "Page not Found" page.
-     */
-    public static function pageNotFound(): void
+    private function addNoCacheHeaders(): void
     {
-        $page = new Page(Page::HEADER_DEFAULT_WITH_MENU, Page::FOOTER_DEFAULT,
-            'errorPage', "Page not Found");
-        $placeholderValues = [
-            'errorPage:err-code' => 404,
-            'errorPage:err-message' => 'Page not Found'
+        header("Cache-Control: no-store, no-cache, must-revalidate");
+        header("Cache-Control: post-check=0, pre-check=0", false);
+        header("Pragma: no-cache");
+    }
+
+    /**
+     * Get JSON POST request body
+     * @return array Associative array of values
+     */
+    private function getPostJsonBody(): array
+    {
+        return json_decode(file_get_contents('php://input'), true);
+    }
+
+    /**
+     * Send JSON type response for API type requests.
+     */
+    private function sendJsonResponse(int $statusCode, string $statusMessage, array $body): void
+    {
+        header("Content-Type: application/json");
+        $this->addNoCacheHeaders();
+        $response = [
+            'statusCode' => $statusCode,
+            'statusMessage' => $statusMessage,
+            'body' => $body
         ];
-        Application::$app->renderer->renderPage($page, $placeholderValues);
+        echo json_encode($response);
     }
 
     public function login(): void
     {
         if (Application::$app->request->isGet()) {
+            $this->addNoCacheHeaders();
             $page = new Page(Page::HEADER_BLANK, Page::FOOTER_BLANK, 'forms/login', 'Login');
             $params = ['login:csrf-token' => CSRF_Token::generateToken('/')];
             Application::$app->renderer->renderPage($page, $params);
@@ -111,6 +131,7 @@ class SiteController
     public function register(): void
     {
         if (Application::$app->request->isGet()) {
+            $this->addNoCacheHeaders();
             $page = new Page(Page::HEADER_BLANK, Page::FOOTER_BLANK, 'forms/register', 'Register');
             $params = ['register:csrf-token' => CSRF_Token::generateToken('/register')];
             Application::$app->renderer->renderPage($page, $params);
@@ -138,18 +159,28 @@ class SiteController
     }
 
     /**
-     * Check if the user making the request has admin privileges. If user does not have,
-     * then render PageNotFound and exit. If user does have admin privileges, then does nothing.
+     * Check if the user making the request has admin privileges.
+     * If user does have admin privileges, does nothing.
+     * If user does not have admin privileges, Redirect to login page if request is GET,
+     * send FORBIDDEN response if request is POST
      */
     private function checkAdmin(): void
     {
+        $success = true;
         if (!isset($_SESSION['role']) || !isset($_SESSION['userId'])) {
-            self::pageNotFound();
-            exit();
+            $success = false;
+        } elseif (!User::isAdmin($_SESSION['userId'], $_SESSION['role'])) {
+            $success = false;
         }
-        if (!User::isAdmin($_SESSION['userId'], $_SESSION['role'])) {
-            self::pageNotFound();
-            exit();
+        if (Application::$app->request->isGet()) {
+            if (!$success) {
+                Application::$app->response->redirect('/');
+            }
+        } elseif (Application::$app->request->isPost()) {
+            if (!$success) {
+                $this->sendJsonResponse(Response::STATUS_CODE_FORBIDDEN, 'forbidden',
+                    ['errorMessage' => 'You need to log in first']);
+            }
         }
     }
 
@@ -158,6 +189,7 @@ class SiteController
         if (Application::$app->request->isGet()) {
             $this->checkAdmin();
 
+            $this->addNoCacheHeaders();
             $page = new Page(Page::HEADER_DEFAULT_WITH_MENU, Page::FOOTER_DEFAULT, 'dashboard', 'Dashboard');
             Application::$app->renderer->renderPage($page);
         }
@@ -165,23 +197,70 @@ class SiteController
 
     public function stocks(): void
     {
+        $this->checkAdmin();
         if (Application::$app->request->isGet()) {
-            $this->checkAdmin();
 
-            $page = new Page(Page::HEADER_STOCKS_PAGE, Page::FOOTER_DEFAULT, 'stocks', 'Stock');
+            $page = new Page(Page::HEADER_DEFAULT_WITH_MENU, Page::FOOTER_DEFAULT, 'stocks', 'Stock');
             Application::$app->renderer->renderPage($page);
         }
     }
 
     public function users(): void
     {
+        $this->checkAdmin();
         if (Application::$app->request->isGet()) {
-            $this->checkAdmin();
 
             $page = new Page(Page::HEADER_DEFAULT_WITH_MENU, Page::FOOTER_DEFAULT, 'users', 'Users');
             Application::$app->renderer->renderPage($page);
         } elseif (Application::$app->request->isPost()) {
-
+            $req = $this->getPostJsonBody();
+            if (isset($req['action'])) {
+                if ($req['action'] === 'add-user') {
+                    $user = new User();
+                    $msg = $user->createNewUser($req['payload']);
+                    if ($msg === 'user created.') {
+                        unset($req['password']);
+                        $this->sendJsonResponse(Response::STATUS_CODE_SUCCESS, 'success', $req);
+                    } else {
+                        $this->sendJsonResponse(Response::STATUS_CODE_SUCCESS, 'error',
+                            ['errorMessage' => $msg]);
+                    }
+                } elseif ($req['action'] === 'update-user') {
+                    $user = new User();
+                    $msg = $user->updateUserDetails($req['payload']);
+                    if ($msg === 'user updated.') {
+                        unset($req['password']);
+                        $this->sendJsonResponse(Response::STATUS_CODE_SUCCESS, 'success', $req);
+                    } else {
+                        $this->sendJsonResponse(Response::STATUS_CODE_SUCCESS, 'error',
+                            ['errorMessage' => $msg]);
+                    }
+                } elseif ($req['action'] === 'update-user-password') {
+                    $userId = $req['id'];
+                    if (!is_int($userId) || !isset($req['password'])) {
+                        $this->sendJsonResponse(Response::STATUS_CODE_SUCCESS, 'error',
+                            ['errorMessage' => 'invalid request.']);
+                    }
+                    $user = new User();
+                    if ($user->updateUserPassword($userId, $req['password'])) {
+                        $this->sendJsonResponse(Response::STATUS_CODE_SUCCESS, 'success',
+                            ['message' => 'Password Updated.']);
+                    }else{
+                        $this->sendJsonResponse(Response::STATUS_CODE_SUCCESS, 'error',
+                            ['errorMessage' => 'Password Failed.']);
+                    }
+                }elseif ($req['action'] === 'get-users'){
+                    $users = User::getAllUsers();
+                    $this->sendJsonResponse(Response::STATUS_CODE_SUCCESS, 'success',
+                        ['users' => $users]);
+                }else{
+                    $this->sendJsonResponse(Response::STATUS_CODE_SUCCESS, 'error',
+                        ['errorMessage' => 'Invalid action']);
+                }
+            }else{
+                $this->sendJsonResponse(Response::STATUS_CODE_SUCCESS, 'error',
+                    ['errorMessage' => 'Invalid request']);
+            }
         }
     }
 }
