@@ -32,7 +32,7 @@
         </div>
     </div>
 
-    <table class="table table-striped-columns ">
+    <table class="table table-striped-columns table-hover">
         <thead class="table-dark">
         <tr>
             <th>Id</th>

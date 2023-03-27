@@ -1,31 +1,3 @@
-<script>
-    window.addEventListener('load', () => {
-        let update = document.getElementById('update')
-        update.addEventListener('click', (event) => {
-            event.preventDefault()
-            
-            let username = document.getElementById('username').value
-
-            let email = document.getElementById('email').value
-
-            let firstName = document.getElementById('firstName').value
-
-            let lastName = document.getElementById('lastName').value
-
-            console.log(`${username} ${email} ${firstName} ${lastName}`)
-  })
-})
-
-window.addEventListener('load', () => {
-  let changePassButton = document.getElementById('changePass')
-  changePassButton.addEventListener('click', (event) => {
-    event.preventDefault()
-    let newUserPassword = document.getElementById("newUserPassword").value
-    console.log(newUserPassword)
-  })
-})
-</script>
-
 <!--This div is about the pop up change user details -->
 <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog">
@@ -68,6 +40,7 @@ window.addEventListener('load', () => {
     </div>
   </div>
 </div>
+
 <!--This div is about the pop up change user password -->
 <div class="modal fade" id="changePassword" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog">
@@ -140,3 +113,5 @@ window.addEventListener('load', () => {
         </div>
     </div>
 </div>
+
+<script src="assets/js/userPage.js"></script>
