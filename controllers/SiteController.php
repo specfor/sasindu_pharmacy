@@ -232,7 +232,7 @@ class SiteController
                 $user = new User();
                 $msg = $user->updateUserDetails($req['payload']);
                 if ($msg === 'user updated.') {
-                    unset($req['password']);
+                    unset($req['payload']['password']);
                     $this->sendJsonResponse(Response::STATUS_CODE_SUCCESS, 'success', $req);
                 } else {
                     $this->sendJsonResponse(Response::STATUS_CODE_SUCCESS, 'error',
@@ -256,6 +256,19 @@ class SiteController
                 $users = User::getAllUsers();
                 $this->sendJsonResponse(Response::STATUS_CODE_SUCCESS, 'success',
                     ['users' => $users]);
+            } elseif ($req['action'] === 'remove-user') {
+                $userId = $req['payload']['user-id'] ?? null;
+                if (!is_int($userId)) {
+                    $this->sendJsonResponse(Response::STATUS_CODE_SUCCESS, 'error',
+                        ['errorMessage' => 'Failed to remove user.']);
+                }
+                if (User::removeUser($userId)) {
+                    $this->sendJsonResponse(Response::STATUS_CODE_SUCCESS, 'success',
+                        ['message' => 'User removed successfully.']);
+                } else {
+                    $this->sendJsonResponse(Response::STATUS_CODE_SUCCESS, 'error',
+                        ['errorMessage' => 'Failed to remove user.']);
+                }
             } else {
                 $this->sendJsonResponse(Response::STATUS_CODE_SUCCESS, 'error',
                     ['errorMessage' => 'Invalid action']);
