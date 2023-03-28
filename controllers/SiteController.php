@@ -263,12 +263,20 @@ class SiteController
         }
     }
 
-    public function suppliers():void
+    public function suppliers(): void
     {
         $this->checkAdmin();
         if (Application::$app->request->isGet()) {
-
             $page = new Page(Page::HEADER_DEFAULT_WITH_MENU, Page::FOOTER_DEFAULT, 'suppliers', 'Suppliers');
+            Application::$app->renderer->renderPage($page);
+        }
+    }
+
+    public function payments(): void
+    {
+        $this->checkAdmin();
+        if (Application::$app->request->isGet()) {
+            $page = new Page(Page::HEADER_DEFAULT_WITH_MENU, Page::FOOTER_DEFAULT, 'payments', 'Payments');
             Application::$app->renderer->renderPage($page);
         }
     }
