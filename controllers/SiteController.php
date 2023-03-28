@@ -214,53 +214,62 @@ class SiteController
             Application::$app->renderer->renderPage($page);
         } elseif (Application::$app->request->isPost()) {
             $req = $this->getPostJsonBody();
-            if (isset($req['action'])) {
-                if ($req['action'] === 'add-user') {
-                    $user = new User();
-                    $msg = $user->createNewUser($req['payload']);
-                    if ($msg === 'user created.') {
-                        unset($req['password']);
-                        $this->sendJsonResponse(Response::STATUS_CODE_SUCCESS, 'success', $req);
-                    } else {
-                        $this->sendJsonResponse(Response::STATUS_CODE_SUCCESS, 'error',
-                            ['errorMessage' => $msg]);
-                    }
-                } elseif ($req['action'] === 'update-user') {
-                    $user = new User();
-                    $msg = $user->updateUserDetails($req['payload']);
-                    if ($msg === 'user updated.') {
-                        unset($req['password']);
-                        $this->sendJsonResponse(Response::STATUS_CODE_SUCCESS, 'success', $req);
-                    } else {
-                        $this->sendJsonResponse(Response::STATUS_CODE_SUCCESS, 'error',
-                            ['errorMessage' => $msg]);
-                    }
-                } elseif ($req['action'] === 'update-user-password') {
-                    $userId = $req['id'];
-                    if (!is_int($userId) || !isset($req['password'])) {
-                        $this->sendJsonResponse(Response::STATUS_CODE_SUCCESS, 'error',
-                            ['errorMessage' => 'invalid request.']);
-                    }
-                    $user = new User();
-                    if ($user->updateUserPassword($userId, $req['password'])) {
-                        $this->sendJsonResponse(Response::STATUS_CODE_SUCCESS, 'success',
-                            ['message' => 'Password Updated.']);
-                    }else{
-                        $this->sendJsonResponse(Response::STATUS_CODE_SUCCESS, 'error',
-                            ['errorMessage' => 'Password Failed.']);
-                    }
-                }elseif ($req['action'] === 'get-users'){
-                    $users = User::getAllUsers();
-                    $this->sendJsonResponse(Response::STATUS_CODE_SUCCESS, 'success',
-                        ['users' => $users]);
-                }else{
-                    $this->sendJsonResponse(Response::STATUS_CODE_SUCCESS, 'error',
-                        ['errorMessage' => 'Invalid action']);
-                }
-            }else{
+            if (!isset($req['action'])) {
                 $this->sendJsonResponse(Response::STATUS_CODE_SUCCESS, 'error',
                     ['errorMessage' => 'Invalid request']);
             }
+            if ($req['action'] === 'add-user') {
+                $user = new User();
+                $msg = $user->createNewUser($req['payload']);
+                if ($msg === 'user created.') {
+                    unset($req['password']);
+                    $this->sendJsonResponse(Response::STATUS_CODE_SUCCESS, 'success', $req);
+                } else {
+                    $this->sendJsonResponse(Response::STATUS_CODE_SUCCESS, 'error',
+                        ['errorMessage' => $msg]);
+                }
+            } elseif ($req['action'] === 'update-user') {
+                $user = new User();
+                $msg = $user->updateUserDetails($req['payload']);
+                if ($msg === 'user updated.') {
+                    unset($req['password']);
+                    $this->sendJsonResponse(Response::STATUS_CODE_SUCCESS, 'success', $req);
+                } else {
+                    $this->sendJsonResponse(Response::STATUS_CODE_SUCCESS, 'error',
+                        ['errorMessage' => $msg]);
+                }
+            } elseif ($req['action'] === 'update-user-password') {
+                $userId = $req['id'];
+                if (!is_int($userId) || !isset($req['password'])) {
+                    $this->sendJsonResponse(Response::STATUS_CODE_SUCCESS, 'error',
+                        ['errorMessage' => 'invalid request.']);
+                }
+                $user = new User();
+                if ($user->updateUserPassword($userId, $req['password'])) {
+                    $this->sendJsonResponse(Response::STATUS_CODE_SUCCESS, 'success',
+                        ['message' => 'Password Updated.']);
+                } else {
+                    $this->sendJsonResponse(Response::STATUS_CODE_SUCCESS, 'error',
+                        ['errorMessage' => 'Password Failed.']);
+                }
+            } elseif ($req['action'] === 'get-users') {
+                $users = User::getAllUsers();
+                $this->sendJsonResponse(Response::STATUS_CODE_SUCCESS, 'success',
+                    ['users' => $users]);
+            } else {
+                $this->sendJsonResponse(Response::STATUS_CODE_SUCCESS, 'error',
+                    ['errorMessage' => 'Invalid action']);
+            }
+        }
+    }
+
+    public function suppliers():void
+    {
+        $this->checkAdmin();
+        if (Application::$app->request->isGet()) {
+
+            $page = new Page(Page::HEADER_DEFAULT_WITH_MENU, Page::FOOTER_DEFAULT, 'suppliers', 'Suppliers');
+            Application::$app->renderer->renderPage($page);
         }
     }
 }
