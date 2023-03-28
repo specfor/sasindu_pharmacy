@@ -86,7 +86,8 @@ window.addEventListener("load",function(){
             'Content-Type': 'application/json',
             },
             body: JSON.stringify(newItem),
-            };
+            credentials:"same-origin"  
+          };
             
             fetch('/dashboard/stocks',options)
   .then(data => {
