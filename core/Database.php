@@ -89,7 +89,7 @@ class Database
                     buy_date date ,
                     exp_date date NOT NULL,
                     retail_price float(2) NOT NULL,
-                    company_name varchar(255) NOT NULL,
+                    company_id int NOT NULL
                     )";
         $this->pdo->exec($sql);
 
