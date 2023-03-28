@@ -304,7 +304,7 @@ class SiteController
                 $user = new User();
                 $msg = $user->createNewUser($req['payload']);
                 if ($msg === 'user created.') {
-                    unset($req['password']);
+                    unset($req['payload']['password']);
                     $this->sendJsonResponse(Response::STATUS_CODE_SUCCESS, 'success', $req);
                 } else {
                     $this->sendJsonResponse(Response::STATUS_CODE_SUCCESS, 'error',
