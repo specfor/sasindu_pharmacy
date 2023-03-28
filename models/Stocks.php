@@ -2,7 +2,6 @@
 
 namespace LogicLeap\SasinduPharmacy\models;
 
-use LogicLeap\SasinduPharmacy\core\Application;
 use PDO;
 
 class Stocks extends DbModel
@@ -27,7 +26,7 @@ class Stocks extends DbModel
             $filters[] = " name LIKE '%:productName%'";
         }
         if ($productCompanyId != -1) {
-            $filters[] = " company_id = $productCompanyId";
+            $filters[] = " supplier_id = $productCompanyId";
         }
         if ($productPrice != -1) {
             $priceMin = $productPrice - 100;
@@ -59,7 +58,7 @@ class Stocks extends DbModel
             'buy_date' => $buyingDate,
             'exp_date' => $expireDate,
             'retail_price' => $price,
-            'company_id' => $supplierId
+            'supplier_id' => $supplierId
         ];
         return self::insertIntoTable(self::TABLE_NAME, $params);
     }
@@ -75,7 +74,7 @@ class Stocks extends DbModel
             'buy_date' => $buyingDate,
             'exp_date' => $expireDate,
             'retail_price' => $price,
-            'company_id' => $supplierId
+            'supplier_id' => $supplierId
         ];
         return self::updateTableData(self::TABLE_NAME, $params, "id=$productId");
     }

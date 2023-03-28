@@ -89,11 +89,11 @@ class Database
                     buy_date date ,
                     exp_date date NOT NULL,
                     retail_price float(2) NOT NULL,
-                    company_id int NOT NULL
+                    supplier_id int NOT NULL
                     )";
         $this->pdo->exec($sql);
 
-        $sql = "CREATE TABLE companies (
+        $sql = "CREATE TABLE suppliers (
                     id int NOT NULL AUTO_INCREMENT PRIMARY KEY,
                     name varchar(255) NOT NULL,
                     medical_ref varchar(255) NOT NULL,
@@ -104,10 +104,10 @@ class Database
         $sql = "CREATE TABLE payments (
                     id int NOT NULL AUTO_INCREMENT PRIMARY KEY,
                     method varchar(255) NOT NULL,
-                    check_number int,
+                    cheque_number int,
                     amount float(2) NOT NULL,
                     payment_date date NOT NULL,
-                    company_id int NOT NULL                  
+                    supplier_id int NOT NULL                  
                     )";
         $this->pdo->exec($sql);
 
