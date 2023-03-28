@@ -7,6 +7,7 @@ use LogicLeap\SasinduPharmacy\core\CSRF_Token;
 use LogicLeap\SasinduPharmacy\core\Response;
 use LogicLeap\SasinduPharmacy\core\Session;
 use LogicLeap\SasinduPharmacy\models\Page;
+use LogicLeap\SasinduPharmacy\models\Stocks;
 use LogicLeap\SasinduPharmacy\models\User;
 
 class SiteController
@@ -202,6 +203,88 @@ class SiteController
 
             $page = new Page(Page::HEADER_DEFAULT_WITH_MENU, Page::FOOTER_DEFAULT, 'stocks', 'Stock');
             Application::$app->renderer->renderPage($page);
+        } elseif (Application::$app->request->isPost()) {
+            $req = $this->getPostJsonBody();
+            if (!isset($req['action'])) {
+                $this->sendJsonResponse(Response::STATUS_CODE_SUCCESS, 'error',
+                    ['errorMessage' => 'Invalid request']);
+            }
+            if ($req['action'] === 'get-items') {
+                $itemLimit = $req['payload']['filters']['limit'] ?? 30;
+                $itemBeginIndex = $req['payload']['filters']['begin'] ?? 0;
+                $itemName = $req['payload']['filters']['product-name'] ?? null;
+                $itemPrice = $req['payload']['filters']['product-price'] ?? null;
+                $itemCompanyId = $req['payload']['filters']['product-company-id'] ?? null;
+                $data = Stocks::getItems($itemBeginIndex, $itemLimit, $itemName, $itemPrice, $itemCompanyId);
+                if (!isset($req['action'])) {
+                    $this->sendJsonResponse(Response::STATUS_CODE_SUCCESS, 'success',
+                        [
+                            'number-of-rows' => $data['number-of-rows'],
+                            'items' => $data['data']
+                        ]);
+                }
+            } elseif ($req['action'] === 'add-item') {
+                $productName = $req['payload']['product-name'] ?? 'none';
+                $productAmount = $req['payload']['product-amount'] ?? 0;
+                $buyingDate = $req['payload']['buying-date'] ?? '2023-01-01';
+                $expireDate = $req['payload']['expire-date'] ?? '2023-01-01';
+                $supplierId = $req['payload']['supplier-id'] ?? -1;
+                $price = $req['payload']['product-price'] ?? 0;
+                $success = Stocks::addItem($productName, $productAmount, $buyingDate, $expireDate, $supplierId, $price);
+                if ($success) {
+                    $this->sendJsonResponse(Response::STATUS_CODE_SUCCESS, 'success',
+                        [
+                            'message' => 'New Item Added Successfully.'
+                        ]);
+                } else {
+                    $this->sendJsonResponse(Response::STATUS_CODE_SUCCESS, 'error',
+                        [
+                            'errorMessage' => 'Failed to add item.'
+                        ]);
+                }
+            } elseif ($req['action'] === 'update-item') {
+                $productId = $req['payload']['product-id'] ?? null;
+                $productName = $req['payload']['product-name'] ?? 'none';
+                $productAmount = $req['payload']['product-amount'] ?? 0;
+                $buyingDate = $req['payload']['buying-date'] ?? '2023-01-01';
+                $expireDate = $req['payload']['expire-date'] ?? '2023-01-01';
+                $supplierId = $req['payload']['supplier-id'] ?? -1;
+                $price = $req['payload']['product-price'] ?? 0;
+                $success = Stocks::updateItem($productId, $productName, $productAmount, $buyingDate, $expireDate, $supplierId, $price);
+                if ($success) {
+                    $this->sendJsonResponse(Response::STATUS_CODE_SUCCESS, 'success',
+                        [
+                            'message' => 'Item Updated Successfully.'
+                        ]);
+                } else {
+                    $this->sendJsonResponse(Response::STATUS_CODE_SUCCESS, 'error',
+                        [
+                            'errorMessage' => 'Failed to update item.'
+                        ]);
+                }
+            } elseif ($req['action'] === 'delete-item') {
+                $productId = $req['payload']['product-id'] ?? null;
+                if (!is_int($productId)) {
+                    $this->sendJsonResponse(Response::STATUS_CODE_SUCCESS, 'error',
+                        [
+                            'errorMessage' => 'Failed to delete item.'
+                        ]);
+                }
+                if (Stocks::deleteItem($productId)) {
+                    $this->sendJsonResponse(Response::STATUS_CODE_SUCCESS, 'success',
+                        [
+                            'message' => 'Item Deleted Successfully.'
+                        ]);
+                } else {
+                    $this->sendJsonResponse(Response::STATUS_CODE_SUCCESS, 'error',
+                        [
+                            'errorMessage' => 'Failed to delete item.'
+                        ]);
+                }
+            } else {
+                $this->sendJsonResponse(Response::STATUS_CODE_SUCCESS, 'error',
+                    ['errorMessage' => 'Invalid action']);
+            }
         }
     }
 
@@ -209,7 +292,6 @@ class SiteController
     {
         $this->checkAdmin();
         if (Application::$app->request->isGet()) {
-
             $page = new Page(Page::HEADER_DEFAULT_WITH_MENU, Page::FOOTER_DEFAULT, 'users', 'Users');
             Application::$app->renderer->renderPage($page);
         } elseif (Application::$app->request->isPost()) {
@@ -222,7 +304,7 @@ class SiteController
                 $user = new User();
                 $msg = $user->createNewUser($req['payload']);
                 if ($msg === 'user created.') {
-                    unset($req['password']);
+                    unset($req['payload']['password']);
                     $this->sendJsonResponse(Response::STATUS_CODE_SUCCESS, 'success', $req);
                 } else {
                     $this->sendJsonResponse(Response::STATUS_CODE_SUCCESS, 'error',
@@ -232,7 +314,7 @@ class SiteController
                 $user = new User();
                 $msg = $user->updateUserDetails($req['payload']);
                 if ($msg === 'user updated.') {
-                    unset($req['password']);
+                    unset($req['payload']['password']);
                     $this->sendJsonResponse(Response::STATUS_CODE_SUCCESS, 'success', $req);
                 } else {
                     $this->sendJsonResponse(Response::STATUS_CODE_SUCCESS, 'error',
@@ -256,6 +338,19 @@ class SiteController
                 $users = User::getAllUsers();
                 $this->sendJsonResponse(Response::STATUS_CODE_SUCCESS, 'success',
                     ['users' => $users]);
+            } elseif ($req['action'] === 'remove-user') {
+                $userId = $req['payload']['user-id'] ?? null;
+                if (!is_int($userId)) {
+                    $this->sendJsonResponse(Response::STATUS_CODE_SUCCESS, 'error',
+                        ['errorMessage' => 'Failed to remove user.']);
+                }
+                if (User::removeUser($userId)) {
+                    $this->sendJsonResponse(Response::STATUS_CODE_SUCCESS, 'success',
+                        ['message' => 'User removed successfully.']);
+                } else {
+                    $this->sendJsonResponse(Response::STATUS_CODE_SUCCESS, 'error',
+                        ['errorMessage' => 'Failed to remove user.']);
+                }
             } else {
                 $this->sendJsonResponse(Response::STATUS_CODE_SUCCESS, 'error',
                     ['errorMessage' => 'Invalid action']);

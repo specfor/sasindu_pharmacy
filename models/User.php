@@ -228,4 +228,9 @@ class User extends DbModel
         }
         return true;
     }
+
+    public static function removeUser(int $userId):bool{
+        $sql = "DELETE FROM ". self::TABLE_NAME." WHERE id=$userId";
+        return self::exec($sql);
+    }
 }
