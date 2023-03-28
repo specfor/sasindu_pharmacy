@@ -88,7 +88,7 @@ window.addEventListener("load",function(){
             body: JSON.stringify(newItem),
             };
             
-            fetch('/dashboard/stocks', newItem)
+            fetch('/dashboard/stocks',options)
   .then(data => {
       if (!data.ok) {
         throw Error(data.status);
