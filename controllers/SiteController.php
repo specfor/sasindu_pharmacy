@@ -180,7 +180,7 @@ class SiteController
         } elseif (Application::$app->request->isPost()) {
             if (!$success) {
                 $this->sendJsonResponse(Response::STATUS_CODE_FORBIDDEN, 'forbidden',
-                    ['errorMessage' => 'You need to log in first']);
+                    ['message' => 'You need to log in first']);
             }
         }
     }
@@ -207,7 +207,7 @@ class SiteController
             $req = $this->getPostJsonBody();
             if (!isset($req['action'])) {
                 $this->sendJsonResponse(Response::STATUS_CODE_SUCCESS, 'error',
-                    ['errorMessage' => 'Invalid request']);
+                    ['message' => 'Invalid request']);
             }
             if ($req['action'] === 'get-items') {
                 $itemLimit = $req['payload']['filters']['limit'] ?? 30;
@@ -239,7 +239,7 @@ class SiteController
                 } else {
                     $this->sendJsonResponse(Response::STATUS_CODE_SUCCESS, 'error',
                         [
-                            'errorMessage' => 'Failed to add item.'
+                            'message' => 'Failed to add item.'
                         ]);
                 }
             } elseif ($req['action'] === 'update-item') {
@@ -259,7 +259,7 @@ class SiteController
                 } else {
                     $this->sendJsonResponse(Response::STATUS_CODE_SUCCESS, 'error',
                         [
-                            'errorMessage' => 'Failed to update item.'
+                            'message' => 'Failed to update item.'
                         ]);
                 }
             } elseif ($req['action'] === 'delete-item') {
@@ -267,7 +267,7 @@ class SiteController
                 if (!is_int($productId)) {
                     $this->sendJsonResponse(Response::STATUS_CODE_SUCCESS, 'error',
                         [
-                            'errorMessage' => 'Failed to delete item.'
+                            'message' => 'Failed to delete item.'
                         ]);
                 }
                 if (Stocks::deleteItem($productId)) {
@@ -278,12 +278,12 @@ class SiteController
                 } else {
                     $this->sendJsonResponse(Response::STATUS_CODE_SUCCESS, 'error',
                         [
-                            'errorMessage' => 'Failed to delete item.'
+                            'message' => 'Failed to delete item.'
                         ]);
                 }
             } else {
                 $this->sendJsonResponse(Response::STATUS_CODE_SUCCESS, 'error',
-                    ['errorMessage' => 'Invalid action']);
+                    ['message' => 'Invalid action']);
             }
         }
     }
@@ -298,7 +298,7 @@ class SiteController
             $req = $this->getPostJsonBody();
             if (!isset($req['action'])) {
                 $this->sendJsonResponse(Response::STATUS_CODE_SUCCESS, 'error',
-                    ['errorMessage' => 'Invalid request']);
+                    ['message' => 'Invalid request']);
             }
             if ($req['action'] === 'add-user') {
                 $user = new User();
@@ -308,7 +308,7 @@ class SiteController
                     $this->sendJsonResponse(Response::STATUS_CODE_SUCCESS, 'success', $req);
                 } else {
                     $this->sendJsonResponse(Response::STATUS_CODE_SUCCESS, 'error',
-                        ['errorMessage' => $msg]);
+                        ['message' => $msg]);
                 }
             } elseif ($req['action'] === 'update-user') {
                 $user = new User();
@@ -318,13 +318,13 @@ class SiteController
                     $this->sendJsonResponse(Response::STATUS_CODE_SUCCESS, 'success', $req);
                 } else {
                     $this->sendJsonResponse(Response::STATUS_CODE_SUCCESS, 'error',
-                        ['errorMessage' => $msg]);
+                        ['message' => $msg]);
                 }
             } elseif ($req['action'] === 'update-user-password') {
                 $userId = $req['id'];
                 if (!is_int($userId) || !isset($req['password'])) {
                     $this->sendJsonResponse(Response::STATUS_CODE_SUCCESS, 'error',
-                        ['errorMessage' => 'invalid request.']);
+                        ['message' => 'invalid request.']);
                 }
                 $user = new User();
                 if ($user->updateUserPassword($userId, $req['password'])) {
@@ -332,7 +332,7 @@ class SiteController
                         ['message' => 'Password Updated.']);
                 } else {
                     $this->sendJsonResponse(Response::STATUS_CODE_SUCCESS, 'error',
-                        ['errorMessage' => 'Password Failed.']);
+                        ['message' => 'Password Failed.']);
                 }
             } elseif ($req['action'] === 'get-users') {
                 $users = User::getAllUsers();
@@ -342,18 +342,18 @@ class SiteController
                 $userId = $req['payload']['user-id'] ?? null;
                 if (!is_int($userId)) {
                     $this->sendJsonResponse(Response::STATUS_CODE_SUCCESS, 'error',
-                        ['errorMessage' => 'Failed to remove user.']);
+                        ['message' => 'Failed to remove user.']);
                 }
                 if (User::removeUser($userId)) {
                     $this->sendJsonResponse(Response::STATUS_CODE_SUCCESS, 'success',
                         ['message' => 'User removed successfully.']);
                 } else {
                     $this->sendJsonResponse(Response::STATUS_CODE_SUCCESS, 'error',
-                        ['errorMessage' => 'Failed to remove user.']);
+                        ['message' => 'Failed to remove user.']);
                 }
             } else {
                 $this->sendJsonResponse(Response::STATUS_CODE_SUCCESS, 'error',
-                    ['errorMessage' => 'Invalid action']);
+                    ['message' => 'Invalid action']);
             }
         }
     }
