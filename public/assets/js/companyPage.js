@@ -1,4 +1,41 @@
 
+
+window.addEventListener("load",function(){
+    let addCompanyButton = document.getElementById("addCompany")
+    addCompanyButton.addEventListener('click',function(){
+        let companyName = document.getElementById("companyName")
+        let medRef = document.getElementById("medRef")
+        let contactNum = document.getElementById("contactNumber")
+    
+        let newCompanyObject = {
+            companyName:companyName.value,
+            medicalReferance:medRef.value,
+            contactNumber:contactNum.value,
+        }
+    
+        const options = {
+            method: 'POST',
+            headers: {
+            'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(newCompanyObject),
+            };
+
+            fetch('', options)
+  .then(data => {
+      if (!data.ok) {
+        throw Error(data.status);
+       }
+       return data.json();
+      }).then(update => {
+      console.log(update);
+      }).catch(e => {
+      console.log(e);
+      });
+    })
+
+})
+
 let sampleArray = [
     {
         id:34,

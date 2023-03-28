@@ -56,3 +56,44 @@ window.addEventListener("load",function(){
 
   }
 })
+
+
+window.addEventListener("load",function(){
+        let addNewItem = document.getElementById("addItem")
+        addNewItem.addEventListener("click",function(){
+          let itemName = document.getElementById("productName").value
+          let quantity = document.getElementById("quantity").value
+          let buyingDate = document.getElementById("buyingDate").value
+          let expDate = document.getElementById("expDate").value
+          let companyName = document.getElementById("cmpnyName").value
+          let price  = document.getElementById("price").value
+
+          let newItem = {
+            itemName,
+            quantity,
+            buyingDate,
+            expDate,
+            companyName,
+            price
+          }
+          
+          const options = {
+            method: 'POST',
+            headers: {
+            'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(newItem),
+            };
+            
+            fetch('/dashboard/stocks', options)
+  .then(data => {
+      if (!data.ok) {
+        throw Error(data.status);
+       }
+       console.log(data)
+      }).catch(e => {
+      console.log(e);
+      });
+
+        })
+})

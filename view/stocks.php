@@ -10,23 +10,23 @@
       <div class="row text-center  ps-4 pe-4">
         <div class="input-group mb-3">
             <span class="input-group-text" id="basic-addon1">Product Name</span>
-            <input type="text" class="form-control" aria-describedby="basic-addon1">
+            <input type="text" class="form-control" aria-describedby="basic-addon1" id="productName">
         </div>
         <div class="input-group mb-3">
             <span class="input-group-text" id="basic-addon2">Quantity</span>
-            <input type="number" class="form-control " aria-describedby="basic-addon2">
+            <input type="number" class="form-control " aria-describedby="basic-addon2" id="quantity">
         </div>
         <div class="input-group mb-3">
             <span class="input-group-text" id="basic-addon3">Buying Date</span>
-            <input type="date" class="form-control" aria-describedby="basic-addon3">
+            <input type="date" class="form-control" aria-describedby="basic-addon3" id="buyingDate">
         </div>
         <div class="input-group mb-3">
             <span class="input-group-text" id="basic-addon4">Expiry Date</span>
-            <input type="date" class="form-control" aria-describedby="basic-addon4">
+            <input type="date" class="form-control" aria-describedby="basic-addon4" id="expDate">
         </div>
         <div class="input-group mb-3">
             <span class="input-group-text" id="inputGroupSelect01">Company Name</span>
-            <select class="form-select" aria-label="Select Company">
+            <select class="form-select" aria-label="Select Company" id="cmpnyName">
                     <option selected>Supplier Company</option>
                     <option value="1">One</option>
                     <option value="2">Two</option>
@@ -35,12 +35,12 @@
         </div>
         <div class="input-group mb-3">
             <span class="input-group-text" id="basic-addon4">Price</span>
-            <input type="number" class="form-control" aria-describedby="basic-addon4">
+            <input type="number" class="form-control" aria-describedby="basic-addon4" id='price'>
         </div>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">Add Item</button>
+        <button type="button" class="btn btn-primary" id="addItem">Add Item</button>
       </div>
     </div>
   </div>

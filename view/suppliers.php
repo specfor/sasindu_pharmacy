@@ -43,20 +43,20 @@
         <div class="row text-center  ps-4 pe-4">
           <div class="input-group mb-3">
             <span class="input-group-text" id="basic-addon1">Company Name</span>
-            <input type="text" class="form-control" aria-describedby="basic-addon1">
+            <input type="text" class="form-control" aria-describedby="basic-addon1" id="companyName">
           </div>
           <div class="input-group mb-3">
             <span class="input-group-text" id="basic-addon2">Medical Referance</span>
-            <input type="text" class="form-control " aria-describedby="basic-addon2">
+            <input type="text" class="form-control " aria-describedby="basic-addon2" id="medRef">
           </div>
           <div class="input-group mb-3">
             <span class="input-group-text" id="basic-addon3">Contact Number</span>
-            <input type="number" class="form-control" aria-describedby="basic-addon3">
+            <input type="number" class="form-control" aria-describedby="basic-addon3" id="contactNumber">
           </div>
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-          <button type="button" class="btn btn-primary">Add Company</button>
+          <button type="button" class="btn btn-primary" id="addCompany">Add Company</button>
         </div>
       </div>
     </div>
