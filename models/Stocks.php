@@ -1,0 +1,88 @@
+<?php
+
+namespace LogicLeap\SasinduPharmacy\models;
+
+use LogicLeap\SasinduPharmacy\core\Application;
+use PDO;
+
+class Stocks extends DbModel
+{
+    private const TABLE_NAME = 'medicines';
+
+    /**
+     * Get details about items.
+     * @param int $startingIndex Starting index of array to return results.
+     * @param int $limitItems Number of results to return starting at starting Index.
+     * @param string $productName Name of the product to filter results.
+     * @param float $productPrice Price of the product to filter results.
+     * @param int $productCompanyId Id of the company to filter results.
+     * @return array Returns an array of ['data' => data, 'number-of-rows' => no. of rows];
+     */
+    public static function getItems(int $startingIndex, int $limitItems, string $productName = '', float $productPrice = -1,
+                                    int $productCompanyId = -1): array
+    {
+        $sql = "SELECT * FROM " . self::TABLE_NAME;
+        $filters = [];
+        if (!empty($productName)) {
+            $filters[] = " name LIKE '%:productName%'";
+        }
+        if ($productCompanyId != -1) {
+            $filters[] = " company_id = $productCompanyId";
+        }
+        if ($productPrice != -1) {
+            $priceMin = $productPrice - 100;
+            $priceMax = $productPrice + 100;
+            $filters[] = " retail_price > $priceMin AND retail_price < $priceMax";
+        }
+        if (!empty($filters)) {
+            $sql .= " WHERE" . implode(' AND', $filters);
+        }
+
+        $sql .= " ORDER BY id DESC";
+        $statement = self::prepare($sql);
+        if (!empty($productName))
+            $statement->bindVakue(':productName', $productName);
+        $statement->execute();
+        $rows = $statement->fetchColumn();
+        $data = array_slice($statement->fetch(PDO::FETCH_ASSOC), $startingIndex, $limitItems);
+        return [
+            'data' => $data,
+            'number-of-rows' => count($rows)];
+    }
+
+    public static function addItem(string $productName, int $productAmount, string $buyingDate,
+                                   string $expireDate, int $supplierId, float $price): bool
+    {
+        $params = [
+            'name' => $productName,
+            'quantity' => $productAmount,
+            'buy_date' => $buyingDate,
+            'exp_date' => $expireDate,
+            'retail_price' => $price,
+            'company_id' => $supplierId
+        ];
+        return self::insertIntoTable(self::TABLE_NAME, $params);
+    }
+
+    public static function updateItem(int    $productId, string $productName, int $productAmount, string $buyingDate,
+                                      string $expireDate, int $supplierId, float $price): bool
+    {
+        if (empty($productId))
+            return false;
+        $params = [
+            'name' => $productName,
+            'quantity' => $productAmount,
+            'buy_date' => $buyingDate,
+            'exp_date' => $expireDate,
+            'retail_price' => $price,
+            'company_id' => $supplierId
+        ];
+        return self::updateTableData(self::TABLE_NAME, $params, "id=$productId");
+    }
+
+    public static function deleteItem(int $productId):bool
+    {
+        $sql = "DELETE FROM " . self::TABLE_NAME . " WHERE id=$productId";
+        return self::exec($sql);
+    }
+}
