@@ -1,10 +1,82 @@
+<!--This div is about the pop up change user details -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Edit User Details</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+      </div>
+    <div class="row text-center ps-4 pe-4" style="">
+        <div class="input-group mb-3">
+            <span class="input-group-text" id="basic-addon1">Username</span>
+            <input type="text" class="form-control" aria-describedby="basic-addon1" id="username">
+        </div>
+        <div class="input-group mb-3">
+            <span class="input-group-text" id="basic-addon2">Email</span>
+            <input type="email" class="form-control " aria-describedby="basic-addon2" id="email">
+        </div>
+        <div class="input-group mb-3">
+            <span class="input-group-text" id="basic-addon3">First Name</span>
+            <input type="text" class="form-control" aria-describedby="basic-addon3" id="firstName">
+        </div>
+        <div class="input-group mb-3">
+            <span class="input-group-text" id="basic-addon4">Last Name</span>
+            <input type="text" class="form-control" aria-describedby="basic-addon4" id="lastName">
+        </div>
+        <div class="input-group mb-3">
+            <span class="input-group-text" id="inputGroupSelect01">User Role</span>
+            <select class="form-select" id="inputGroupSelect01">
+                <option selected value="1">Administrator</option>
+                <option value="2">Data Entry Operator</option>
+            </select>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary" id="update">Save changes</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!--This div is about the pop up change user password -->
+<div class="modal fade" id="changePassword" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Change Password</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+      <div class="row text-center">
+        <div class="input-group mb-3">
+            <span class="input-group-text" id="basic-addon1">New Password</span>
+            <input type="password" class="form-control" aria-describedby="basic-addon1" id="newUserPassword">
+        </div>
+        <div class="input-group mb-3">
+            <span class="input-group-text" id="basic-addon1">Confirm Password</span>
+            <input type="password" class="form-control" aria-describedby="basic-addon1" id="newUserPasswordConfirm">
+        </div>        
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary" id="changePass">Save changes</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
 <div class="container-fluid mb-5">
     <div class="row text-center mt-5">
         <h3>Manage Access of System Users</h3>
     </div>
-    <div class="row">
-        <div class="col-lg-8 overflow-auto">
-            <div class="container-fluid m-2">
+    <div class="row ">
+        <div class="col-12 ">
+            <div class="container-fluid overflow-auto m-2">
                 <table class="table table-striped-columns table-hover">
                     <thead class="table-dark">
                     <tr>
@@ -17,13 +89,7 @@
                         <th scope="col">Actions</th>
                     </tr>
                     </thead>
-                    <tbody>
-                    <tr>
-                        <td>2</td>
-                        <td>Jacob</td>
-                        <td>Thornton</td>
-                        <td>@fat</td>
-                    </tr>
+                    <tbody id="userTable">
                     </tbody>
                 </table>
                 <nav aria-label="Page navigation">
@@ -35,40 +101,7 @@
                 </nav>
             </div>
         </div>
-        <div class="col-lg-4">
-            <div class="container mt-2 mt-lg-5 ml-2 mb-3">
-                <div class="row text-center mb-3">
-                    <h4>Edit User Details</h4>
-                </div>
-                <div class="row text-center">
-                    <fieldset disabled>
-                        <div class="input-group mb-3">
-                            <span class="input-group-text" id="basic-addon1">Username</span>
-                            <input type="text" class="form-control" aria-describedby="basic-addon1">
-                        </div>
-                        <div class="input-group mb-3">
-                            <span class="input-group-text" id="basic-addon2">Email</span>
-                            <input type="email" class="form-control " aria-describedby="basic-addon2">
-                        </div>
-                        <div class="input-group mb-3">
-                            <span class="input-group-text" id="basic-addon3">First Name</span>
-                            <input type="text" class="form-control" aria-describedby="basic-addon3">
-                        </div>
-                        <div class="input-group mb-3">
-                            <span class="input-group-text" id="basic-addon4">Last Name</span>
-                            <input type="text" class="form-control" aria-describedby="basic-addon4">
-                        </div>
-                        <div class="input-group mb-3">
-                            <span class="input-group-text" id="inputGroupSelect01">User Role</span>
-                            <select class="form-select" id="inputGroupSelect01">
-                                <option selected value="1">Administrator</option>
-                                <option value="2">Data Entry Operator</option>
-                            </select>
-                        </div>
-                        <button type="button" class="btn btn-outline-primary">Update</button>
-                    </fieldset>
-                </div>
-            </div>
-        </div>
     </div>
 </div>
+
+<script src="/assets/js/usersPage.js"></script>

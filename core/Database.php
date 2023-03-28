@@ -69,7 +69,7 @@ class Database
         $sql = "CREATE TABLE users (
                     id int NOT NULL AUTO_INCREMENT PRIMARY KEY,
                     username varchar(255) NOT NULL,
-                    email varchar(255) NOT NULL,
+                    email varchar(255),
                     firstname varchar(255) NOT NULL,
                     lastname varchar(255) NOT NULL,
                     password varchar(255) NOT NULL,
@@ -89,7 +89,7 @@ class Database
                     buy_date date ,
                     exp_date date NOT NULL,
                     retail_price float(2) NOT NULL,
-                    company_name varchar(255) NOT NULL,
+                    company_id int NOT NULL
                     )";
         $this->pdo->exec($sql);
 

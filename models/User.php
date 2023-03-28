@@ -47,8 +47,9 @@ class User extends DbModel
      */
     public function createNewUser(array $params): string
     {
-        if (!isset($params['username']) || !isset($params['email']) || !isset($params['password']) ||
-            !isset($params['confirmPassword'])) {
+        if (!isset($params['username']) || !isset($params['password']) ||
+            !isset($params['confirmPassword']) || !isset($params['role']) || !isset($params['firstname']) ||
+            !isset($params['lastname'])) {
             return 'All required fields were not filled.';
         }
 
@@ -58,12 +59,6 @@ class User extends DbModel
             [':username' => $params['username']]);
         if ($statement->fetch(PDO::FETCH_ASSOC)) {
             return 'Username already exists.';
-        }
-
-        $statement = self::getDataFromTable(['id'], self::TABLE_NAME, 'email=:email',
-            [':email' => $params['email']]);
-        if ($statement->fetch(PDO::FETCH_ASSOC)) {
-            return 'Email already exists.';
         }
 
         if ($params['password'] !== $params['confirmPassword']) {
@@ -77,11 +72,19 @@ class User extends DbModel
         if (strlen($params['password']) > self::MAX_PASSWORD_LENGTH) {
             return 'Password is too long.';
         }
+        if (!is_int($params['role'])) {
+            return 'Invalid user role.';
+        }
 
         $params['password'] = self::generatePasswordHash($params['password']);
 
-        //For now set user role to 1
-        $params['role'] = User::ROLE_ADMINISTRATOR;
+        if (!isset($params['email'])) {
+            $params['email'] = null;
+        }
+
+        if ($params['role'] === User::ROLE_SUPER_ADMINISTRATOR) {
+            $params['role'] = User::ROLE_ADMINISTRATOR;
+        }
 
         // Filter user passed variables against actual database available columns.
         foreach ($params as $key => $value) {
@@ -92,7 +95,68 @@ class User extends DbModel
         if (self::insertIntoTable(self::TABLE_NAME, $params)) {
             return 'user created.';
         }
-        return 'Unknown error occured.';
+        return 'Unknown error occurred.';
+    }
+
+    public function updateUserDetails(array $params): string
+    {
+        if (!isset($params['username']) || !isset($params['id']) || !isset($params['role']) ||
+            !isset($params['firstname']) || !isset($params['lastname'])) {
+            return 'All required fields were not filled.';
+        }
+
+        // Performing checks on input variables.
+
+        if ($params['password'] !== $params['confirmPassword']) {
+            return 'Password and Confirm Password fields are not same.';
+        }
+
+        if (strlen($params['password']) < self::MIN_PASSWORD_LENGTH) {
+            return 'Password is too short.';
+        }
+
+        if (strlen($params['password']) > self::MAX_PASSWORD_LENGTH) {
+            return 'Password is too long.';
+        }
+        if (!is_int($params['role'])) {
+            return 'Invalid user role.';
+        }
+
+        if (!isset($params['email'])) {
+            $params['email'] = null;
+        }
+
+        unset($params['password']);
+
+        $userId = $params['id'];
+        if ($params['role'] === User::ROLE_SUPER_ADMINISTRATOR) {
+            $params['role'] = User::ROLE_ADMINISTRATOR;
+        }
+        unset($params['id']);
+
+        // Filter user passed variables against actual database available columns.
+        foreach ($params as $key => $value) {
+            if (!in_array($key, self::TABLE_COLUMNS)) {
+                unset($params[$key]);
+            }
+        }
+        if (self::updateTableData(self::TABLE_NAME, $params, 'id=:id', [':id' => $userId])) {
+            return 'user updated.';
+        }
+        return 'Unknown error occurred.';
+    }
+
+    public function updateUserPassword(int $userId, string $password): bool
+    {
+        $passwordHash = self::generatePasswordHash($password);
+        return self::updateTableData(self::TABLE_NAME, ['password' => $passwordHash], "id=$userId");
+    }
+
+    public static function getAllUsers(): array
+    {
+        $statement = DbModel::getDataFromTable(['id', 'username', 'email','firstname','lastname', 'role'],
+            self::TABLE_NAME,'role!='.User::ROLE_SUPER_ADMINISTRATOR);
+        return $statement->fetchAll(PDO::FETCH_ASSOC);
     }
 
     /**
@@ -163,5 +227,10 @@ class User extends DbModel
             return false;
         }
         return true;
+    }
+
+    public static function removeUser(int $userId):bool{
+        $sql = "DELETE FROM ". self::TABLE_NAME." WHERE id=$userId";
+        return self::exec($sql);
     }
 }

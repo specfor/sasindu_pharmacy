@@ -17,9 +17,10 @@
     }
 </style>
 <header>
-    <nav class="navbar navbar-expand-sm sticky-top" style="background-color: #001a4d;">
-        <a class="navbar-brand text-white pb-0 ps-3" href=""><img src="images/logo.png" alt="Logo" height="50px"
-                                                                  width="50px"></a>
+    <nav class="navbar navbar-expand-sm sticky-top " style="background-color: midnightblue">
+        <a class="navbar-brand text-white pb-0 ps-3" href="#">
+            <h4>Stock Management System</h4>
+        </a>
         <div class="container-fluid justify-content-end">
             <div class="content-fluid">
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
@@ -28,17 +29,23 @@
                 </button>
                 <div class="collapse navbar-collapse" id="collapsibleNavbar">
                     <ul class="navbar-nav ">
-                        <li class="nav-item px-3 ">
-                            <a class="nav-link active text-white px-3 py-3 " href="#">Home</a>
+                        <li class="nav-item px-1 ">
+                            <a class="nav-link rounded-pill text-white px-3 py-2 " href="/dashboard">Dashboard</a>
                         </li>
-                        <li class="nav-item px-3 ">
-                            <a class="nav-link active text-white px-3 py-3 " href="#">Dashboard</a>
+                        <li class="nav-item px-1 ">
+                            <a class="nav-link rounded-pill text-white px-3 py-2" href="/dashboard/stocks">Stock</a>
                         </li>
-                        <li class="nav-item px-3 ">
-                            <a class="nav-link active text-white px-3 py-3" href="#">My Account</a>
+                        <li class="nav-item px-1 ">
+                            <a class="nav-link rounded-pill text-white px-3 py-2 " href="/dashboard/suppliers">Suppliers</a>
                         </li>
-                        <li class="nav-item px-3 ">
-                            <a class="nav-link active text-white px-3 py-3 " href="#">About</a>
+                        <li class="nav-item px-1 ">
+                            <a class="nav-link rounded-pill text-white px-3 py-2 " href="/dashboard/reports">Reports</a>
+                        </li>
+                        <li class="nav-item px-1 ">
+                            <a class="nav-link rounded-pill text-white px-3 py-2 " href="/dashboard/users">Users</a>
+                        </li>
+                        <li class="nav-item px-1 ">
+                            <a class="nav-link rounded-pill text-white px-3 py-2 " href="/dashboard/logout">Log Out</a>
                         </li>
                     </ul>
                 </div>

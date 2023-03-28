@@ -92,23 +92,20 @@ abstract class DbModel
     /**
      * Updates data in a table.
      * @param string $tableName Name of the table.
-     * @param array $data Associative array of [column-name => value]. Values ara passed through prepared statements
+     * @param array $data Associative array of [column-name => value]. Values are passed through prepared statements
      * @param string $condition If needed, a condition can be passed. Can parse condition with placeholders
      * @param array $placeholderValues An Associative array of [placeholder => value] for the condition if condition is
      *      passed with placeholders.
      * @return bool True if success, false if failed.
      */
     protected static function updateTableData(string $tableName, array $data,
-                                              string $condition = '', array $placeholderValues = []): bool
+                                              string $condition, array $placeholderValues = []): bool
     {
         $columnsWithPlaceholders = [];
         foreach ($data as $key => $value){
             $columnsWithPlaceholders[] = "$key=:$key";
         }
-        $sql = "UPDATE $tableName SET ". implode(', ', $columnsWithPlaceholders);
-        if ($condition){
-            $sql .= " WHERE $condition";
-        }
+        $sql = "UPDATE $tableName SET ". implode(', ', $columnsWithPlaceholders). " WHERE $condition";
 
         $statement = self::prepare($sql);
         foreach ($data as $key => $value){
