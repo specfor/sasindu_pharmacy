@@ -69,12 +69,15 @@ window.addEventListener("load",function(){
           let price  = document.getElementById("price").value
 
           let newItem = {
+           acion:'add-item',
+           payload:{
             itemName,
             quantity,
             buyingDate,
             expDate,
             companyName,
             price
+           }
           }
           
           const options = {
@@ -85,7 +88,7 @@ window.addEventListener("load",function(){
             body: JSON.stringify(newItem),
             };
             
-            fetch('/dashboard/stocks', options)
+            fetch('/dashboard/stocks', newItem)
   .then(data => {
       if (!data.ok) {
         throw Error(data.status);
