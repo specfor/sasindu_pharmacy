@@ -143,22 +143,8 @@
                     <th>Actions</th>
                 </tr>
                 </thead>
-                <tbody>
-                <tr>
-                    <td>1</td>
-                    <td>Injection 1</td>
-                    <td>5</td>
-                    <td>2023-03-20</td>
-                    <td>2023-06-20</td>
-                    <td>Bla Enterprise</td>
-                    <td>500</td>
-                    <td>
-                        <div class="input-group mb-3">
-                            <button class="btn btn-primary fw-bold" type="button" data-bs-toggle="modal" data-bs-target="#changeProductDetails">Edit Details</button>
-                            <button class="btn btn-danger fw-bold" type="button">Delete</button>
-                        </div>
-                    </td>
-                </tr>
+                <tbody id="itemTable">
+  
                 </tbody>
             </table>
             <nav aria-label="Page navigation">
@@ -171,4 +157,4 @@
         </div>
     </div>
 </div>
-
+<script src="/assets/js/stocksScript.js"></script>

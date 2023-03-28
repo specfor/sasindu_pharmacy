@@ -1,42 +1,58 @@
-//This eventlisner operates when the dom is loaded and company name filter is clicked
-window.addEventListener('load', () => {
-  let companyName = document.getElementById('companyName')
-  companyName.addEventListener('click', (event) => {
-    event.preventDefault()
-    let companyFilterOption = document.getElementById('companyFilter')
-    companyFilterOption.style.display = "inline"
-  })
+let itemInfo = [{
+  id:132,
+  productName:"injection",
+  quantity:6,
+  buyingDate:"2020/2/23",
+  expiryDate:"2021/3/23",
+  companyName:"zzzaffsdfs",
+  price:500,
+},
+{
+  id:132324,
+  productName:"injectionOtwe",
+  quantity:64,
+  buyingDate:"2020/2/23",
+  expiryDate:"2021/3/23",
+  companyName:"qaaaqqqaffsdfs",
+  price:500,
+},
+{
+  id:132,
+  productName:"injectiontTwer",
+  quantity:346,
+  buyingDate:"2020/2/23",
+  expiryDate:"2021/3/23",
+  companyName:"affssdfadfdadfs",
+  price:500,
+}
+]
+
+window.addEventListener("load",function(){
+  for(i of itemInfo){
+      let itemTable = document.getElementById("itemTable")
+
+      let newRow = itemTable.insertRow(-1)
+
+      let cell1 = newRow.insertCell(0)
+      let cell2 = newRow.insertCell(1)
+      let cell3 = newRow.insertCell(2)
+      let cell4 = newRow.insertCell(3)
+      let cell5 = newRow.insertCell(4)
+      let cell6 = newRow.insertCell(5)
+      let cell7 = newRow.insertCell(6)
+      let cell8 = newRow.insertCell(7)
+
+      cell1.innerText = `${i.id}`
+      cell2.innerText = `${i.productName}`
+      cell3.innerText = `${i.quantity}`
+      cell4.innerText = `${i.buyingDate}`
+      cell5.innerText = `${i.expiryDate}`
+      cell6.innerText = `${i.companyName}`
+      cell7.innerText = `${i.price}`
+      cell8.innerHTML = `<div class="input-group mb-3">
+      <button class="btn btn-primary fw-bold" type="button" data-bs-toggle="modal" data-bs-target="#changeProductDetails">Edit Details</button>
+      <button class="btn btn-danger fw-bold" type="button">Delete</button>
+  </div>`
+
+  }
 })
-
-//Removes the company name filter
-window.addEventListener('load', () => {
-  let removeFilter = document.getElementById("removeFilter")
-  removeFilter.addEventListener("click", function(event) {
-    let companyFilterOption = document.getElementById('companyFilter')
-    companyFilterOption.style.display = "none"
-  })
-})
-
-//This eventlisner operates when the dom is loaded and retail price filter is clicked
-window.addEventListener('load', () => {
-  let retailPrice = document.getElementById("retailPrice")
-  retailPrice.addEventListener("click", function(event) {
-    let priceInput = document.getElementById("priceInput")
-    let priceRemove = document.getElementById("removeRetailPrice")
-    priceInput.style.display = "inline"
-    priceRemove.style.display = "inline"
-  })
-})
-
-//removes the retail price input
-window.addEventListener('load', () => {
-  let removeRetailPrice = document.getElementById("removeRetailPrice")
-  removeRetailPrice.addEventListener("click", function(event) {
-    let priceInput = document.getElementById("priceInput")
-    priceInput.style.display = "none"
-    removeRetailPrice.style.display = "none"
-  })
-})
-
-
-

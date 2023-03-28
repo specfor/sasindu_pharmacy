@@ -89,21 +89,7 @@
                         <th scope="col">Actions</th>
                     </tr>
                     </thead>
-                    <tbody>
-                    <tr>
-                        <td>2</td>
-                        <td>asdf</td>
-                        <td>Thornton@gmail.com</td>
-                        <td>fat</td>
-                        <td>man</td>
-                        <td>Administrator</td>
-                        <td>
-                            <div class="input-group mb-3">
-                                <button class="btn btn-primary fw-bold" type="button" id="editDetails" data-bs-toggle="modal" data-bs-target="#exampleModal">Edit Details</button>
-                                <button class="btn btn-primary fw-bold" type="button" id="changePass" data-bs-toggle="modal" data-bs-target="#changePassword">Change Password</button>
-                            </div>
-                        </td>
-                    </tr>
+                    <tbody id="userTable">
                     </tbody>
                 </table>
                 <nav aria-label="Page navigation">
@@ -118,4 +104,4 @@
     </div>
 </div>
 
-<script src="assets/js/userPage.js"></script>
+<script src="/assets/js/usersPage.js"></script>

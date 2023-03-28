@@ -99,20 +99,7 @@
               <th>Actions</th>
             </tr>
           </thead>
-          <tbody>
-            <tr>
-              <td>1</td>
-              <td>asdf</td>
-              <td>a234324sdf</td>
-              <td>0112323423</td>
-              <td>
-                <div class="input-group mb-3">
-                  <button class="btn btn-primary fw-bold" type="button" data-bs-toggle="modal"
-                    data-bs-target="#editCompanyDetails">Edit Details</button>
-                  <button class="btn btn-danger fw-bold" type="button">Delete</button>
-                </div>
-              </td>
-            </tr>
+          <tbody id="companyTable">
           </tbody>
         </table>
         <nav aria-label="Page navigation">
@@ -125,3 +112,4 @@
       </div>
     </div>
   </div>
+<script src="/assets/js/companyPage.js"></script>
