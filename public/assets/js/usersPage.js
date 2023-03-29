@@ -50,10 +50,17 @@ let userArray = [
 ]
 
 window.addEventListener("load",function(){
-    for(i of userArray){
+    updatingTheUserTable(userArray)
+})
+
+let rowCount = 0
+//This function updates the users table from the data by the server
+function updatingTheUserTable(newUserData){
+    for(i of newUserData){
         let userTable = document.getElementById("userTable")
 
         let newRow = userTable.insertRow(-1)
+        newRow.id =  `rowCountUsers${rowCount}`
 
         let cell1 = newRow.insertCell(0)
         let cell2 = newRow.insertCell(1)
@@ -71,9 +78,9 @@ window.addEventListener("load",function(){
         cell6.innerText = `${i.userRole}`
         cell7.innerHTML = `<div class="input-group mb-3">
         <button class="btn btn-primary fw-bold" type="button" id="editDetails" data-bs-toggle="modal" data-bs-target="#exampleModal">Edit Details</button>
-        <button class="btn btn-primary fw-bold" type="button" id="changePass" data-bs-toggle="modal" data-bs-target="#changePassword">Change Password</button>
+        <button class=" btn btn-primary fw-bold" type="button" id="changePass" data-bs-toggle="modal" data-bs-target="#changePassword">Change Password</button>
     </div>`
 
 
     }
-})
+}

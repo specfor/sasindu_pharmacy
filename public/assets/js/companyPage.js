@@ -2,7 +2,7 @@
 
 window.addEventListener("load",function(){
     let addCompanyButton = document.getElementById("addCompany")
-    addCompanyButton.addEventListener('click',function(){
+    addCompanyButton.addEventListener('click',async function(){
         let companyName = document.getElementById("companyName")
         let medRef = document.getElementById("medRef")
         let contactNum = document.getElementById("contactNumber")
@@ -20,18 +20,18 @@ window.addEventListener("load",function(){
             },
             body: JSON.stringify(newCompanyObject),
             };
+        
+            
+        let response = await fetch('/dashboard/suppliers', options);
+        let data = await response.json();
+        console.log(data.statusMessage)
+        if(data.statusMessage =="success"){
+          //updating the table code goes here
+        }else{
+            alert("Adding new item failed!")
+        }
 
-            fetch('', options)
-  .then(data => {
-      if (!data.ok) {
-        throw Error(data.status);
-       }
-       return data.json();
-      }).then(update => {
-      console.log(update);
-      }).catch(e => {
-      console.log(e);
-      });
+            
     })
 
 })
@@ -58,10 +58,18 @@ let sampleArray = [
 ]
 
 window.addEventListener("load",function(){
-    for(i of sampleArray){
+    updatingTheCompanyTable(sampleArray)
+})
+
+
+let rowCount = 0
+//This function updates the company table with data from the server
+function updatingTheCompanyTable(newData){
+    for(i of newData){
         let companyTable = document.getElementById("companyTable")
 
         let newRow = companyTable.insertRow(-1)
+        newRow.id = `rowCountSuppliers${rowCount}`
 
         let cell1 = newRow.insertCell(0)
         let cell2 = newRow.insertCell(1)
@@ -76,8 +84,17 @@ window.addEventListener("load",function(){
         cell5.innerHTML = `<div class="input-group mb-3">
         <button class="btn btn-primary fw-bold" type="button" data-bs-toggle="modal"
           data-bs-target="#editCompanyDetails">Edit Details</button>
-        <button class="btn btn-danger fw-bold" type="button">Delete</button>
+        <button class="delete btn btn-danger fw-bold" type="button" id="${rowCount}">Delete</button>
       </div>`
 
+      rowCount++
     }
-})
+}
+
+//Deleting company details rows
+window.addEventListener("load",function(){
+    document.querySelectorAll('.delete').forEach((e) => {
+      e.onclick = (e) => 
+      document.getElementById("companyTable").deleteRow(e.currentTarget.id);
+    });
+  })
