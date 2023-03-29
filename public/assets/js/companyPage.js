@@ -98,3 +98,9 @@ window.addEventListener("load",function(){
       document.getElementById("companyTable").deleteRow(e.currentTarget.id);
     });
   })
+
+
+//searching the table goes here
+window.addEventListener("load",function(){
+    
+})

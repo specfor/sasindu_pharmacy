@@ -103,7 +103,7 @@ function updatingTheItemTable(newData){
     cell6.innerText = `${i.companyName}`
     cell7.innerText = `${i.price}`
     cell8.innerHTML = `<div class="input-group mb-3">
-  <button class="btn btn-primary fw-bold" type="button" data-bs-toggle="modal" data-bs-target="#changeProductDetails" >Edit Details</button>
+  <button class="edit btn btn-primary fw-bold" type="button" data-bs-toggle="modal" data-bs-target="#changeProductDetails" id="changeDetailsRow${rowCount}" >Edit Details</button>
   <button class="delete btn btn-danger fw-bold" type="button" id="${rowCount}">Delete</button>
 </div>`
 
@@ -114,6 +114,21 @@ function updatingTheItemTable(newData){
 
 }
 
+//Editing stocks
+window.addEventListener("load",function(){
+  document.querySelectorAll('.edit').forEach((e) => {
+    e.onclick = (e) => 
+    console.log(e.currentTarget.id)
+    let saveChanges = document.getElementById("saveChanges")
+    saveChanges.addEventListener("click",function(){
+      console.log("item")
+
+      //sendNewDataToTheServer(e.currentTarget.id)
+
+    });
+  });
+})
+
 
 //Deleting table rows
 window.addEventListener("load",function(){
@@ -123,3 +138,44 @@ window.addEventListener("load",function(){
 })
 
 
+//This funtion sends new data to the server
+async function sendNewDataToTheServer(id){
+  let newItemName = document.getElementById("newproductName").value
+  let newQuantity = document.getElementById("newquantity").value
+  let newBuyingDate = document.getElementById("newbuyingDate").value
+  let newExpDate = document.getElementById("newexpDate").value
+  let newCompanyName = document.getElementById("newcmpnyName").value
+  let newPrice = document.getElementById("newprice").value
+
+  let newItemData = {
+    itemID:id,
+    newItemName,
+    newQuantity,
+    newBuyingDate,
+    newExpDate,
+    newCompanyName,
+    newPrice
+  }
+
+  console.log(newItemData)
+
+  let options = {
+    method: 'POST',
+    headers: {
+        'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(newItemData),
+    credentials: "same-origin"
+};
+
+  
+  let response = await fetch('/dashboard/stocks', options);
+  let data = await response.json();
+  console.log(data.statusMessage)
+  if(data.statusMessage =="success"){
+    //updating the table code goes here
+    console.log(newItemData)
+  }else{
+      alert("Changing item details failed")
+  }
+}
