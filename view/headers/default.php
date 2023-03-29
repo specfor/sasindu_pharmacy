@@ -45,7 +45,7 @@
                             <a class="nav-link rounded-pill text-white px-3 py-2 " href="/dashboard/users">Users</a>
                         </li>
                         <li class="nav-item px-1 ">
-                            <a class="nav-link rounded-pill text-white px-3 py-2 " href="/dashboard/logout">Log Out</a>
+                            <a onclick="logOut()" class="nav-link rounded-pill text-white px-3 py-2 " href="#">Log Out</a>
                         </li>
                     </ul>
                 </div>
@@ -53,3 +53,15 @@
         </div>
     </nav>
 </header>
+<script>
+    async function logOut(){
+        let response = fetch('/dashboard/logout',
+            {
+                method: 'POST',
+                credentials: 'same-origin'
+            })
+        if((await response).status === 200){
+            window.location.href = "/"
+        }
+    }
+</script>
