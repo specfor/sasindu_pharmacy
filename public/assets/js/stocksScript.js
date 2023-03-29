@@ -28,33 +28,7 @@ let itemInfo = [{
 ]
 
 window.addEventListener("load", function () {
-    for (i of itemInfo) {
-        let itemTable = document.getElementById("itemTable")
-
-        let newRow = itemTable.insertRow(-1)
-
-        let cell1 = newRow.insertCell(0)
-        let cell2 = newRow.insertCell(1)
-        let cell3 = newRow.insertCell(2)
-        let cell4 = newRow.insertCell(3)
-        let cell5 = newRow.insertCell(4)
-        let cell6 = newRow.insertCell(5)
-        let cell7 = newRow.insertCell(6)
-        let cell8 = newRow.insertCell(7)
-
-        cell1.innerText = `${i.id}`
-        cell2.innerText = `${i.productName}`
-        cell3.innerText = `${i.quantity}`
-        cell4.innerText = `${i.buyingDate}`
-        cell5.innerText = `${i.expiryDate}`
-        cell6.innerText = `${i.companyName}`
-        cell7.innerText = `${i.price}`
-        cell8.innerHTML = `<div class="input-group mb-3">
-      <button class="btn btn-primary fw-bold" type="button" data-bs-toggle="modal" data-bs-target="#changeProductDetails">Edit Details</button>
-      <button class="btn btn-danger fw-bold" type="button">Delete</button>
-  </div>`
-
-    }
+    updatingTheItemTable(itemInfo)
 })
 
 
@@ -71,12 +45,12 @@ window.addEventListener("load", function () {
         let newItem = {
             action: 'add-item',
             payload: {
-                'product-name': 'value',
-                'product-amount': 44,
-                'buying-date': '2023-02-12',
-                'expire-date': '2023-05-25',
-                'supplier-id': 1,
-                'product-price': 250
+                'product-name': itemName,
+                'product-amount': quantity,
+                'buying-date': buyingDate,
+                'expire-date': expDate,
+                'supplier-id': companyName,
+                'product-price': price
             }
         }
 
@@ -91,7 +65,61 @@ window.addEventListener("load", function () {
 
         let response = await fetch('/dashboard/stocks', options);
         let data = await response.json();
-        console.log(data)
+        console.log(data.statusMessage)
+        if(data.statusMessage =="success"){
+          //updating the table code goes here
+        }else{
+            alert("Adding new item failed!")
+        }
 
     })
 })
+
+
+let rowCount = 0 
+
+//This function updates the item table
+function updatingTheItemTable(newData){
+  for(i of newData){
+    let itemTable = document.getElementById("itemTable")
+
+    let newRow = itemTable.insertRow(-1)
+    newRow.id = `rowCountStocks${rowCount}`
+
+    let cell1 = newRow.insertCell(0)
+    let cell2 = newRow.insertCell(1)
+    let cell3 = newRow.insertCell(2)
+    let cell4 = newRow.insertCell(3)
+    let cell5 = newRow.insertCell(4)
+    let cell6 = newRow.insertCell(5)
+    let cell7 = newRow.insertCell(6)
+    let cell8 = newRow.insertCell(7)
+
+    cell1.innerText = `${i.id}`
+    cell2.innerText = `${i.productName}`
+    cell3.innerText = `${i.quantity}`
+    cell4.innerText = `${i.buyingDate}`
+    cell5.innerText = `${i.expiryDate}`
+    cell6.innerText = `${i.companyName}`
+    cell7.innerText = `${i.price}`
+    cell8.innerHTML = `<div class="input-group mb-3">
+  <button class="btn btn-primary fw-bold" type="button" data-bs-toggle="modal" data-bs-target="#changeProductDetails" >Edit Details</button>
+  <button class="delete btn btn-danger fw-bold" type="button" id="${rowCount}">Delete</button>
+</div>`
+
+    rowCount++
+
+    
+  }
+
+}
+
+
+//Deleting table rows
+window.addEventListener("load",function(){
+  document.querySelectorAll('.delete').forEach((e) => {
+    e.onclick = (e) => document.getElementById("itemTable").deleteRow(e.currentTarget.id);
+  });
+})
+
+
