@@ -375,4 +375,9 @@ class SiteController
             Application::$app->renderer->renderPage($page);
         }
     }
+
+    public function logout(): void
+    {
+        session_destroy();
+    }
 }
