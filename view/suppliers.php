@@ -1,3 +1,21 @@
+<div class="modal" tabindex="-1" id="confirmDelete" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">Confirm Deletion</h3>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <h5>This action is irreversible. Are you sure you want to delete this data?</h5>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button id="btnConfirmDeletion" type="button" data-bs-dismiss="modal" class="btn btn-primary save">Yes</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 <div class="modal fade" id="editCompanyDetails" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
       <div class="modal-content">
@@ -10,20 +28,20 @@
         <div class="row text-center  ps-4 pe-4">
           <div class="input-group mb-3">
             <span class="input-group-text" id="basic-addon1">Company Name</span>
-            <input type="text" class="form-control" aria-describedby="basic-addon1">
+            <input type="text" class="form-control" aria-describedby="basic-addon1" id="newCompanyName">
           </div>
           <div class="input-group mb-3">
             <span class="input-group-text" id="basic-addon2">Medical Referance</span>
-            <input type="text" class="form-control " aria-describedby="basic-addon2">
+            <input type="text" class="form-control " aria-describedby="basic-addon2" id="newMedRef">
           </div>
           <div class="input-group mb-3">
             <span class="input-group-text" id="basic-addon3">Contact Number</span>
-            <input type="number" class="form-control" aria-describedby="basic-addon3">
+            <input type="number" class="form-control" aria-describedby="basic-addon3" id="newContactNum">
           </div>
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-          <button type="button" class="btn btn-primary">Update</button>
+          <button type="button" class="btn btn-primary" id="update">Update</button>
         </div>
       </div>
     </div>
@@ -65,7 +83,7 @@
 
   <div class="container-fluid mt-5">
     <h2 class="">All Companies</h2>
-    <label type="button" class="btn btn-primary mb-4 mt-3" data-bs-toggle="modal" data-bs-target="#addNewCompany">Add
+    <label type="button" class="btn btn-primary mb-4 mt-3" data-bs-toggle="modal" data-bs-target="#addNewCompany" id="btn-add-new">Add
       New
       Company</label>
     <div class="row">
