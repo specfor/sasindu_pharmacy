@@ -1,9 +1,10 @@
-let clickedBtnId
+let productId
 
 window.addEventListener('load', () => {
     document.getElementById('btn-add-new-item').addEventListener('click', clearAddNewItemInputs)
     document.getElementById('btnAddItem').addEventListener('click', addItemToDatabase)
     document.getElementById('btnSaveChanges').addEventListener('click', updateItemToDatabase)
+    document.getElementById('btnConfirmDeletion').addEventListener('click',deleteItem )
 
     getSuppliers();
     getItems();
@@ -37,16 +38,16 @@ async function addItemToTable(productId, productName, quantity, buyDate, expDate
     newRow.insertCell(6).innerText = price
     newRow.insertCell(7).innerHTML = `<div class="input-group mb-3">
   <button onclick="editItem()" class="edit btn btn-primary fw-bold" type="button" id="btn-edit-${productId}" data-bs-toggle="modal" data-bs-target="#changeProductDetails">Edit Details</button>
-  <button onclick="deleteItem()" class="delete btn btn-danger fw-bold" type="button" id="btn-delete-${productId}">Delete</button>
+  <button onclick="showDeleteConfirmation()" class="delete btn btn-danger fw-bold" type="button" id="btn-delete-${productId}">Delete</button>
 </div>`
 }
 
 async function editItem() {
-    clickedBtnId = event.target.id.split('-')[2]
+    productId = event.target.id.split('-')[2]
     let itemTable = document.getElementById("itemTable")
 
     for (let i = 0, row; row = itemTable.rows[i]; i++) {
-        if (row.cells[0].innerText == clickedBtnId) {
+        if (row.cells[0].innerText == productId) {
 
             document.getElementById('newProductName').value = row.cells[1].innerText
             document.getElementById('newQuantity').value = row.cells[2].innerText
@@ -58,9 +59,36 @@ async function editItem() {
     }
 }
 
-function deleteItem() {
-    clickedBtnId = event.target.id.split('-')[2]
+function showDeleteConfirmation(){
+    productId = event.target.id.split('-')[2]
 
+    let modalElement = document.getElementById('confirmDelete')
+    let modal = new bootstrap.Modal(modalElement)
+    modal.show()
+}
+
+async function deleteItem() {
+    let response = await sendJsonRequest('/dashboard/stocks', {
+        'action': 'delete-item',
+        'payload': {
+            'product-id': productId
+        }
+    })
+    if (response.status === 200) {
+        let data = await response.json()
+        if (data.statusMessage === 'success') {
+            let itemTable = document.getElementById("itemTable")
+
+            for (let i = 0, row; row = itemTable.rows[i]; i++) {
+                if (row.cells[0].innerText == productId) {
+                    itemTable.deleteRow(i)
+                }
+            }
+            alert(data.body.message)
+        } else {
+            alert(data.body.message)
+        }
+    }
 }
 
 async function addItemToDatabase() {
@@ -107,7 +135,7 @@ async function updateItemToDatabase() {
     let response = await sendJsonRequest('/dashboard/stocks', {
         action: 'update-item',
         payload: {
-            'product-id': clickedBtnId,
+            'product-id': productId,
             'product-name': productName,
             'product-amount': quantity,
             'buying-date': buyDate,
@@ -121,7 +149,7 @@ async function updateItemToDatabase() {
         if (data.statusMessage === 'success') {
             let itemTable = document.getElementById("itemTable")
             for (let i = 0, row; row = itemTable.rows[i]; i++) {
-                if (row.cells[0].innerText == clickedBtnId) {
+                if (row.cells[0].innerText == productId) {
                     row.cells[1].innerText = productName
                     row.cells[2].innerText = quantity
                     row.cells[3].innerText = buyDate
@@ -130,7 +158,11 @@ async function updateItemToDatabase() {
                     row.cells[6].innerText = price
                 }
             }
+            let modalElement = document.getElementById('changeProductDetails')
+            let modal = new bootstrap.Modal(modalElement)
+            modal.hide()
             alert(data.body.message)
+
         } else {
             alert(data.body.message)
             console.log(data.body.message)

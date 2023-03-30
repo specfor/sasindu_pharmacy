@@ -87,6 +87,24 @@
     </div>
 </div>
 
+<div class="modal" tabindex="-1" id="confirmDelete" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">Confirm Deletion</h3>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <h5>This action is irreversible. Are you sure you want to delete this data?</h5>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button id="btnConfirmDeletion" type="button" data-bs-dismiss="modal" class="btn btn-primary save">Yes</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 <div class="container-fluid mt-5">
     <h2 class="">All Medical Items</h2>
     <label id="btn-add-new-item" type="button" class="btn btn-primary mb-4 mt-3" data-bs-toggle="modal"
