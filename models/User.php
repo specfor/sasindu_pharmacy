@@ -47,8 +47,8 @@ class User extends DbModel
      */
     public function createNewUser(array $params): string
     {
-        if (!isset($params['username']) || !isset($params['password']) ||
-            !isset($params['confirmPassword']) || !isset($params['role']) || !isset($params['firstname']) ||
+        if (!isset($params['username']) || !isset($params['password'])
+            || !isset($params['role']) || !isset($params['firstname']) ||
             !isset($params['lastname'])) {
             return 'All required fields were not filled.';
         }
@@ -59,10 +59,6 @@ class User extends DbModel
             [':username' => $params['username']]);
         if ($statement->fetch(PDO::FETCH_ASSOC)) {
             return 'Username already exists.';
-        }
-
-        if ($params['password'] !== $params['confirmPassword']) {
-            return 'Password and Confirm Password fields are not same.';
         }
 
         if (strlen($params['password']) < self::MIN_PASSWORD_LENGTH) {
