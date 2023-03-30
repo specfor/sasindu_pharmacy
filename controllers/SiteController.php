@@ -8,6 +8,7 @@ use LogicLeap\SasinduPharmacy\core\Response;
 use LogicLeap\SasinduPharmacy\core\Session;
 use LogicLeap\SasinduPharmacy\models\Page;
 use LogicLeap\SasinduPharmacy\models\Stocks;
+use LogicLeap\SasinduPharmacy\models\Suppliers;
 use LogicLeap\SasinduPharmacy\models\User;
 
 class SiteController
@@ -363,6 +364,27 @@ class SiteController
         if (Application::$app->request->isGet()) {
             $page = new Page(Page::HEADER_DEFAULT_WITH_MENU, Page::FOOTER_DEFAULT, 'suppliers', 'Suppliers');
             Application::$app->renderer->renderPage($page);
+        } elseif (Application::$app->request->isPost()) {
+            $req = $this->getPostJsonBody();
+            if (!isset($req['action'])) {
+                $this->sendJsonResponse(Response::STATUS_CODE_SUCCESS, 'error',
+                    ['message' => 'Invalid request']);
+            }
+            if ($req['action'] === 'get-suppliers') {
+                $supplierData = Suppliers::getAllSupplierDetails();
+                $this->sendJsonResponse(Response::STATUS_CODE_SUCCESS, 'success',
+                    ['suppliers' => $supplierData]);
+            }elseif ($req['action'] === 'get-supplier-by-id'){
+                $supplierId = $req['payload']['supplier-id'] ?? -1;
+                $supplierName = Suppliers::getSupplierName($supplierId);
+                $this->sendJsonResponse(Response::STATUS_CODE_SUCCESS, 'success',
+                    ['supplier-name' => $supplierName]);
+            }elseif ($req['action'] === 'get-supplier-by-name'){
+                $supplierName = $req['payload']['supplier-name'] ?? '';
+                $supplierId = Suppliers::getSupplierId($supplierName);
+                $this->sendJsonResponse(Response::STATUS_CODE_SUCCESS, 'success',
+                    ['supplier-id' => $supplierId]);
+            }
         }
     }
 
