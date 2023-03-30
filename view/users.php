@@ -72,8 +72,8 @@
             <input type="text" class="form-control" aria-describedby="basic-addon4" id="newLastName">
         </div>
         <div class="input-group mb-3">
-            <span class="input-group-text" id="inputGroupSelect01">User Role</span>
-            <select class="form-select" id="inputGroupSelect01" id="newUserRole">
+            <span class="input-group-text" >User Role</span>
+            <select class="form-select" id="newInputGroupSelect01" >
                 <option selected value="1">Administrator</option>
                 <option value="2">Data Entry Operator</option>
             </select>
@@ -115,7 +115,6 @@
   </div>
 </div>
 
-5JB1 TRANK SHAF
 
 <div class="container-fluid mb-5">
     <div class="row text-center mt-5">
