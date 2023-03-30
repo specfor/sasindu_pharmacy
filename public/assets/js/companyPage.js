@@ -14,6 +14,7 @@ function clearAllInputFields(){
     document.getElementById("companyName").value = ""
     document.getElementById("medRef").value = "" 
     document.getElementById("contactNumber").value = ""
+    document.getElementById("password").value = ""
 }
 
 

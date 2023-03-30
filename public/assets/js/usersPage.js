@@ -1,86 +1,60 @@
-window.addEventListener('load', () => {
-    let update = document.getElementById('update')
-    update.addEventListener('click', (event) => {
-        event.preventDefault()
-
-        let username = document.getElementById('username').value
-
-        let email = document.getElementById('email').value
-
-        let firstName = document.getElementById('firstName').value
-
-        let lastName = document.getElementById('lastName').value
-
-        console.log(`${username} ${email} ${firstName} ${lastName}`)
-    })
-})
-
-window.addEventListener('load', () => {
-    let changePassButton = document.getElementById('changePass')
-    changePassButton.addEventListener('click', (event) => {
-        event.preventDefault()
-        let newUserPassword = document.getElementById("newUserPassword").value
-        console.log(newUserPassword)
-    })
-})
-
-let userArray = [
-    {
-        id:132,
-        username:"buddy",
-        email:"qweasdfsf@sm.com",
-        firstName:"bruce",
-        lastName:"lee",
-        userRole:"admin",
-      },    {
-        id:2132,
-        username:"asdf",
-        email:"werasdfsf@sm.com",
-        firstName:"bret",
-        lastName:"wef",
-        userRole:"iudsf",
-      }  , {
-        id:3132,
-        username:"gsfda",
-        email:"asdfsf@sm.com",
-        firstName:"zzasf",
-        lastName:"lasfghh",
-        userRole:"admin",
-      }
-]
-
 window.addEventListener("load",function(){
-    updatingTheUserTable(userArray)
+    document.getElementById("addNewUser").addEventListener("click",clearAllInputs)
+    document.getElementById("addUser").addEventListener("click",sendUserData2DB)
+
 })
 
-let rowCount = 0
-//This function updates the users table from the data by the server
-function updatingTheUserTable(newUserData){
-    for(i of newUserData){
-        let userTable = document.getElementById("userTable")
+function clearAllInputs(){
+    document.getElementById("username").value = ''
+    document.getElementById("email").value = ''
+    document.getElementById("firstName").value = ''
+    document.getElementById("password").value = ''
 
-        let newRow = userTable.insertRow(-1)
-        newRow.id =  `rowCountUsers${rowCount}`
+}
 
-        let cell1 = newRow.insertCell(0)
-        let cell2 = newRow.insertCell(1)
-        let cell3 = newRow.insertCell(2)
-        let cell4 = newRow.insertCell(3)
-        let cell5 = newRow.insertCell(4)
-        let cell6 = newRow.insertCell(5)
-        let cell7 = newRow.insertCell(6)
+async function sendUserData2DB(){
+   let username = document.getElementById("username").value 
+   let email =  document.getElementById("email").value 
+   let fName = document.getElementById("firstName").value
+   let lName = document.getElementById("lastName").value
+   let password = document.getElementById("password").value 
+   let userRole = document.getElementById("inputGroupSelect01")
 
-        cell1.innerText = `${i.id}`
-        cell2.innerText = `${i.email}`
-        cell3.innerText = `${i.username}`
-        cell4.innerText = `${i.firstName}`
-        cell5.innerText = `${i.lastName}`
-        cell6.innerText = `${i.userRole}`
-        cell7.innerHTML = `<div class="input-group mb-3">
-        <button class="btn btn-primary fw-bold" type="button" id="editDetails" data-bs-toggle="modal" data-bs-target="#exampleModal">Edit Details</button>
-        <button class=" btn btn-primary fw-bold" type="button" id="changePass" data-bs-toggle="modal" data-bs-target="#changePassword">Change Password</button>
-    </div>`
+    role = userRole.options[userRole.selectedIndex].value
+    console.log(role)
 
-
+   let response = await sendJsonRequest('/dashboard/users', {
+    action: 'add-user',
+    payload: {
+        username:username,
+        password:password,
+        role:Number(role),
+        firstname:fName,
+        lastname:lName,
+        email:email,
     }
+})
+if (response.status === 200) {
+    let data = await response.json()
+    if (data.statusMessage === 'success') {
+        clearAllInputs()
+        alert(data.body.message)
+        console.log(data.body.message)
+    } else {
+        alert(data.body.message)
+        console.log(data.body.message)
+    }
+}
+}
+
+
+async function sendJsonRequest(url, jsonBody) {
+    return await fetch(url, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(jsonBody),
+        credentials: "same-origin"
+    })
 }
