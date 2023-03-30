@@ -132,7 +132,7 @@
                     <th>Quantity</th>
                     <th>Buying Date</th>
                     <th>Expiry Date</th>
-                    <th>Company Name</th>
+                    <th>Supplier Name</th>
                     <th>Price</th>
                     <th>Actions</th>
                 </tr>
