@@ -2,6 +2,7 @@
 
 namespace LogicLeap\SasinduPharmacy\controllers;
 
+use Exception;
 use LogicLeap\SasinduPharmacy\core\Application;
 use LogicLeap\SasinduPharmacy\core\CSRF_Token;
 use LogicLeap\SasinduPharmacy\core\Response;
@@ -51,7 +52,7 @@ class SiteController
      * All the functions in here are used to call render function with their placeholder values.
      */
 
-    public static function httpError(\Exception $exception): void
+    public static function httpError(Exception $exception): void
     {
         Application::$app->response->setStatusCode($exception->getCode());
         $page = new Page(Page::HEADER_DEFAULT_WITH_MENU, Page::FOOTER_DEFAULT,
@@ -266,7 +267,7 @@ class SiteController
                 $productId = $req['payload']['product-id'] ?? null;
                 try {
                     $productId = intval($productId);
-                }catch (\Exception){
+                } catch (Exception) {
                     $this->sendJsonResponse(Response::STATUS_CODE_SUCCESS, 'error',
                         [
                             'message' => 'Failed to delete item.'
@@ -376,21 +377,55 @@ class SiteController
                 $supplierData = Suppliers::getAllSupplierDetails();
                 $this->sendJsonResponse(Response::STATUS_CODE_SUCCESS, 'success',
                     ['suppliers' => $supplierData]);
-            }elseif ($req['action'] === 'get-supplier-by-id'){
+            } elseif ($req['action'] === 'get-supplier-by-id') {
                 $supplierId = $req['payload']['supplier-id'] ?? -1;
                 $supplierName = Suppliers::getSupplierName($supplierId);
                 $this->sendJsonResponse(Response::STATUS_CODE_SUCCESS, 'success',
                     ['supplier-name' => $supplierName]);
-            }elseif ($req['action'] === 'get-supplier-by-name'){
+            } elseif ($req['action'] === 'get-supplier-by-name') {
                 $supplierName = $req['payload']['supplier-name'] ?? '';
                 $supplierId = Suppliers::getSupplierId($supplierName);
                 $this->sendJsonResponse(Response::STATUS_CODE_SUCCESS, 'success',
                     ['supplier-id' => $supplierId]);
-            }elseif($req['action']==='add-supplier'){
-
+            } elseif ($req['action'] === 'add-supplier') {
+                $supplierName = $req['payload']['supplier-name'] ?? '';
+                $medicalRef = $req['payload']['medical-ref'] ?? '';
+                $contactNumber = $req['payload']['contact-number'] ?? -1;
+                if (Suppliers::addSupplier($supplierName, $medicalRef, $contactNumber)) {
+                    $this->sendJsonResponse(Response::STATUS_CODE_SUCCESS, 'success',
+                        ['message' => 'Supplier Added successfully.']);
+                }
+            } elseif ($req['action'] === 'remove-supplier') {
+                $supplierId = $req['payload']['supplier-id'] ?? -1;
+                try {
+                    $supplierId = intval($supplierId);
+                } catch (Exception) {
+                    $this->sendJsonResponse(Response::STATUS_CODE_SUCCESS, 'error',
+                        ['message' => 'Invalid supplier id.']);
+                }
+                if (Suppliers::removeSupplier($supplierId)) {
+                    $this->sendJsonResponse(Response::STATUS_CODE_SUCCESS, 'success',
+                        ['message' => 'Supplier removed successfully.']);
+                } else {
+                    $this->sendJsonResponse(Response::STATUS_CODE_SUCCESS, 'error',
+                        ['message' => 'Failed to remove the supplier.']);
+                }
+            } elseif ($req['action'] === 'update-supplier') {
+                $supplierId = $req['payload']['supplier-id'] ?? -1;
+                $supplierName = $req['payload']['supplier-name'] ?? -1;
+                $medicalRef = $req['payload']['medical-ref'] ?? -1;
+                $contactNumber = $req['payload']['contact-number'] ?? -1;
+                if (Suppliers::updateSupplier($supplierId, $supplierName, $medicalRef, $contactNumber)){
+                    $this->sendJsonResponse(Response::STATUS_CODE_SUCCESS, 'success',
+                        ['message' => 'Supplier details updated successfully.']);
+                }else{
+                    $this->sendJsonResponse(Response::STATUS_CODE_SUCCESS, 'error',
+                        ['message' => 'Failed to update supplier data.']);
+                }
             }
         }
     }
+
 
     public function payments(): void
     {

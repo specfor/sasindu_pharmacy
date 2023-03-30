@@ -70,10 +70,10 @@ abstract class DbModel
      * @param string $conditionWithPlaceholders The condition to get data with placeholders(if needed) to values.
      *      Should be a valid sql condition.
      * @param array $placeholderValues Associative array of placeholder => value.
-     * @return mixed Return PDOStatement|PDOException|bool based on scenario.
+     * @return PDOStatement|PDOException|bool Return PDOStatement|PDOException|bool based on scenario.
      */
     protected static function getDataFromTable(array $rows, string $tableName, string $conditionWithPlaceholders = '',
-                                               array $placeholderValues = [])
+                                               array $placeholderValues = []):PDOStatement|PDOException|bool
     {
         if ($conditionWithPlaceholders)
             $sql = "SELECT " . implode(', ', $rows) . " FROM $tableName WHERE $conditionWithPlaceholders";
