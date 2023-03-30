@@ -167,12 +167,13 @@ class SiteController
      * If user does not have admin privileges, Redirect to login page if request is GET,
      * send FORBIDDEN response if request is POST
      */
-    private function checkAdmin(): void
+    private function checkUserPermission(bool $requireAdmin = false): void
     {
         $success = true;
         if (!isset($_SESSION['role']) || !isset($_SESSION['userId'])) {
             $success = false;
-        } elseif (!User::isAdmin($_SESSION['userId'], $_SESSION['role'])) {
+        }
+        if ($requireAdmin && !User::isAdmin($_SESSION['userId'], $_SESSION['role'])) {
             $success = false;
         }
         if (Application::$app->request->isGet()) {
@@ -182,7 +183,7 @@ class SiteController
         } elseif (Application::$app->request->isPost()) {
             if (!$success) {
                 $this->sendJsonResponse(Response::STATUS_CODE_FORBIDDEN, 'forbidden',
-                    ['message' => 'You need to log in first']);
+                    ['message' => 'You do not have required permissions.']);
             }
         }
     }
@@ -190,7 +191,7 @@ class SiteController
     public function dashboard(): void
     {
         if (Application::$app->request->isGet()) {
-            $this->checkAdmin();
+            $this->checkUserPermission();
 
             $this->addNoCacheHeaders();
             $page = new Page(Page::HEADER_DEFAULT_WITH_MENU, Page::FOOTER_DEFAULT, 'dashboard', 'Dashboard');
@@ -200,7 +201,7 @@ class SiteController
 
     public function stocks(): void
     {
-        $this->checkAdmin();
+        $this->checkUserPermission();
         if (Application::$app->request->isGet()) {
 
             $page = new Page(Page::HEADER_DEFAULT_WITH_MENU, Page::FOOTER_DEFAULT, 'stocks', 'Stock');
@@ -293,7 +294,7 @@ class SiteController
 
     public function users(): void
     {
-        $this->checkAdmin();
+        $this->checkUserPermission(true);
         if (Application::$app->request->isGet()) {
             $page = new Page(Page::HEADER_DEFAULT_WITH_MENU, Page::FOOTER_DEFAULT, 'users', 'Users');
             Application::$app->renderer->renderPage($page);
@@ -363,7 +364,7 @@ class SiteController
 
     public function suppliers(): void
     {
-        $this->checkAdmin();
+        $this->checkUserPermission();
         if (Application::$app->request->isGet()) {
             $page = new Page(Page::HEADER_DEFAULT_WITH_MENU, Page::FOOTER_DEFAULT, 'suppliers', 'Suppliers');
             Application::$app->renderer->renderPage($page);
@@ -415,10 +416,10 @@ class SiteController
                 $supplierName = $req['payload']['supplier-name'] ?? -1;
                 $medicalRef = $req['payload']['medical-ref'] ?? -1;
                 $contactNumber = $req['payload']['contact-number'] ?? -1;
-                if (Suppliers::updateSupplier($supplierId, $supplierName, $medicalRef, $contactNumber)){
+                if (Suppliers::updateSupplier($supplierId, $supplierName, $medicalRef, $contactNumber)) {
                     $this->sendJsonResponse(Response::STATUS_CODE_SUCCESS, 'success',
                         ['message' => 'Supplier details updated successfully.']);
-                }else{
+                } else {
                     $this->sendJsonResponse(Response::STATUS_CODE_SUCCESS, 'error',
                         ['message' => 'Failed to update supplier data.']);
                 }
@@ -429,7 +430,7 @@ class SiteController
 
     public function payments(): void
     {
-        $this->checkAdmin();
+        $this->checkUserPermission();
         if (Application::$app->request->isGet()) {
             $page = new Page(Page::HEADER_DEFAULT_WITH_MENU, Page::FOOTER_DEFAULT, 'payments', 'Payments');
             Application::$app->renderer->renderPage($page);
