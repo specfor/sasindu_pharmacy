@@ -261,3 +261,7 @@ async function sendJsonRequest(url, jsonBody) {
     })
 }
 
+`<div class="input-group mb-3">
+<button class="btn btn-primary fw-bold" type="button" id="editDetails" data-bs-toggle="modal" data-bs-target="#exampleModal">Edit Details</button>
+<button class=" btn btn-primary fw-bold" type="button" id="changePass" data-bs-toggle="modal" data-bs-target="#changePassword">Change Password</button>
+</div>`
