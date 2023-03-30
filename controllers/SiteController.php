@@ -264,7 +264,9 @@ class SiteController
                 }
             } elseif ($req['action'] === 'delete-item') {
                 $productId = $req['payload']['product-id'] ?? null;
-                if (!is_int($productId)) {
+                try {
+                    $productId = intval($productId);
+                }catch (\Exception){
                     $this->sendJsonResponse(Response::STATUS_CODE_SUCCESS, 'error',
                         [
                             'message' => 'Failed to delete item.'
@@ -384,6 +386,8 @@ class SiteController
                 $supplierId = Suppliers::getSupplierId($supplierName);
                 $this->sendJsonResponse(Response::STATUS_CODE_SUCCESS, 'success',
                     ['supplier-id' => $supplierId]);
+            }elseif($req['action']==='add-supplier'){
+
             }
         }
     }
