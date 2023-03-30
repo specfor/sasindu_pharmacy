@@ -101,6 +101,29 @@ async function updateUserToDatabase() {
     }
 }
 
+async function addItemToTable(userId, username, email, firstName, lastName) {
+    let userTable = document.getElementById("userTable")
+
+    let newRow = userTable.insertRow(-1)
+
+    newRow.insertCell(0).innerText = userId
+    newRow.insertCell(1).innerText = username
+    newRow.insertCell(2).innerText = email
+    newRow.insertCell(3).innerText = firstName
+    newRow.insertCell(4).innerText = lastName
+    newRow.insertCell(5).innerText = `<div class="input-group mb-3">
+    <button onclick="editItem()" class="edit btn btn-primary fw-bold" type="button" id="btn-edit-${userId}" data-bs-toggle="modal" data-bs-target="#changeProductDetails">Edit Details</button>
+    <button onclick="showDeleteConfirmation()" class="delete btn btn-danger fw-bold" type="button" id="btn-delete-${userId}">Delete</button>
+  </div>`
+}
+
+
+function clearTable() {
+    let userTable = document.getElementById("userTable")
+    userTable.innerHTML = '';
+}
+
+
 async function sendJsonRequest(url, jsonBody) {
     return await fetch(url, {
         method: 'POST',
