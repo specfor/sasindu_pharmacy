@@ -323,7 +323,7 @@ class SiteController
                         ['message' => $msg]);
                 }
             } elseif ($req['action'] === 'update-user-password') {
-                $userId = $req['id'];
+                $userId = $req['payload']['user-id'];
                 if (!is_int($userId) || !isset($req['password'])) {
                     $this->sendJsonResponse(Response::STATUS_CODE_SUCCESS, 'error',
                         ['message' => 'invalid request.']);
