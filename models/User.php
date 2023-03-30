@@ -103,17 +103,6 @@ class User extends DbModel
 
         // Performing checks on input variables.
 
-        if ($params['password'] !== $params['confirmPassword']) {
-            return 'Password and Confirm Password fields are not same.';
-        }
-
-        if (strlen($params['password']) < self::MIN_PASSWORD_LENGTH) {
-            return 'Password is too short.';
-        }
-
-        if (strlen($params['password']) > self::MAX_PASSWORD_LENGTH) {
-            return 'Password is too long.';
-        }
         if (!is_int($params['role'])) {
             return 'Invalid user role.';
         }
@@ -122,7 +111,8 @@ class User extends DbModel
             $params['email'] = null;
         }
 
-        unset($params['password']);
+        if (isset($params['password']))
+            unset($params['password']);
 
         $userId = $params['id'];
         if ($params['role'] === User::ROLE_SUPER_ADMINISTRATOR) {
@@ -150,8 +140,8 @@ class User extends DbModel
 
     public static function getAllUsers(): array
     {
-        $statement = DbModel::getDataFromTable(['id', 'username', 'email','firstname','lastname', 'role'],
-            self::TABLE_NAME,'role!='.User::ROLE_SUPER_ADMINISTRATOR);
+        $statement = DbModel::getDataFromTable(['id', 'username', 'email', 'firstname', 'lastname', 'role'],
+            self::TABLE_NAME, 'role!=' . User::ROLE_SUPER_ADMINISTRATOR);
         return $statement->fetchAll(PDO::FETCH_ASSOC);
     }
 
@@ -225,8 +215,9 @@ class User extends DbModel
         return true;
     }
 
-    public static function removeUser(int $userId):bool{
-        $sql = "DELETE FROM ". self::TABLE_NAME." WHERE id=$userId";
+    public static function removeUser(int $userId): bool
+    {
+        $sql = "DELETE FROM " . self::TABLE_NAME . " WHERE id=$userId";
         return self::exec($sql);
     }
 }
