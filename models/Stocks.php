@@ -40,13 +40,14 @@ class Stocks extends DbModel
         $sql .= " ORDER BY id DESC";
         $statement = self::prepare($sql);
         if (!empty($productName))
-            $statement->bindVakue(':productName', $productName);
+            $statement->bindValue(':productName', $productName);
         $statement->execute();
-        $rows = $statement->fetchColumn();
-        $data = array_slice($statement->fetch(PDO::FETCH_ASSOC), $startingIndex, $limitItems);
+        $data = $statement->fetchAll(PDO::FETCH_ASSOC);
+        $rows = count($data);
+        $data = array_slice($data, $startingIndex, $limitItems);
         return [
             'data' => $data,
-            'number-of-rows' => count($rows)];
+            'number-of-rows' => $rows];
     }
 
     public static function addItem(string $productName, int $productAmount, string $buyingDate,
@@ -66,7 +67,7 @@ class Stocks extends DbModel
     public static function updateItem(int    $productId, string $productName, int $productAmount, string $buyingDate,
                                       string $expireDate, int $supplierId, float $price): bool
     {
-        if (empty($productId))
+        if ($productId === -1)
             return false;
         $params = [
             'name' => $productName,
@@ -79,7 +80,7 @@ class Stocks extends DbModel
         return self::updateTableData(self::TABLE_NAME, $params, "id=$productId");
     }
 
-    public static function deleteItem(int $productId):bool
+    public static function deleteItem(int $productId): bool
     {
         $sql = "DELETE FROM " . self::TABLE_NAME . " WHERE id=$productId";
         return self::exec($sql);

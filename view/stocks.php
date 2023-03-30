@@ -1,103 +1,97 @@
 <div class="modal fade" id="addNewItem" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Add New Product</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
-</div>
-      <div class="row text-center  ps-4 pe-4">
-        <div class="input-group mb-3">
-            <span class="input-group-text" id="basic-addon1">Product Name</span>
-            <input type="text" class="form-control" aria-describedby="basic-addon1" id="productName">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Add New Product</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+            </div>
+            <div class="row text-center  ps-4 pe-4">
+                <div class="input-group mb-3">
+                    <span class="input-group-text" id="basic-addon1">Product Name</span>
+                    <input type="text" class="form-control" aria-describedby="basic-addon1" id="productName">
+                </div>
+                <div class="input-group mb-3">
+                    <span class="input-group-text" id="basic-addon2">Quantity</span>
+                    <input type="number" class="form-control " aria-describedby="basic-addon2" id="quantity">
+                </div>
+                <div class="input-group mb-3">
+                    <span class="input-group-text" id="basic-addon3">Buying Date</span>
+                    <input type="date" class="form-control" aria-describedby="basic-addon3" id="buyingDate">
+                </div>
+                <div class="input-group mb-3">
+                    <span class="input-group-text" id="basic-addon4">Expiry Date</span>
+                    <input type="date" class="form-control" aria-describedby="basic-addon4" id="expDate">
+                </div>
+                <div class="input-group mb-3">
+                    <span class="input-group-text" id="inputGroupSelect01">Supplier Name</span>
+                    <select class="form-select" aria-label="Select Company" id="supplierId">
+                    </select>
+                </div>
+                <div class="input-group mb-3">
+                    <span class="input-group-text" id="basic-addon4">Price</span>
+                    <input type="number" class="form-control" aria-describedby="basic-addon4" id='price'>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" id="btnAddItem">Add Item</button>
+            </div>
         </div>
-        <div class="input-group mb-3">
-            <span class="input-group-text" id="basic-addon2">Quantity</span>
-            <input type="number" class="form-control " aria-describedby="basic-addon2" id="quantity">
-        </div>
-        <div class="input-group mb-3">
-            <span class="input-group-text" id="basic-addon3">Buying Date</span>
-            <input type="date" class="form-control" aria-describedby="basic-addon3" id="buyingDate">
-        </div>
-        <div class="input-group mb-3">
-            <span class="input-group-text" id="basic-addon4">Expiry Date</span>
-            <input type="date" class="form-control" aria-describedby="basic-addon4" id="expDate">
-        </div>
-        <div class="input-group mb-3">
-            <span class="input-group-text" id="inputGroupSelect01">Company Name</span>
-            <select class="form-select" aria-label="Select Company" id="cmpnyName">
-                    <option selected>Supplier Company</option>
-                    <option value="1">One</option>
-                    <option value="2">Two</option>
-                    <option value="3">Three</option>
-                </select>
-        </div>
-        <div class="input-group mb-3">
-            <span class="input-group-text" id="basic-addon4">Price</span>
-            <input type="number" class="form-control" aria-describedby="basic-addon4" id='price'>
-        </div>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary" id="addItem">Add Item</button>
-      </div>
     </div>
-  </div>
 </div>
 
 <div class="modal fade" id="changeProductDetails" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Edit Product Details</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
-</div>
-      <div class="row text-center  ps-4 pe-4">
-        <div class="input-group mb-3">
-            <span class="input-group-text" id="basic-addon1">Product Name</span>
-            <input type="text" class="form-control" aria-describedby="basic-addon1" id="newproductName">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Edit Product Details</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+            </div>
+            <div class="row text-center  ps-4 pe-4">
+                <div class="input-group mb-3">
+                    <span class="input-group-text" id="basic-addon1">Product Name</span>
+                    <input type="text" class="form-control" aria-describedby="basic-addon1" id="newProductName">
+                </div>
+                <div class="input-group mb-3">
+                    <span class="input-group-text" id="basic-addon2">Quantity</span>
+                    <input type="number" class="form-control " aria-describedby="basic-addon2" id="newQuantity">
+                </div>
+                <div class="input-group mb-3">
+                    <span class="input-group-text" id="basic-addon3">Buying Date</span>
+                    <input type="date" class="form-control" aria-describedby="basic-addon3" id="newBuyingDate">
+                </div>
+                <div class="input-group mb-3">
+                    <span class="input-group-text" id="basic-addon4">Expiry Date</span>
+                    <input type="date" class="form-control" aria-describedby="basic-addon4" id="newExpDate">
+                </div>
+                <div class="input-group mb-3">
+                    <span class="input-group-text" id="inputGroupSelect01">Company Name</span>
+                    <select class="form-select" aria-label="Select Company" id="newSupplierId">
+
+                    </select>
+                </div>
+                <div class="input-group mb-3">
+                    <span class="input-group-text" id="basic-addon4">Price</span>
+                    <input type="number" class="form-control" aria-describedby="basic-addon4" id="newPrice">
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" id="btnSaveChanges">Save changes</button>
+            </div>
         </div>
-        <div class="input-group mb-3">
-            <span class="input-group-text" id="basic-addon2">Quantity</span>
-            <input type="number" class="form-control " aria-describedby="basic-addon2" id="newquantity">
-        </div>
-        <div class="input-group mb-3">
-            <span class="input-group-text" id="basic-addon3">Buying Date</span>
-            <input type="date" class="form-control" aria-describedby="basic-addon3" id="newbuyingDate">
-        </div>
-        <div class="input-group mb-3">
-            <span class="input-group-text" id="basic-addon4">Expiry Date</span>
-            <input type="date" class="form-control" aria-describedby="basic-addon4" id="newexpDate">
-        </div>
-        <div class="input-group mb-3">
-            <span class="input-group-text" id="inputGroupSelect01" >Company Name</span>
-            <select class="form-select" aria-label="Select Company" id="newcmpnyName">
-                    <option selected>Supplier Company</option>
-                    <option value="1">One</option>
-                    <option value="2">Two</option>
-                    <option value="3">Three</option>
-                </select>
-        </div>
-        <div class="input-group mb-3">
-            <span class="input-group-text" id="basic-addon4">Price</span>
-            <input type="number" class="form-control" aria-describedby="basic-addon4" id="newprice">
-        </div>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary" id="saveChanges">Save changes</button>
-      </div>
     </div>
-  </div>
 </div>
 
 <div class="container-fluid mt-5">
     <h2 class="">All Medical Items</h2>
-    <label type="button" class="btn btn-primary mb-4 mt-3" data-bs-toggle="modal" data-bs-target="#addNewItem">Add New
-      Item</label>
+    <label id="btn-add-new-item" type="button" class="btn btn-primary mb-4 mt-3" data-bs-toggle="modal"
+           data-bs-target="#addNewItem">Add New
+        Item</label>
     <div class="row">
         <h4>Filter results</h4>
     </div>
@@ -144,7 +138,7 @@
                 </tr>
                 </thead>
                 <tbody id="itemTable">
-  
+
                 </tbody>
             </table>
             <nav aria-label="Page navigation">

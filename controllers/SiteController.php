@@ -212,20 +212,19 @@ class SiteController
             if ($req['action'] === 'get-items') {
                 $itemLimit = $req['payload']['filters']['limit'] ?? 30;
                 $itemBeginIndex = $req['payload']['filters']['begin'] ?? 0;
-                $itemName = $req['payload']['filters']['product-name'] ?? null;
-                $itemPrice = $req['payload']['filters']['product-price'] ?? null;
-                $itemCompanyId = $req['payload']['filters']['product-company-id'] ?? null;
+                $itemName = $req['payload']['filters']['product-name'] ?? '';
+                $itemPrice = $req['payload']['filters']['price'] ?? -1;
+                $itemCompanyId = $req['payload']['filters']['supplier-id'] ?? -1;
                 $data = Stocks::getItems($itemBeginIndex, $itemLimit, $itemName, $itemPrice, $itemCompanyId);
-                if (!isset($req['action'])) {
-                    $this->sendJsonResponse(Response::STATUS_CODE_SUCCESS, 'success',
-                        [
-                            'number-of-rows' => $data['number-of-rows'],
-                            'items' => $data['data']
-                        ]);
-                }
+                $this->sendJsonResponse(Response::STATUS_CODE_SUCCESS, 'success',
+                    [
+                        'total-number-of-rows' => $data['number-of-rows'],
+                        'items' => $data['data']
+                    ]);
+
             } elseif ($req['action'] === 'add-item') {
                 $productName = $req['payload']['product-name'] ?? 'none';
-                $productAmount = $req['payload']['product-amount'] ?? 0;
+                $productAmount = $req['payload']['amount'] ?? 0;
                 $buyingDate = $req['payload']['buying-date'] ?? '2023-01-01';
                 $expireDate = $req['payload']['expire-date'] ?? '2023-01-01';
                 $supplierId = $req['payload']['supplier-id'] ?? -1;
@@ -243,9 +242,9 @@ class SiteController
                         ]);
                 }
             } elseif ($req['action'] === 'update-item') {
-                $productId = $req['payload']['product-id'] ?? null;
+                $productId = $req['payload']['product-id'] ?? -1;
                 $productName = $req['payload']['product-name'] ?? 'none';
-                $productAmount = $req['payload']['product-amount'] ?? 0;
+                $productAmount = $req['payload']['amount'] ?? 0;
                 $buyingDate = $req['payload']['buying-date'] ?? '2023-01-01';
                 $expireDate = $req['payload']['expire-date'] ?? '2023-01-01';
                 $supplierId = $req['payload']['supplier-id'] ?? -1;

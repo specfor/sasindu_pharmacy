@@ -11,9 +11,9 @@ abstract class DbModel
     /**
      * Prepare sql statement
      * @param string $sql SQL statement to prepare
-     * @return mixed PDOStatement if success, PDOException or false if any error occurred.
+     * @return PDOStatement|PDOException|false PDOStatement if success, PDOException or false if any error occurred.
      */
-    protected static function prepare(string $sql)
+    protected static function prepare(string $sql): PDOStatement|PDOException|false
     {
         return Application::$app->db->pdo->prepare($sql);
     }
@@ -102,16 +102,16 @@ abstract class DbModel
                                               string $condition, array $placeholderValues = []): bool
     {
         $columnsWithPlaceholders = [];
-        foreach ($data as $key => $value){
+        foreach ($data as $key => $value) {
             $columnsWithPlaceholders[] = "$key=:$key";
         }
-        $sql = "UPDATE $tableName SET ". implode(', ', $columnsWithPlaceholders). " WHERE $condition";
+        $sql = "UPDATE $tableName SET " . implode(', ', $columnsWithPlaceholders) . " WHERE $condition";
 
         $statement = self::prepare($sql);
-        foreach ($data as $key => $value){
+        foreach ($data as $key => $value) {
             $statement->bindValue(":$key", $value);
         }
-        if ($placeholderValues){
+        if ($placeholderValues) {
             foreach ($placeholderValues as $placeholder => $value) {
                 $statement->bindValue($placeholder, $value);
             }
