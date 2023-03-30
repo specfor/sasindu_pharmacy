@@ -309,7 +309,8 @@ class SiteController
                 $msg = $user->createNewUser($req['payload']);
                 if ($msg === 'user created.') {
                     unset($req['payload']['password']);
-                    $this->sendJsonResponse(Response::STATUS_CODE_SUCCESS, 'success', $req);
+                    $this->sendJsonResponse(Response::STATUS_CODE_SUCCESS, 'success',
+                        ['message'=>'User account created successfully.']);
                 } else {
                     $this->sendJsonResponse(Response::STATUS_CODE_SUCCESS, 'error',
                         ['message' => $msg]);
@@ -319,7 +320,8 @@ class SiteController
                 $msg = $user->updateUserDetails($req['payload']);
                 if ($msg === 'user updated.') {
                     unset($req['payload']['password']);
-                    $this->sendJsonResponse(Response::STATUS_CODE_SUCCESS, 'success', $req);
+                    $this->sendJsonResponse(Response::STATUS_CODE_SUCCESS, 'success',
+                        ['message'=>'User account updated successfully.']);
                 } else {
                     $this->sendJsonResponse(Response::STATUS_CODE_SUCCESS, 'error',
                         ['message' => $msg]);
@@ -375,7 +377,9 @@ class SiteController
                     ['message' => 'Invalid request']);
             }
             if ($req['action'] === 'get-suppliers') {
-                $supplierData = Suppliers::getAllSupplierDetails();
+                $supplierName = $req['payload']['supplier-name'] ?? '';
+                $contactNumber = $req['payload']['contact-number'] ?? -1;
+                $supplierData = Suppliers::getAllSupplierDetails($supplierName, $contactNumber);
                 $this->sendJsonResponse(Response::STATUS_CODE_SUCCESS, 'success',
                     ['suppliers' => $supplierData]);
             } elseif ($req['action'] === 'get-supplier-by-id') {
@@ -423,10 +427,12 @@ class SiteController
                     $this->sendJsonResponse(Response::STATUS_CODE_SUCCESS, 'error',
                         ['message' => 'Failed to update supplier data.']);
                 }
+            }else{
+                $this->sendJsonResponse(Response::STATUS_CODE_SUCCESS, 'error',
+                    ['message' => 'Incorrect request']);
             }
         }
     }
-
 
     public function payments(): void
     {
