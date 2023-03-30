@@ -308,7 +308,6 @@ class SiteController
                 $user = new User();
                 $msg = $user->createNewUser($req['payload']);
                 if ($msg === 'user created.') {
-                    unset($req['payload']['password']);
                     $this->sendJsonResponse(Response::STATUS_CODE_SUCCESS, 'success',
                         ['message'=>'User account created successfully.']);
                 } else {
@@ -319,7 +318,6 @@ class SiteController
                 $user = new User();
                 $msg = $user->updateUserDetails($req['payload']);
                 if ($msg === 'user updated.') {
-                    unset($req['payload']['password']);
                     $this->sendJsonResponse(Response::STATUS_CODE_SUCCESS, 'success',
                         ['message'=>'User account updated successfully.']);
                 } else {
