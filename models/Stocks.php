@@ -2,6 +2,7 @@
 
 namespace LogicLeap\SasinduPharmacy\models;
 
+use JetBrains\PhpStorm\ArrayShape;
 use PDO;
 
 class Stocks extends DbModel
@@ -17,13 +18,15 @@ class Stocks extends DbModel
      * @param int $productCompanyId Id of the company to filter results.
      * @return array Returns an array of ['data' => data, 'number-of-rows' => no. of rows];
      */
+    #[ArrayShape(['data' => "array", 'number-of-rows' => "int"])]
     public static function getItems(int $startingIndex, int $limitItems, string $productName = '', float $productPrice = -1,
                                     int $productCompanyId = -1): array
     {
         $sql = "SELECT * FROM " . self::TABLE_NAME;
         $filters = [];
         if (!empty($productName)) {
-            $filters[] = " name LIKE '%:productName%'";
+            $productName = "%$productName%";
+            $filters[] = " name LIKE :productName";
         }
         if ($productCompanyId != -1) {
             $filters[] = " supplier_id = $productCompanyId";
