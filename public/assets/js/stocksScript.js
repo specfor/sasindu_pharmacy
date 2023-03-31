@@ -15,6 +15,18 @@ window.addEventListener('load', () => {
     let productNameFilter = document.getElementById('productNameFilter')
     let priceFilter = document.getElementById('priceFilter')
     let supplierFilter = document.getElementById('suppliersFilter')
+    document.getElementById('btnClearFilterProductName').addEventListener('click', () => {
+        productNameFilter.value = ''
+        searchItems()
+    })
+    document.getElementById('btnClearFilterPrice').addEventListener('click', () => {
+        priceFilter.value = ''
+        searchItems()
+    })
+    document.getElementById('btnClearFilterSupplier').addEventListener('click', () => {
+        supplierFilter.value = -1
+        searchItems()
+    })
     productNameFilter.addEventListener('keyup', () => {
         clearTimeout(typingTimer);
         typingTimer = setTimeout(searchItems, doneTypingInterval);
