@@ -59,6 +59,10 @@ function clearAddNewItemInputs() {
     document.getElementById('price').value = ''
 }
 
+
+
+
+
 function clearTable() {
     let itemTable = document.getElementById("itemTable")
     itemTable.innerHTML = '';
@@ -139,27 +143,32 @@ async function addItemToDatabase() {
     let supplierId = document.getElementById('supplierId').value
     let price = document.getElementById('price').value
 
-    let response = await sendJsonRequest('/dashboard/stocks', {
-        action: 'add-item',
-        payload: {
-            'product-name': productName,
-            'product-amount': quantity,
-            'buying-date': buyDate,
-            'expire-date': expDate,
-            'supplier-id': supplierId,
-            'product-price': price
-        }
-    })
-    if (response.status === 200) {
-        let data = await response.json()
-        if (data.statusMessage === 'success') {
-            getItems()
-            clearAddNewItemInputs()
-            alert(data.body.message)
-        } else {
-            alert(data.body.message)
+    if(productName==="" || quantity==="" || buyDate==="" || expDate==="" || supplierId==="" || price===""){
+        alert("Fill all fields.")
+    }else{
+        let response = await sendJsonRequest('/dashboard/stocks', {
+            action: 'add-item',
+            payload: {
+                'product-name': productName,
+                'product-amount': quantity,
+                'buying-date': buyDate,
+                'expire-date': expDate,
+                'supplier-id': supplierId,
+                'product-price': price
+            }
+        })
+        if (response.status === 200) {
+            let data = await response.json()
+            if (data.statusMessage === 'success') {
+                getItems()
+                clearAddNewItemInputs()
+                alert(data.body.message)
+            } else {
+                alert(data.body.message)
+            }
         }
     }
+
 }
 
 async function updateItemToDatabase() {
@@ -170,37 +179,43 @@ async function updateItemToDatabase() {
     let supplierId = document.getElementById('newSupplierId').value
     let price = document.getElementById('newPrice').value
 
-    let response = await sendJsonRequest('/dashboard/stocks', {
-        action: 'update-item',
-        payload: {
-            'product-id': productId,
-            'product-name': productName,
-            'product-amount': quantity,
-            'buying-date': buyDate,
-            'expire-date': expDate,
-            'supplier-id': supplierId,
-            'product-price': price
-        }
-    })
-    if (response.status === 200) {
-        let data = await response.json()
-        if (data.statusMessage === 'success') {
-            let itemTable = document.getElementById("itemTable")
-            for (let i = 0, row; row = itemTable.rows[i]; i++) {
-                if (row.cells[0].innerText == productId) {
-                    row.cells[1].innerText = productName
-                    row.cells[2].innerText = quantity
-                    row.cells[3].innerText = buyDate
-                    row.cells[4].innerText = expDate
-                    row.cells[5].innerText = await getSupplierName(supplierId)
-                    row.cells[6].innerText = price
-                }
+    if(productName==="" || quantity==="" || buyDate==="" || expDate==="" || supplierId==="" || price===""){
+        alert("Fill all fields")
+    }else{
+        let response = await sendJsonRequest('/dashboard/stocks', {
+            action: 'update-item',
+            payload: {
+                'product-id': productId,
+                'product-name': productName,
+                'product-amount': quantity,
+                'buying-date': buyDate,
+                'expire-date': expDate,
+                'supplier-id': supplierId,
+                'product-price': price
             }
-            alert(data.body.message)
-        } else {
-            alert(data.body.message)
+        })
+        if (response.status === 200) {
+            let data = await response.json()
+            if (data.statusMessage === 'success') {
+                let itemTable = document.getElementById("itemTable")
+                for (let i = 0, row; row = itemTable.rows[i]; i++) {
+                    if (row.cells[0].innerText == productId) {
+                        row.cells[1].innerText = productName
+                        row.cells[2].innerText = quantity
+                        row.cells[3].innerText = buyDate
+                        row.cells[4].innerText = expDate
+                        row.cells[5].innerText = await getSupplierName(supplierId)
+                        row.cells[6].innerText = price
+                    }
+                }
+                alert(data.body.message)
+            } else {
+                alert(data.body.message)
+            }
         }
     }
+
+
 }
 
 //  Return supplier name if success, false if request fails.
