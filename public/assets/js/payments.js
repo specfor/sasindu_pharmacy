@@ -36,6 +36,7 @@ async function sendDataToDB(){
         if (response.status === 200) {
             let data = await response.json()
             if (data.statusMessage === 'success') {
+                clearInputFields()
                 //Update the table
                 
                 alert(data.body.message)
