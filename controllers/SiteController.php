@@ -99,6 +99,10 @@ class SiteController
     public function login(): void
     {
         if (Application::$app->request->isGet()) {
+            if (isset($_SESSION['userId'])){
+                Application::$app->response->redirect('/dashboard');
+                exit();
+            }
             $this->addNoCacheHeaders();
             $page = new Page(Page::HEADER_BLANK, Page::FOOTER_BLANK, 'forms/login', 'Login');
             Application::$app->renderer->renderPage($page);
