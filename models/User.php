@@ -16,7 +16,7 @@ class User extends DbModel
     // User Roles
     public const ROLE_SUPER_ADMINISTRATOR = 0;
     public const ROLE_ADMINISTRATOR = 1;
-    public const ROLE_USER = 2;
+    public const ROLE_DATA_ENTRY_OPERATOR = 2;
 
     public int $userId;
     public string $username;
@@ -196,7 +196,7 @@ class User extends DbModel
     {
         if ($this->role == User::ROLE_ADMINISTRATOR)
             return 'admin';
-        elseif ($this->role == User::ROLE_USER)
+        elseif ($this->role == User::ROLE_DATA_ENTRY_OPERATOR)
             return 'user';
         else
             return 'none';

@@ -41,7 +41,6 @@ class Stocks extends DbModel
         }
 
         $sql .= " ORDER BY id DESC";
-        echo $sql;
         $statement = self::prepare($sql);
         if (!empty($productName))
             $statement->bindValue(':productName', $productName);
