@@ -174,6 +174,7 @@ class SiteController
             if (!isset($req['action'])) {
                 $this->sendJsonResponse(Response::STATUS_CODE_SUCCESS, 'error',
                     ['message' => 'Invalid request']);
+                exit();
             }
             if ($req['action'] === 'get-items') {
                 $itemLimit = $req['payload']['filters']['limit'] ?? 30;
@@ -181,13 +182,22 @@ class SiteController
                 $itemName = $req['payload']['filters']['product-name'] ?? '';
                 $itemPrice = $req['payload']['filters']['price'] ?? -1;
                 $itemCompanyId = $req['payload']['filters']['supplier-id'] ?? -1;
+                try {
+                    $itemLimit = intval($itemLimit);
+                    $itemBeginIndex = intval($itemBeginIndex);
+                    $itemPrice = floatval($itemPrice);
+                    $itemCompanyId = intval($itemCompanyId);
+                }catch (Exception){
+                    $this->sendJsonResponse(Response::STATUS_CODE_SUCCESS, 'error',
+                        ['message' => 'Invalid request']);
+                    exit();
+                }
                 $data = Stocks::getItems($itemBeginIndex, $itemLimit, $itemName, $itemPrice, $itemCompanyId);
                 $this->sendJsonResponse(Response::STATUS_CODE_SUCCESS, 'success',
                     [
                         'total-number-of-rows' => $data['number-of-rows'],
                         'items' => $data['data']
                     ]);
-
             } elseif ($req['action'] === 'add-item') {
                 $productName = $req['payload']['product-name'] ?? 'none';
                 $productAmount = $req['payload']['product-amount'] ?? 0;
@@ -266,13 +276,14 @@ class SiteController
             if (!isset($req['action'])) {
                 $this->sendJsonResponse(Response::STATUS_CODE_SUCCESS, 'error',
                     ['message' => 'Invalid request']);
+                exit();
             }
             if ($req['action'] === 'add-user') {
                 $user = new User();
                 $msg = $user->createNewUser($req['payload']);
                 if ($msg === 'user created.') {
                     $this->sendJsonResponse(Response::STATUS_CODE_SUCCESS, 'success',
-                        ['message'=>'User account created successfully.']);
+                        ['message' => 'User account created successfully.']);
                 } else {
                     $this->sendJsonResponse(Response::STATUS_CODE_SUCCESS, 'error',
                         ['message' => $msg]);
@@ -282,7 +293,7 @@ class SiteController
                 $msg = $user->updateUserDetails($req['payload']);
                 if ($msg === 'user updated.') {
                     $this->sendJsonResponse(Response::STATUS_CODE_SUCCESS, 'success',
-                        ['message'=>'User account updated successfully.']);
+                        ['message' => 'User account updated successfully.']);
                 } else {
                     $this->sendJsonResponse(Response::STATUS_CODE_SUCCESS, 'error',
                         ['message' => $msg]);
@@ -291,7 +302,7 @@ class SiteController
                 $userId = $req['payload']['user-id'];
                 try {
                     $userId = intval($userId);
-                }catch (Exception){
+                } catch (Exception) {
                     $this->sendJsonResponse(Response::STATUS_CODE_SUCCESS, 'error',
                         ['message' => 'invalid request.']);
                 }
@@ -342,11 +353,20 @@ class SiteController
             if (!isset($req['action'])) {
                 $this->sendJsonResponse(Response::STATUS_CODE_SUCCESS, 'error',
                     ['message' => 'Invalid request']);
+                exit();
             }
             if ($req['action'] === 'get-suppliers') {
-                $supplierName = $req['payload']['supplier-name'] ?? '';
-                $contactNumber = $req['payload']['contact-number'] ?? -1;
-                $supplierData = Suppliers::getAllSupplierDetails($supplierName, $contactNumber);
+                $supplierName = $req['payload']['filters']['supplier-name'] ?? '';
+                $contactNumber = $req['payload']['filters']['contact-number'] ?? -1;
+                $medicalRef = $req['payload']['filters']['medical-ref'] ?? '';
+                try {
+                    $contactNumber = intval($contactNumber);
+                } catch (Exception) {
+                    $this->sendJsonResponse(Response::STATUS_CODE_SUCCESS, 'error',
+                        ['message' => 'Invalid request']);
+                    exit();
+                }
+                $supplierData = Suppliers::getAllSupplierDetails($supplierName, $contactNumber, $medicalRef);
                 $this->sendJsonResponse(Response::STATUS_CODE_SUCCESS, 'success',
                     ['suppliers' => $supplierData]);
             } elseif ($req['action'] === 'get-supplier-by-id') {
@@ -394,7 +414,7 @@ class SiteController
                     $this->sendJsonResponse(Response::STATUS_CODE_SUCCESS, 'error',
                         ['message' => 'Failed to update supplier data.']);
                 }
-            }else{
+            } else {
                 $this->sendJsonResponse(Response::STATUS_CODE_SUCCESS, 'error',
                     ['message' => 'Incorrect request']);
             }
@@ -410,7 +430,7 @@ class SiteController
         }
     }
 
-    public function expiredItems():void
+    public function expiredItems(): void
     {
         $this->checkUserPermission();
         if (Application::$app->request->isGet()) {
@@ -418,7 +438,9 @@ class SiteController
             Application::$app->renderer->renderPage($page);
         }
     }
-    public function reports():void{
+
+    public function reports(): void
+    {
         $this->checkUserPermission();
         if (Application::$app->request->isGet()) {
             $page = new Page(Page::HEADER_DEFAULT_WITH_MENU, Page::FOOTER_DEFAULT, 'reports', 'Reports');

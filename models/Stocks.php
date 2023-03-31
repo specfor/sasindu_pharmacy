@@ -29,7 +29,7 @@ class Stocks extends DbModel
             $filters[] = " name LIKE :productName";
         }
         if ($productCompanyId != -1) {
-            $filters[] = " supplier_id = $productCompanyId";
+            $filters[] = " supplier_id LIKE '$productCompanyId%'";
         }
         if ($productPrice != -1) {
             $priceMin = $productPrice - 100;
@@ -41,6 +41,7 @@ class Stocks extends DbModel
         }
 
         $sql .= " ORDER BY id DESC";
+        echo $sql;
         $statement = self::prepare($sql);
         if (!empty($productName))
             $statement->bindValue(':productName', $productName);

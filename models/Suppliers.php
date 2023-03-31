@@ -8,9 +8,30 @@ class Suppliers extends DbModel
 {
     private const TABLE_NAME = 'suppliers';
 
-    public static function getAllSupplierDetails(): array
+    public static function getAllSupplierDetails(string $supplierName = '', int $contactNumber = -1, string $medicalRef = ''): array
     {
-        $statement = self::getDataFromTable(['*'], self::TABLE_NAME);
+        $sql = "SELECT * FROM " . self::TABLE_NAME;
+        if ($supplierName || $contactNumber >= 0 || $medicalRef)
+            $sql .= " WHERE ";
+        $filters = [];
+        if ($supplierName) {
+            $supplierName = "%$supplierName%";
+            $filters[] = "name LIKE :name";
+        }
+        if ($contactNumber >= 0) {
+            $filters[] = "contact_number LIKE '%$contactNumber%'";
+        }
+        if ($medicalRef) {
+            $filters[] = 'medical_ref LIKE :medical_ref';
+            $medicalRef = "%$medicalRef%";
+        }
+        $sql .= implode(" AND ", $filters);
+        $statement = self::prepare($sql);
+        if ($supplierName)
+            $statement->bindValue(':name', $supplierName);
+        if ($medicalRef)
+            $statement->bindValue(':medical_ref', $medicalRef);
+        $statement->execute();
         return $statement->fetchAll(PDO::FETCH_ASSOC);
     }
 
@@ -38,13 +59,14 @@ class Suppliers extends DbModel
         $sql = "DELETE FROM " . self::TABLE_NAME . " WHERE id=$supplierId";
         if (self::exec($sql)) {
             return true;
-        }else{
+        } else {
             return false;
         }
     }
 
-    public static function updateSupplier(int $supplierId, string $supplierName, string $medicalRef, int $contactNumber):bool{
+    public static function updateSupplier(int $supplierId, string $supplierName, string $medicalRef, int $contactNumber): bool
+    {
         return self::updateTableData(self::TABLE_NAME,
-            ['name'=>$supplierName, 'medical_ref'=>$medicalRef, 'contact_number'=>$contactNumber],"id=$supplierId");
+            ['name' => $supplierName, 'medical_ref' => $medicalRef, 'contact_number' => $contactNumber], "id=$supplierId");
     }
 }

@@ -77,9 +77,9 @@ class Session
     /**
      * Get the value of a session variable.
      * @param string $variable Name of session variable.
-     * @return false|mixed Return value if variable is present and false if variable is absent.
+     * @return mixed Return value if variable is present and false if variable is absent.
      */
-    public function getVariable(string $variable)
+    public function getVariable(string $variable) : mixed
     {
         return $_SESSION[$variable] ?? false;
     }
