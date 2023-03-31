@@ -18,6 +18,8 @@
         body{
             background-size: cover;
             background-repeat: no-repeat;
+            background: rgb(26,123,218);
+background: linear-gradient(157deg, rgba(26,123,218,0.5802696078431373) 0%, rgba(255,255,255,0.7819502801120448) 34%, rgba(255,255,255,0.7455357142857143) 58%, rgba(26,123,218,0.227328431372549) 100%);
         }
         .border {
             border: 5px solid black;
@@ -54,8 +56,7 @@
       <div class="container  p-1 justify-content-center border_s align-items-center">
         <div class="container p-2">
           <div class="row p-2 mb-4 g-2" style="min-height:95vh">
-
-              <div class="d-flex flex-row justify-content-center align-items-center position-relative border ">
+              <div class="d-flex flex-row justify-content-center align-items-center position-relative ">
             
                 <div class="container position-absolute p-4" style="top:80px;">
                     <div class="d-flex flex-row justify-content-end mb-2 p-3 top-10 left-50">
