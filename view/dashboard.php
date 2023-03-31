@@ -90,35 +90,35 @@
                           </div>
                     </div>
 
-                    <div class="d-flex flex-row justify-content-center align-items-center mt-5">
+                    <div class="d-flex flex-row justify-content-center align-items-center mt-3">
                         <div class="card m-3">
-                          <div class="card-header ">
+                          <div class="card-header text-center ">
                             <div class="text-success h3">PAYMENTS</div>
                           </div>
-                            <div class="card-body" style="width:20vw; min-height: 40vh;">
-                              <h5 class="card-title">Payment management </h5>
+                            <div class="card-body d-flex flex-column justify-content-evenly" style="width:20vw; min-height: 25vh;">
+                              <h5 class="card-title text-center">Payment management </h5>
                               <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
                               <a href="#" class="btn btn-primary">Go somewhere</a>
                             </div>
                           </div>
                           <div class="card m-3">
-                            <div class="card-header ">
+                            <div class="card-header text-center ">
                               <div class="text-success h3">SUPPLIERS</div>
                             </div>
-                            <div class="card-body" style="width:20vw; min-height: 40vh;">
-                              <h5 class="card-title">Recent suppliers from latest stock</h5>
+                            <div class="card-body d-flex flex-column justify-content-evenly" style="width:20vw; min-height: 25vh;">
+                              <h5 class="card-title text-center">Recent suppliers from latest stock</h5>
                               <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
                               <a href="#" class="btn btn-primary">Go somewhere</a>
                             </div>
                           </div>
                           <div class="card m-3 ">
-                            <div class="card-header ">
+                            <div class="card-header text-center">
                                 <div class="text-success h3">PNL</div>
                             </div>
-                            <div class="card-body" style="width:20vw; min-height: 40vh;">
-                              <h5 class="card-title">Monthly report</h5>
+                            <div class="card-body d-flex flex-column justify-content-evenly" style="width:20vw; min-height: 25vh;">
+                              <h5 class="card-title text-center ">Monthly report</h5>
                               <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-                              <a href="#" class="btn btn-primary">Go somewhere</a>
+                              <a href="#" class="btn btn-primary ">Go somewhere</a>
                             </div>
                           </div>
                     </div>
