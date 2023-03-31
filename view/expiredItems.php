@@ -12,7 +12,6 @@
                     <th>Expiry Date</th>
                     <th>Supplier Name</th>
                     <th>Price</th>
-                    <th>Actions</th>
                 </tr>
                 </thead>
                 <tbody id="expItemTable">
