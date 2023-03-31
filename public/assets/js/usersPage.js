@@ -4,6 +4,7 @@ window.addEventListener("load",function(){
     document.getElementById("addNewUser").addEventListener("click",clearAllInputs)
     document.getElementById("addUser").addEventListener("click",sendUserData2DB)
     document.getElementById('update').addEventListener('click', updateUserToDatabase)
+    document.getElementById('changePass').addEventListener('click',changePass)
 
 })
 
@@ -41,7 +42,6 @@ async function sendUserData2DB(){
 })
 if (response.status === 200) {
     let data = await response.json()
-    console.log(data)
     if (data.statusMessage === 'success') {
         clearAllInputs()
         //call the func to update the table here
@@ -55,6 +55,36 @@ if (response.status === 200) {
     }
 }
 }
+
+async function changePass(){
+   let newPass = document.getElementById("newUserPassword").value
+   let newPassConfirm = document.getElementById("newUserPasswordConfirm").value
+
+   if(newPass===newPassConfirm){
+    let response = await sendJsonRequest('/dashboard/users', {
+        action: 'update-user-password',
+        payload: {
+            "user-id":userId,
+            "password":newPass
+        }
+    })
+    if (response.status === 200) {
+        let data = await response.json()
+
+        if (data.statusMessage === 'success') {
+                
+            alert(data.body.message)
+            console.log(data.body.message)
+        } else {
+            alert(data.body.message)
+            console.log(data.body.message)
+        }
+    }
+   }else{
+    alert("passwords do not match!")
+   }
+}
+
 
 async function updateUserToDatabase() {
     
@@ -97,6 +127,22 @@ async function updateUserToDatabase() {
         } else {
             alert(data.body.message)
             console.log(data.body.message)
+        }
+    }
+}
+
+async function editUser() {
+    userId = event.target.id.split('-')[2]
+    let userTable = document.getElementById("userTable")
+
+    for (let i = 0, row; row = userTable.rows[i]; i++) {
+        if (row.cells[0].innerText == productId) {
+
+            document.getElementById('newUsername').value = row.cells[1].innerText
+            document.getElementById('newEmail').value = row.cells[2].innerText
+            document.getElementById('newFirstName').value = row.cells[3].innerText
+            document.getElementById('newLastName').value = row.cells[4].innerText
+            document.getElementById('newInputGroupSelect01').value = row.cells[5].innerText
         }
     }
 }
