@@ -1,8 +1,8 @@
 <footer class="text-white fixed-bottom" style="max-height: 24px">
 
-  <div class="container-fluid text-center" style="background-color:indigo ;">
+  <div class="container-fluid text-center" style="background-color:midnightblue ;">
     <div class="row text-small">
-        <p>© 2023 copyright: <b>Logic Leap Solutions</b></p>
+        <p>© 2023 copyright: <b>LogicLeap Solutions</b></p>
     </div>
   </div>
 
