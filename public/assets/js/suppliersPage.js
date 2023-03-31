@@ -103,28 +103,34 @@ async function addSupplierToTheDB(){
     let medRef  =  document.getElementById("medRef").value
     let contactNumber = document.getElementById("contactNumber").value
 
-    let response = await sendJsonRequest('/dashboard/suppliers', {
-        action: 'add-supplier',
-        payload: {
-            'supplier-name': supplierName,
-            'medical-ref': medRef,
-            'contact-number': contactNumber,
-        }
-    })
-    
-    if (response.status === 200) {
-        let data = await response.json()
-      
-        if (data.statusMessage === 'success') {
-            getSuppliers()
-            clearAllInputFields()
-            alert(data.body.message)
-            console.log(data.body.message)
-        } else {
-            alert(data.body.message)
-            console.log(data.body.message)
+    if(supplierName===""|| medRef===""||contactNumber===""){
+        alert("Fill all fields.")
+    }else{
+        let response = await sendJsonRequest('/dashboard/suppliers', {
+            action: 'add-supplier',
+            payload: {
+                'supplier-name': supplierName,
+                'medical-ref': medRef,
+                'contact-number': contactNumber,
+            }
+        })
+        
+        if (response.status === 200) {
+            let data = await response.json()
+          
+            if (data.statusMessage === 'success') {
+                getSuppliers()
+                clearAllInputFields()
+                alert(data.body.message)
+                console.log(data.body.message)
+            } else {
+                alert(data.body.message)
+                console.log(data.body.message)
+            }
         }
     }
+
+
 }
 
 //This function updates the company table
@@ -187,32 +193,38 @@ async function updateSupplierToDatabase() {
     let medRef = document.getElementById('newMedRef').value
     let contactNum = document.getElementById('newContactNum').value
 
-    let response = await sendJsonRequest('/dashboard/suppliers', {
-        action: 'update-supplier',
-        payload: {
-            'supplier-id': supplierId,
-            'supplier-name': companyName,
-            'medical-ref': medRef,
-            'contact-number': contactNum,
-        }
-    })
-    if (response.status === 200) {
-        let data = await response.json()
-        if (data.statusMessage === 'success') {
-            let supplierTable = document.getElementById("supplierTable")
-            for (let i = 0, row; row = supplierTable.rows[i]; i++) {
-                if (row.cells[0].innerText == supplierId) {
-                    row.cells[1].innerText = companyName
-                    row.cells[2].innerText = medRef
-                    row.cells[3].innerText = contactNum
-                }
+    if(companyName===""|| medRef===""||contactNum===""){
+        alert("Fill all fields.")
+    }else{
+        let response = await sendJsonRequest('/dashboard/suppliers', {
+            action: 'update-supplier',
+            payload: {
+                'supplier-id': supplierId,
+                'supplier-name': companyName,
+                'medical-ref': medRef,
+                'contact-number': contactNum,
             }
-            alert(data.body.message)
-        } else {
-            alert(data.body.message)
-            console.log(data.body.message)
+        })
+        if (response.status === 200) {
+            let data = await response.json()
+            if (data.statusMessage === 'success') {
+                let supplierTable = document.getElementById("supplierTable")
+                for (let i = 0, row; row = supplierTable.rows[i]; i++) {
+                    if (row.cells[0].innerText == supplierId) {
+                        row.cells[1].innerText = companyName
+                        row.cells[2].innerText = medRef
+                        row.cells[3].innerText = contactNum
+                    }
+                }
+                alert(data.body.message)
+            } else {
+                alert(data.body.message)
+                console.log(data.body.message)
+            }
         }
     }
+
+
 }
 
 // Returns the fetch response object
