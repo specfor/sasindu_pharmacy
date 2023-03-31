@@ -35,6 +35,7 @@
                 <option value="2">Data Entry Operator</option>
             </select>
         </div>
+        <p>Note - "Data Entry Operator" does not have permission to visit "Reports" and "Users" pages.</p>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>

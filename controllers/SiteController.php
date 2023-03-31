@@ -5,6 +5,7 @@ namespace LogicLeap\SasinduPharmacy\controllers;
 use Exception;
 use LogicLeap\SasinduPharmacy\core\Application;
 use LogicLeap\SasinduPharmacy\core\CSRF_Token;
+use LogicLeap\SasinduPharmacy\core\exceptions\NotFoundException;
 use LogicLeap\SasinduPharmacy\core\Response;
 use LogicLeap\SasinduPharmacy\core\Session;
 use LogicLeap\SasinduPharmacy\models\Page;
@@ -141,12 +142,17 @@ class SiteController
         }
         if (Application::$app->request->isGet()) {
             if (!$success) {
-                Application::$app->response->redirect('/');
+                if ($requireAdmin)
+                    self::httpError(new NotFoundException());
+                else
+                    Application::$app->response->redirect('/');
+                exit();
             }
         } elseif (Application::$app->request->isPost()) {
             if (!$success) {
                 $this->sendJsonResponse(Response::STATUS_CODE_FORBIDDEN, 'forbidden',
                     ['message' => 'You do not have required permissions.']);
+                exit();
             }
         }
     }
@@ -187,7 +193,7 @@ class SiteController
                     $itemBeginIndex = intval($itemBeginIndex);
                     $itemPrice = floatval($itemPrice);
                     $itemCompanyId = intval($itemCompanyId);
-                }catch (Exception){
+                } catch (Exception) {
                     $this->sendJsonResponse(Response::STATUS_CODE_SUCCESS, 'error',
                         ['message' => 'Invalid request']);
                     exit();
