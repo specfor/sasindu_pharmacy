@@ -2,7 +2,7 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Edit User Details</h5>
+                <h5 class="modal-title" id="exampleModalLabel">Add New Payment</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
@@ -28,7 +28,7 @@
                     <input type="date" class="form-control" aria-describedby="basic-addon4" id="paid-date">
                 </div>
                 <div class="input-group mb-3">
-                    <span class="input-group-text" id="inputGroupSelect01">Paid To</span>
+                    <span class="input-group-text" >Paid To</span>
                     <select class="form-select" id="inputGroupSelect01">
                         <option selected value="1">company 1</option>
                         <option value="2">company 2</option>
@@ -37,7 +37,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary" id="update">Save changes</button>
+                <button type="button" class="btn btn-primary" id="add-payment">Add Payment</button>
             </div>
         </div>
     </div>
@@ -47,7 +47,7 @@
     <div class="row justify-content-end mt-5">
         <div class="col-6 col-sm-4 col-md-3 text-center">
             <h4>Add New Payment</h4>
-            <button class="btn btn-primary fw-bold" type="button" id="editDetails" data-bs-toggle="modal"
+            <button class="btn btn-primary fw-bold" type="button" id="addPayment" data-bs-toggle="modal"
                     data-bs-target="#addNewPayment">Add Payment
             </button>
         </div>
@@ -61,23 +61,16 @@
                 <table class="table table-striped-columns table-hover">
                     <thead class="table-dark">
                     <tr>
-                        <th scope="col">ID</th>
+                        <th scope="col">Id</th>
                         <th scope="col">Payment Method</th>
                         <th scope="col">Cheque Number</th>
                         <th scope="col">Amount</th>
                         <th scope="col">Paid Date</th>
-                        <th scope="col">Paid To</th>
+                        <th scope="col">Paid to</th>
                     </tr>
                     </thead>
-                    <tbody>
-                    <tr>
-                        <td>2</td>
-                        <td>asdf</td>
-                        <td>Thornton@gmail.com</td>
-                        <td>fat</td>
-                        <td>man</td>
-                        <td>Administrator</td>
-                    </tr>
+                    <tbody id="paymentTable">
+
                     </tbody>
                 </table>
                 <nav aria-label="Page navigation">
@@ -91,3 +84,4 @@
         </div>
     </div>
 </div>
+<script src="/assets/js/payments.js"></script>
