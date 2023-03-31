@@ -311,18 +311,27 @@ class SiteController
                 } catch (Exception) {
                     $this->sendJsonResponse(Response::STATUS_CODE_SUCCESS, 'error',
                         ['message' => 'invalid request.']);
+                    exit();
                 }
-                if (!isset($req['password'])) {
+                if (!isset($req['payload']['password'])) {
                     $this->sendJsonResponse(Response::STATUS_CODE_SUCCESS, 'error',
                         ['message' => 'invalid request.']);
+                    exit();
                 }
                 $user = new User();
-                if ($user->updateUserPassword($userId, $req['password'])) {
+                if (strlen($req['payload']['password']) < User::MIN_PASSWORD_LENGTH ||
+                    strlen($req['payload']['password']) > User::MAX_PASSWORD_LENGTH) {
+                    $this->sendJsonResponse(Response::STATUS_CODE_SUCCESS, 'error',
+                        ['message' => 'Password update failed. Password length should be ' . User::MIN_PASSWORD_LENGTH .
+                            ' - ' . User::MAX_PASSWORD_LENGTH . ' characters.']);
+                    exit();
+                }
+                if ($user->updateUserPassword($userId, $req['payload']['password'])) {
                     $this->sendJsonResponse(Response::STATUS_CODE_SUCCESS, 'success',
                         ['message' => 'Password Updated.']);
                 } else {
                     $this->sendJsonResponse(Response::STATUS_CODE_SUCCESS, 'error',
-                        ['message' => 'Password Failed.']);
+                        ['message' => 'Password Update Failed.']);
                 }
             } elseif ($req['action'] === 'get-users') {
                 $users = User::getAllUsers();
@@ -330,9 +339,12 @@ class SiteController
                     ['users' => $users]);
             } elseif ($req['action'] === 'remove-user') {
                 $userId = $req['payload']['user-id'] ?? null;
-                if (!is_int($userId)) {
+                try {
+                    $userId = intval($userId);
+                } catch (Exception) {
                     $this->sendJsonResponse(Response::STATUS_CODE_SUCCESS, 'error',
                         ['message' => 'Failed to remove user.']);
+                    exit();
                 }
                 if (User::removeUser($userId)) {
                     $this->sendJsonResponse(Response::STATUS_CODE_SUCCESS, 'success',
@@ -341,6 +353,9 @@ class SiteController
                     $this->sendJsonResponse(Response::STATUS_CODE_SUCCESS, 'error',
                         ['message' => 'Failed to remove user.']);
                 }
+            } elseif ($req['action'] === 'get-user-roles') {
+                $this->sendJsonResponse(Response::STATUS_CODE_SUCCESS, 'success',
+                    ['roles' => User::getUserRoles()]);
             } else {
                 $this->sendJsonResponse(Response::STATUS_CODE_SUCCESS, 'error',
                     ['message' => 'Invalid action']);

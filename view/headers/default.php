@@ -20,7 +20,11 @@
     .active{
         background-color: white;
     }
+    .custom{
+        border:2px solid black;
+    }
 </style>
+
 <header>
     
 
@@ -36,32 +40,37 @@
 
 
             <div class="contect-fluid  justify-content-evenly text-primary">
-                <nav class="navbar navbar-expand-lg  px-4 text-white-50">
+                <nav class="navbar navbar-expand-md  px-4 text-white-50">
                     <div class="container-fluid px-3 text-primary">
                         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
                         <span class="navbar-toggler-icon"></span>
                         </button>
                         <div class="collapse navbar-collapse" id="navbarNavDropdown">
-                        <ul class="navbar-nav">
+                        <ul class="navbar-nav ">
                             <li class="nav-lg-item">
-                            <a class="nav-link active text-light rounded active" aria-current="page" href="#">Dashboard</a>
+                            <a class="nav-link text-light rounded mx-md-3" aria-current="page" href="/dashboard" >Dashboard</a>
                             </li>
                             <li class="nav-item">
-                            <a class="nav-link  text-light rounded" href="#">Stock</a>
+                            <a class="nav-link  text-light rounded mx-md-3" href="/dashboard/stocks">Stock</a>
                             </li>
                             <li class="nav-item">
-                            <a class="nav-link text-light rounded " href="#">Reports</a>
+                            <a class="nav-link text-light rounded mx-md-3" href="/dashboard/reports">Reports</a>
                             </li>
+                            <a class="nav-link text-light rounded px-md-3 mx-md-3 " href="/dashboard/users">User</a>
+                            </li>
+                            <a onclick="logOut()" type="button" class="btn btn-outline-primary nav-link text-light rounded px-3 " href="/dashboard/reports" id="custom">Log out</a>
+                            </li>
+                            <!--
                             <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle text-light rounded" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                                 Profile
                             </a>
                             <ul class="dropdown-menu">
                                 <li><a class="dropdown-item" href="#">Info</a></li>
-                                <li><a class="dropdown-item" href="#">Manage users</a></li>
-                                <li><a class="dropdown-item" href="#">Log out</a></li>
+                                <li><a class="dropdown-item" href="/dashboard/users">Manage users</a></li>
+                                <li><a  class="dropdown-item" href="#">Log out</a></li>
                             </ul>
-                            </li>
+                            </li> -->
                         </ul>
                         </div>
                     </div>
