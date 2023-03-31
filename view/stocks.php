@@ -117,15 +117,15 @@
         <div class="col-md-6">
             <div class="input-group mb-3">
                 <input id="productNameFilter" type="text" class="form-control" placeholder="Product Name" aria-label="Product Name"
-                       aria-describedby="button-addon1">
-                <button class="btn btn-danger fw-bold" type="button" id="button-addon1">clear</button>
+                       aria-describedby="btnClearFilterProductName">
+                <button class="btn btn-danger fw-bold" type="button" id="btnClearFilterProductName">clear</button>
             </div>
         </div>
         <div class="col-md-3">
             <div class="input-group mb-3">
-                <input id="priceFilter" type="text" class="form-control" placeholder="Retail Price" aria-label="Retail Price"
-                       aria-describedby="button-addon2">
-                <button class="btn btn-danger fw-bold" type="button" id="button-addon2">clear</button>
+                <input id="priceFilter" type="number" class="form-control" placeholder="Retail Price" aria-label="Retail Price"
+                       aria-describedby="btnClearFilterPrice">
+                <button class="btn btn-danger fw-bold" type="button" id="btnClearFilterPrice">clear</button>
             </div>
         </div>
         <div class="col-md-3">
@@ -133,7 +133,7 @@
                 <select id="suppliersFilter" class="form-select" aria-label="Select Supplier">
                     <option value="-1">Select Supplier to filter</option>
                 </select>
-                <button class="btn btn-danger fw-bold" type="button" id="button-addon2">clear</button>
+                <button class="btn btn-danger fw-bold" type="button" id="btnClearFilterSupplier">clear</button>
             </div>
         </div>
     </div>
