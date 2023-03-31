@@ -32,9 +32,7 @@
         </div>
         <div class="input-group mb-3">
             <span class="input-group-text" >User Role</span>
-            <select class="form-select" id="inputGroupSelect01" >
-                <option selected value="1">Administrator</option>
-                <option value="2">Data Entry Operator</option>
+            <select class="form-select" id="selectionUserRoles1" >
             </select>
         </div>
         <p>Note - "Data Entry Operator" does not have permission to visit "Reports" and "Users" pages.</p>
@@ -47,8 +45,26 @@
   </div>
 </div>
 
+<div class="modal" tabindex="-1" id="confirmDelete" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">Confirm Deletion</h3>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <h5>This action is irreversible. Are you sure you want to delete this data?</h5>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button id="btnConfirmDeletion" type="button" data-bs-dismiss="modal" class="btn btn-primary save">Yes</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 <!--This div is about the pop up change user details -->
-<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="editUserModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
@@ -76,9 +92,7 @@
         </div>
         <div class="input-group mb-3">
             <span class="input-group-text" >User Role</span>
-            <select class="form-select" id="newInputGroupSelect01" >
-                <option selected value="1">Administrator</option>
-                <option value="2">Data Entry Operator</option>
+            <select class="form-select" id="selectionUserRoles2" >
             </select>
         </div>
       </div>
@@ -91,7 +105,7 @@
 </div>
 
 <!--This div is about the pop up change user password -->
-<div class="modal fade" id="changePassword" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="changePasswordModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">

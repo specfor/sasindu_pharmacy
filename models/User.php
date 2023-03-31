@@ -27,6 +27,16 @@ class User extends DbModel
 
 
     /**
+     * @return string[] An associate array of [ user role id => role text ]
+     */
+    public static function getUserRoles():array{
+        return [
+            1=>'Administrator',
+            2=>'Data Entry Operator'
+        ];
+    }
+
+    /**
      * Generate a password hash.
      * @param string $password String Password
      * @return string Hashed password string
@@ -37,8 +47,8 @@ class User extends DbModel
     }
 
     // Password Requirements
-    private const MAX_PASSWORD_LENGTH = 24;
-    private const MIN_PASSWORD_LENGTH = 8;
+    public const MAX_PASSWORD_LENGTH = 24;
+    public const MIN_PASSWORD_LENGTH = 8;
 
     /**
      * Create a new user in the database.
@@ -103,7 +113,9 @@ class User extends DbModel
 
         // Performing checks on input variables.
 
-        if (!is_int($params['role'])) {
+        try{
+            $params['role'] = intval($params['role']);
+        }catch (\Exception) {
             return 'Invalid user role.';
         }
 
