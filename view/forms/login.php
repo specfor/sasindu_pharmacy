@@ -1,16 +1,15 @@
 <style>
     body {
-        background-image: url("#");
         background-size: cover;
         background-repeat: no-repeat;
     }
 
     .border {
-        border: 1px solid black;
+        border: 2px solid black;
     }
 
     .border_s {
-        margin-top: 20vh;
+        margin-top: 10vh;
         justify-content: center;
         align-items: center;
         align-self: center;
@@ -26,10 +25,11 @@
     }
 </style>
 
-<div class="container  p-5 justify-content-center border_s align-items-center">
+<div class="container p-5 justify-content-center border_s align-items-center">
     <div class="col-12 col-md-12 justify-content-center align-items-center p-5  ">
         <form class="col-12 col-md-12 col-xl-12 justify-content-center align-items-center form bg-white p-5 rounded shadow"
         action="/" method="post">
+            <h3 class="text-center mb-3">Stock Management System</h3>
             <!-- i want to center this div-->
             <div class="mb-3" style="min-width:150px">
                 <label for="exampleInputEmail1" class="form-label">Email address</label>
@@ -44,7 +44,6 @@
                 <input type="checkbox" class="form-check-input" id="exampleCheck1">
                 <label class="form-check-label" for="exampleCheck1">Remember me</label>
             </div>
-            <input type="hidden" name="csrf-token" value="{{login:csrf-token}}">
             <div class="d-grid gap-2 mx-auto">
                 <button class="col-12 btn btn-primary shadow justify-content-center align-items-center" type="submit"
                         style="text-align:center; min-width: 30vh; justify-content: center;">Log in

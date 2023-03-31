@@ -100,16 +100,9 @@ class SiteController
         if (Application::$app->request->isGet()) {
             $this->addNoCacheHeaders();
             $page = new Page(Page::HEADER_BLANK, Page::FOOTER_BLANK, 'forms/login', 'Login');
-            $params = ['login:csrf-token' => CSRF_Token::generateToken('/')];
-            Application::$app->renderer->renderPage($page, $params);
+            Application::$app->renderer->renderPage($page);
         } elseif (Application::$app->request->isPost()) {
             $params = Application::$app->request->getBodyParams();
-            if (!CSRF_Token::validateToken('/', $params['csrf-token'] ?? false)) {
-                Application::$app->session->setFlashMessage('loginError',
-                    'Invalid CSRF token', Page::ALERT_TYPE_ERROR);
-                Application::$app->response->redirect('/');
-                exit();
-            }
 
             $user = new User();
             if (!isset($params['username']) || !isset($params['password'])) {
@@ -127,36 +120,6 @@ class SiteController
                 Application::$app->session->setFlashMessage('loginError',
                     'Invalid Username or Password', Page::ALERT_TYPE_ERROR);
                 Application::$app->response->redirect('/');
-            }
-        }
-    }
-
-    public function register(): void
-    {
-        if (Application::$app->request->isGet()) {
-            $this->addNoCacheHeaders();
-            $page = new Page(Page::HEADER_BLANK, Page::FOOTER_BLANK, 'forms/register', 'Register');
-            $params = ['register:csrf-token' => CSRF_Token::generateToken('/register')];
-            Application::$app->renderer->renderPage($page, $params);
-        } elseif (Application::$app->request->isPost()) {
-            $params = Application::$app->request->getBodyParams();
-            if (!CSRF_Token::validateToken('/register', $params['csrf-token'] ?? false)) {
-                Application::$app->session->setFlashMessage('RegisterError',
-                    'Invalid CSRF token', Page::ALERT_TYPE_ERROR);
-                Application::$app->response->redirect('/register');
-                exit();
-            }
-
-            $user = new User();
-            $status = $user->createNewUser($params);
-            if ($status === 'user created.') {
-                Application::$app->session->setFlashMessage('registerSuccess',
-                    'Successfully registered.', Page::ALERT_TYPE_SUCCESS);
-                Application::$app->response->redirect('/login');
-            } else {
-                Application::$app->session->setFlashMessage('registerError',
-                    $status, Page::ALERT_TYPE_ERROR);
-                Application::$app->response->redirect('/register');
             }
         }
     }
