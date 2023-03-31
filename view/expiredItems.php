@@ -15,7 +15,7 @@
                     <th>Actions</th>
                 </tr>
                 </thead>
-                <tbody id="itemTable">
+                <tbody id="expItemTable">
 
                 </tbody>
             </table>
