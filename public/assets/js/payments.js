@@ -26,9 +26,23 @@ async function sendDataToDB(){
         let response = await sendJsonRequest("/dashboard/payments",{
             action:"get-payments",
             payload:{
-
-            }
+                "payment-method":paymentMethod,
+                "cheque-number":chequeNo,
+                "amount":amount,
+                "payment-date":paidDate,
+                "supplier-id":paidTo
+            }           
         })
+        if (response.status === 200) {
+            let data = await response.json()
+            if (data.statusMessage === 'success') {
+                //Update the table
+                
+                alert(data.body.message)
+            } else {
+                alert(data.body.message)
+            }
+        }
         
     }
 }
