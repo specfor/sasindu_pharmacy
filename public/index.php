@@ -31,6 +31,10 @@ $app->router->addGetRoute('/dashboard/users', [SiteController::class, 'users']);
 $app->router->addPostRoute('/dashboard/users', [SiteController::class, 'users']);
 $app->router->addGetRoute('/dashboard/suppliers', [SiteController::class, 'suppliers']);
 $app->router->addPostRoute('/dashboard/suppliers', [SiteController::class, 'suppliers']);
+$app->router->addGetRoute('/dashboard/reports', [SiteController::class, 'reports']);
+$app->router->addPostRoute('/dashboard/reports', [SiteController::class, 'reports']);
+$app->router->addGetRoute('/dashboard/expired', [SiteController::class, 'expiredItems']);
+$app->router->addPostRoute('/dashboard/expired', [SiteController::class, 'expiredItems']);
 $app->router->addGetRoute('/dashboard/payments', [SiteController::class, 'payments']);
 $app->router->addPostRoute('/dashboard/logout', [SiteController::class, 'logout']);
 

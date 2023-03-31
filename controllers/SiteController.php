@@ -410,6 +410,22 @@ class SiteController
         }
     }
 
+    public function expiredItems():void
+    {
+        $this->checkUserPermission();
+        if (Application::$app->request->isGet()) {
+            $page = new Page(Page::HEADER_DEFAULT_WITH_MENU, Page::FOOTER_DEFAULT, 'expiredItems', 'Expired');
+            Application::$app->renderer->renderPage($page);
+        }
+    }
+    public function reports():void{
+        $this->checkUserPermission();
+        if (Application::$app->request->isGet()) {
+            $page = new Page(Page::HEADER_DEFAULT_WITH_MENU, Page::FOOTER_DEFAULT, 'reports', 'Reports');
+            Application::$app->renderer->renderPage($page);
+        }
+    }
+
     public function logout(): void
     {
         session_destroy();
