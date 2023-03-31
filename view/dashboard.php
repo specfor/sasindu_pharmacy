@@ -16,7 +16,6 @@
 
     <style>
         body{
-            background-image: url("images/background.jpg");
             background-size: cover;
             background-repeat: no-repeat;
         }
@@ -56,7 +55,7 @@
         <div class="container p-2">
           <div class="row p-2 mb-4 g-2" style="min-height:95vh">
 
-              <div class="d-flex flex-row justify-content-center align-items-center position-relative border overflow-hidden">
+              <div class="d-flex flex-row justify-content-center align-items-center position-relative border ">
             
                 <div class="container position-absolute p-4" style="top:80px;">
                     <div class="d-flex flex-row justify-content-end mb-2 p-3 top-10 left-50">
