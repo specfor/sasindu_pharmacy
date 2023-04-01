@@ -30,7 +30,6 @@
         align-self: center;
     }
 
-
     .form {
         margin: 0 auto;
         display: flex;
