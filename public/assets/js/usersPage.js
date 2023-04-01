@@ -77,7 +77,12 @@ async function sendUserData2DB() {
     let password = document.getElementById("password").value
     let userRole = document.getElementById("selectionUserRoles1")
 
-    role = userRole.options[userRole.selectedIndex].value
+    let role = userRole.options[userRole.selectedIndex].value
+
+    if (!username || !fName || !lName || !password || !role){
+        alert("Fill all required fields.")
+        return
+    }
 
     let response = await sendJsonRequest('/dashboard/users', {
         action: 'add-user',
@@ -127,7 +132,7 @@ async function changePass() {
             }
         }
     } else {
-        alert("passwords do not match!")
+        alert("Passwords do not match!")
     }
 }
 
@@ -139,6 +144,10 @@ async function updateUserToDatabase() {
     let lastName = document.getElementById('newLastName').value
     let userRole = document.getElementById('selectionUserRoles2').value
 
+    if (!username || !firstName || !lastName || !userRole){
+        alert("Fill all required fields.")
+        return
+    }
     let response = await sendJsonRequest('/dashboard/users', {
         action: 'update-user',
         payload: {
