@@ -80,7 +80,7 @@
         </div>
         <div class="input-group mb-3">
             <span class="input-group-text" id="basic-addon2">Email</span>
-            <input type="email" class="form-control " aria-describedby="basic-addon2" id="newEmail" placeholder="*Email">
+            <input type="email" class="form-control " aria-describedby="basic-addon2" id="newEmail" placeholder="Email">
         </div>
         <div class="input-group mb-3">
             <span class="input-group-text" id="basic-addon3">First Name</span>
