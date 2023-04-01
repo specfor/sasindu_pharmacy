@@ -60,9 +60,6 @@ function clearAddNewItemInputs() {
 }
 
 
-
-
-
 function clearTable() {
     let itemTable = document.getElementById("itemTable")
     itemTable.innerHTML = '';
@@ -143,9 +140,9 @@ async function addItemToDatabase() {
     let supplierId = document.getElementById('supplierId').value
     let price = document.getElementById('price').value
 
-    if(productName==="" || quantity==="" || buyDate==="" || expDate==="" || supplierId==="" || price===""){
+    if (productName === "" || quantity === "" || buyDate === "" || expDate === "" || supplierId === "" || price === "") {
         alert("Fill all fields.")
-    }else{
+    } else {
         let response = await sendJsonRequest('/dashboard/stocks', {
             action: 'add-item',
             payload: {
@@ -179,9 +176,9 @@ async function updateItemToDatabase() {
     let supplierId = document.getElementById('newSupplierId').value
     let price = document.getElementById('newPrice').value
 
-    if(productName==="" || quantity==="" || buyDate==="" || expDate==="" || supplierId==="" || price===""){
+    if (productName === "" || quantity === "" || buyDate === "" || expDate === "" || supplierId === "" || price === "") {
         alert("Fill all fields")
-    }else{
+    } else {
         let response = await sendJsonRequest('/dashboard/stocks', {
             action: 'update-item',
             payload: {
@@ -269,7 +266,7 @@ async function getSuppliers() {
     }
 }
 
-async function getItems(filterProductName, filterProductPrice, filterSupplierId, limitResults, resultsBeginIndex) {
+async function getItems(filterProductName, filterProductPrice, filterSupplierId, limitResults = 20, pageNum = 1) {
     let body = {
         'action': 'get-items',
         'payload': {
@@ -288,8 +285,8 @@ async function getItems(filterProductName, filterProductPrice, filterSupplierId,
     if (limitResults) {
         body['payload']['filters']['limit'] = limitResults
     }
-    if (resultsBeginIndex) {
-        body['payload']['filters']['limit'] = resultsBeginIndex
+    if (pageNum != 1) {
+        body['payload']['filters']['begin'] = (pageNum - 1) * limitResults
     }
 
     let response = await sendJsonRequest('/dashboard/stocks', body)
@@ -301,6 +298,26 @@ async function getItems(filterProductName, filterProductPrice, filterSupplierId,
             await addItemToTable(row['id'], row['name'], row['quantity'], row['buy_date'], row['exp_date'],
                 supplierName, row['retail_price'])
         }
+        addPaginationButtons(data.body['total-number-of-items'], data.body['active-page-index'])
+    }
+}
+
+function laodDataOfPage() {
+    let pageNum = event.target.innerText
+    getItems('', '', '', 20, pageNum)
+}
+
+function addPaginationButtons(totalItems, activePageIndex, itemsPerPage = 20) {
+    let paginationHolder = document.getElementById('paginationButtons')
+    let numPages = Math.floor(totalItems / itemsPerPage)
+    if (totalItems % itemsPerPage > 0)
+        numPages += 1
+    paginationHolder.innerHTML = ""
+    for (let i = 1; i <= numPages; i++) {
+        if (i == activePageIndex)
+            paginationHolder.innerHTML += `<li class="page-item active"><a onclick="laodDataOfPage()" class="page-link" href="#">${i}</a></li>`
+        else
+            paginationHolder.innerHTML += `<li class="page-item"><a onclick="laodDataOfPage()" class="page-link" href="#">${i}</a></li>`
     }
 }
 

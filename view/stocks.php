@@ -171,10 +171,7 @@
                 </tbody>
             </table>
             <nav aria-label="Page navigation mb-5">
-                <ul class="pagination pagination-sm justify-content-center">
-                    <li class="page-item active"><a class="page-link" href="">1</a></li>
-                    <li class="page-item"><a class="page-link" href="">2</a></li>
-                    <li class="page-item"><a class="page-link" href="">3</a></li>
+                <ul id="paginationButtons" class="pagination pagination-sm justify-content-center">
                 </ul>
             </nav>
         </div>

@@ -188,7 +188,7 @@ class SiteController
                 exit();
             }
             if ($req['action'] === 'get-items') {
-                $itemLimit = $req['payload']['filters']['limit'] ?? 30;
+                $itemLimit = $req['payload']['filters']['limit'] ?? 20;
                 $itemBeginIndex = $req['payload']['filters']['begin'] ?? 0;
                 $itemName = $req['payload']['filters']['product-name'] ?? '';
                 $itemPrice = $req['payload']['filters']['price'] ?? -1;
@@ -203,10 +203,12 @@ class SiteController
                         ['message' => 'Invalid request']);
                     exit();
                 }
+                $activePageIndex = intdiv($itemBeginIndex, $itemLimit) + 1;
                 $data = Stocks::getItems($itemBeginIndex, $itemLimit, $itemName, $itemPrice, $itemCompanyId);
                 $this->sendJsonResponse(Response::STATUS_CODE_SUCCESS, 'success',
                     [
-                        'total-number-of-rows' => $data['number-of-rows'],
+                        'total-number-of-items' => $data['number-of-rows'],
+                        'active-page-index' => $activePageIndex,
                         'items' => $data['data']
                     ]);
             } elseif ($req['action'] === 'add-item') {
