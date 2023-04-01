@@ -1,10 +1,10 @@
-let suppliersArray
+let suppliersArray = []
 
-window.addEventListener("load", function () {
+window.addEventListener("load", async function () {
     document.getElementById("addPayment").addEventListener("click", clearInputFields)
     document.getElementById("add-payment").addEventListener("click", sendPaymentToDB)
 
-    getSuppliers()
+    await getSuppliers()
     getPayments()
 })
 
@@ -103,8 +103,8 @@ async function getSuppliers(){
     let response = await sendJsonRequest('/dashboard/suppliers', body)
     if (response.status === 200) {
         let data = await response.json()
-        let selectionSuppliers = document.getElementById('inputGroupSelect01')
         suppliersArray = data.body.suppliers
+        let selectionSuppliers = document.getElementById('inputGroupSelect01')
         for (let supplier of data.body.suppliers) {
             selectionSuppliers.innerHTML += `<option value="${supplier['id']}">${supplier['name']}</option>`
         }

@@ -19,8 +19,8 @@ async function initUI() {
     let mainMenu = document.getElementById('mainMenu')
 
     if (Admin) {
-        mainMenu.innerHTML += `<a href="/dashboard/users">Manage Users</a>`
-        mainMenu.innerHTML += `<a href="/dashboard/reports">Get Reports</a>`
+        mainMenu.innerHTML += `<button type="button" onclick="window.location.href='/dashboard/reports'" class="btn btn-outline-primary p-3 m-2" style="min-width:10vw; " >Reports</button>`
+        mainMenu.innerHTML += `<button type="button" onclick="window.location.href='/dashboard/users'" class="btn btn-outline-primary p-3 m-2" style="min-width:10vw; " >Users</button>`
     }
 }
 
