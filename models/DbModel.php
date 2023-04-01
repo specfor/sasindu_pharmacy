@@ -70,15 +70,18 @@ abstract class DbModel
      * @param string $conditionWithPlaceholders The condition to get data with placeholders(if needed) to values.
      *      Should be a valid sql condition.
      * @param array $placeholderValues Associative array of placeholder => value.
+     * @param string $appendToEndSql Additional sql statement to append to the end of the generated sql.
      * @return PDOStatement|PDOException|bool Return PDOStatement|PDOException|bool based on scenario.
      */
     protected static function getDataFromTable(array $rows, string $tableName, string $conditionWithPlaceholders = '',
-                                               array $placeholderValues = []):PDOStatement|PDOException|bool
+                                               array $placeholderValues = [], string $appendToEndSql = ''):PDOStatement|PDOException|bool
     {
         if ($conditionWithPlaceholders)
             $sql = "SELECT " . implode(', ', $rows) . " FROM $tableName WHERE $conditionWithPlaceholders";
         else
             $sql = "SELECT " . implode(', ', $rows) . " FROM $tableName";
+        if ($appendToEndSql)
+            $sql .= " $appendToEndSql";
         $statement = self::prepare($sql);
         if ($conditionWithPlaceholders && !empty($placeholderValues)) {
             foreach ($placeholderValues as $placeholder => $value) {

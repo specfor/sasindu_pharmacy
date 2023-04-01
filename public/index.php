@@ -36,6 +36,7 @@ $app->router->addPostRoute('/dashboard/reports', [SiteController::class, 'report
 $app->router->addGetRoute('/dashboard/expired', [SiteController::class, 'expiredItems']);
 $app->router->addPostRoute('/dashboard/expired', [SiteController::class, 'expiredItems']);
 $app->router->addGetRoute('/dashboard/payments', [SiteController::class, 'payments']);
+$app->router->addPostRoute('/dashboard/payments', [SiteController::class, 'payments']);
 $app->router->addPostRoute('/dashboard/logout', [SiteController::class, 'logout']);
 
 $app->run();

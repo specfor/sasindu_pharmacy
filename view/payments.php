@@ -11,7 +11,7 @@
                 <div class="input-group mb-3">
                     <span class="input-group-text" id="basic-addon1">Payment Method</span>
                     <select class="form-select" name="payment-method" id="payment-method">
-                        <option value="cheque">cheque</option>
+                        <option selected value="cheque">cheque</option>
                         <option value="cash">cash</option>
                     </select>
                 </div>
@@ -30,8 +30,6 @@
                 <div class="input-group mb-3">
                     <span class="input-group-text" >Paid To</span>
                     <select class="form-select" id="inputGroupSelect01">
-                        <option selected value="1">company 1</option>
-                        <option value="2">company 2</option>
                     </select>
                 </div>
             </div>

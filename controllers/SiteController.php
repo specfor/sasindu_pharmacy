@@ -9,6 +9,7 @@ use LogicLeap\SasinduPharmacy\core\exceptions\NotFoundException;
 use LogicLeap\SasinduPharmacy\core\Response;
 use LogicLeap\SasinduPharmacy\core\Session;
 use LogicLeap\SasinduPharmacy\models\Page;
+use LogicLeap\SasinduPharmacy\models\Payments;
 use LogicLeap\SasinduPharmacy\models\Stocks;
 use LogicLeap\SasinduPharmacy\models\Suppliers;
 use LogicLeap\SasinduPharmacy\models\User;
@@ -99,7 +100,7 @@ class SiteController
     public function login(): void
     {
         if (Application::$app->request->isGet()) {
-            if (isset($_SESSION['userId'])){
+            if (isset($_SESSION['userId'])) {
                 Application::$app->response->redirect('/dashboard');
                 exit();
             }
@@ -452,6 +453,34 @@ class SiteController
         if (Application::$app->request->isGet()) {
             $page = new Page(Page::HEADER_DEFAULT_WITH_MENU, Page::FOOTER_DEFAULT, 'payments', 'Payments');
             Application::$app->renderer->renderPage($page);
+        } elseif (Application::$app->request->isPost()) {
+            $req = $this->getPostJsonBody();
+            if ($req['action'] === "get-payments") {
+                $this->sendJsonResponse(Response::STATUS_CODE_SUCCESS, 'success',
+                    ['payments' => Payments::getPayments()]);
+            } elseif ($req['action'] === 'add-payment') {
+                $method = $req['payload']['payment-method'] ?? '';
+                $chequeNumber = $req['payload']['cheque-number'] ?? -1;
+                $amount = $req['payload']['amount'] ?? '';
+                $paidDate = $req['payload']['paid-date'] ?? '';
+                $paidToId = $req['payload']['paid-to-id'] ?? '';
+                try {
+                    $chequeNumber = intval($chequeNumber);
+                    $amount = intval($amount);
+                    $paidToId = intval($paidToId);
+                } catch (Exception) {
+                    $this->sendJsonResponse(Response::STATUS_CODE_SUCCESS, 'error',
+                        ['message' => "Invalid parameter values were given."]);
+                    exit();
+                }
+                if (Payments::addPayment($method, $chequeNumber, $amount, $paidDate, $paidToId)) {
+                    $this->sendJsonResponse(Response::STATUS_CODE_SUCCESS, 'success',
+                        ['message' => "Payment added to the database successfully."]);
+                } else {
+                    $this->sendJsonResponse(Response::STATUS_CODE_SUCCESS, 'error',
+                        ['message' => "Failed to add the payment."]);
+                }
+            }
         }
     }
 
