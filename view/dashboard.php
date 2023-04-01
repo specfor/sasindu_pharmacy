@@ -54,6 +54,38 @@
             font-size: 10px;
         }
     }
+        @media (max-width: 992px) {
+        .aligner {
+            width: 100%;
+            font-size: 10px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .aligner label {
+            width: 100%;
+            margin-bottom: 10px;
+            text-align: center;
+            font-size: 0px;
+        }
+        .ft{
+
+            border-bottom-left-radius: 0px;   
+            border-bottom-right-radius: 0px; 
+            border-top-left-radius: 0px;
+            border-top-right-radius: 0px;
+            
+        }
+        .fb{
+
+            border-bottom-left-radius: 0px;   
+            border-bottom-right-radius: 0px; 
+            border-top-left-radius: 0px;
+            border-top-right-radius: 0px; 
+        }
+        }
+
+
 </style>
 <div class="container  p-1 justify-content-center border_s align-items-center">
     <div class="container p-2">
@@ -80,25 +112,14 @@
                         </button>
                     </div>
 
-                    <div class="d-flex flex-row justify-content-center align-items-center mt-5">
-                        <div id="mainMenu"
-                             class="btn-group p-2 text-center justify-content-center align-items-center  aligner"
-                             role="group" aria-label="Vertical radio toggle button group">
-                            <!--                            <input type="radio" class="btn-check" name="vbtn-radio" id="vbtn-radio1" autocomplete="off" checked>-->
-                            <!--                            <label href="" class="btn btn-outline-primary p-5 m-2" for="vbtn-radio1">MANAGE STOCK</label>-->
-                            <!--                            <input type="radio" class="btn-check" name="vbtn-radio" id="vbtn-radio2" autocomplete="off">-->
-                            <!--                            <label class="btn btn-outline-primary p-5 m-2" for="vbtn-radio2">CHECK AVAILABILITY</label>-->
-                            <!--                            <input type="radio" class="btn-check" name="vbtn-radio" id="vbtn-radio3" autocomplete="off">-->
-                            <!--                            <label class="btn btn-outline-primary p-5 m-2" for="vbtn-radio3">PRODUCT REPORT</label>-->
-                            <!--                            <input type="radio" class="btn-check" name="vbtn-radio" id="vbtn-radio4" autocomplete="off">-->
-                            <!--                            <label class="btn btn-outline-primary p-5 m-2" for="vbtn-radio4">PRODUCT REPORT</label>-->
-                            <!--                            <input type="radio" class="btn-check text-center" name="vbtn-radio" id="vbtn-radio5" autocomplete="off" checked>-->
-                            <!--                            <label class="btn btn-outline-primary p-5 text-center m-2" for="vbtn-radio5">STOCK REPORT</label>-->
-                            <!--                            -->
-                            <a href="/dashboard/stocks">Manage Stocks</a>
-                            <a href="/dashboard/suppliers">Manage Suppliers</a>
-                            <a href="/dashboard/payments">Manage Payments</a>
-                        </div>
+                    <div class=" justify-content-center align-items-center mt-5">
+                            <div class="d-flex flex-lg-row flex-sm-column btn-group btn-group-lg" role="group" aria-label="Large button group">
+                                <button type="button" class="btn btn-outline-primary p-3 active m-2 ft" href="/dashboard/stocks" style="min-width:10vw;">Stock Management</button>
+                                <button type="button" class="btn btn-outline-primary p-3 m-2" href="/dashboard/suppliers"  style="min-width:10vw;">Suppliers</button>
+                                <button type="button" class="btn btn-outline-primary p-3 m-2" href="/dashboard/payments"  style="min-width:10vw;" >Peyments</button>
+                                <button type="button" class="btn btn-outline-primary p-3 m-2" href="/dashboard/payments"  style="min-width:10vw;" >Available stock</button>
+                                <button type="button" class="btn btn-outline-primary p-3 m-2 fb" href="/dashboard/payments"  style="min-width:10vw; " >Check new updates</button>
+                            </div>
                     </div>
 
                     <div class="d-flex flex-row justify-content-center align-items-center mt-3">
