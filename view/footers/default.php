@@ -1,4 +1,4 @@
-<footer class="text-white fixed-bottom " style="max-height: 40px;">
+<footer class="text-white fixed-bottom " style="max-height: 25px;">
 
   <div class="container-fluid text-center" style="background-color:midnightblue ;">
     <div class="row text-small mb-5 ">
