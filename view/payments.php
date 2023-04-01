@@ -10,18 +10,18 @@
             <div class="row text-center ps-4 pe-4" style="">
                 <div class="input-group mb-3">
                     <span class="input-group-text" id="basic-addon1">Payment Method</span>
-                    <select class="form-select" name="payment-method" id="payment-method">
+                    <select class="form-select" name="payment-method" id="payment-method" >
                         <option selected value="cheque">cheque</option>
                         <option value="cash">cash</option>
                     </select>
                 </div>
                 <div class="input-group mb-3">
                     <span class="input-group-text" id="basic-addon2">Cheque Number</span>
-                    <input type="number" class="form-control " aria-describedby="basic-addon2" id="cheque-number">
+                    <input type="number" class="form-control " aria-describedby="basic-addon2" id="cheque-number" placeholder="*Cheque Number">
                 </div>
                 <div class="input-group mb-3">
                     <span class="input-group-text" id="basic-addon3">Amount</span>
-                    <input type="number" class="form-control" aria-describedby="basic-addon3" id="amount">
+                    <input type="number" class="form-control" aria-describedby="basic-addon3" id="amount" placeholder="*Amount"> 
                 </div>
                 <div class="input-group mb-3">
                     <span class="input-group-text" id="basic-addon4">Paid Date</span>

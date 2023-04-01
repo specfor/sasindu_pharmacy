@@ -12,23 +12,23 @@
     <div class="row text-center ps-4 pe-4" style="">
         <div class="input-group mb-3">
             <span class="input-group-text" id="basic-addon1">Username</span>
-            <input type="text" class="form-control" aria-describedby="basic-addon1" id="username" >
+            <input type="text" class="form-control" aria-describedby="basic-addon1" id="username" placeholder="*Username">
         </div>
         <div class="input-group mb-3">
             <span class="input-group-text" id="basic-addon2">Email</span>
-            <input type="email" class="form-control " aria-describedby="basic-addon2" id="email">
+            <input type="email" class="form-control " aria-describedby="basic-addon2" id="email" placeholder="*Email">
         </div>
         <div class="input-group mb-3">
             <span class="input-group-text" id="basic-addon3">First Name</span>
-            <input type="text" class="form-control" aria-describedby="basic-addon3" id="firstName">
+            <input type="text" class="form-control" aria-describedby="basic-addon3" id="firstName" placeholder="*First Name">
         </div>
         <div class="input-group mb-3">
             <span class="input-group-text" id="basic-addon4">Last Name</span>
-            <input type="text" class="form-control" aria-describedby="basic-addon4" id="lastName">
+            <input type="text" class="form-control" aria-describedby="basic-addon4" id="lastName" placeholder="*Last Name">
         </div>
         <div class="input-group mb-3">
             <span class="input-group-text" id="basic-addon4">Password</span>
-            <input type="password" class="form-control" aria-describedby="basic-addon4" id="password">
+            <input type="password" class="form-control" aria-describedby="basic-addon4" id="password" placeholder="*Password">
         </div>
         <div class="input-group mb-3">
             <span class="input-group-text" >User Role</span>
@@ -76,19 +76,19 @@
     <div class="row text-center ps-4 pe-4" style="">
         <div class="input-group mb-3">
             <span class="input-group-text" id="basic-addon1">Username</span>
-            <input type="text" class="form-control" aria-describedby="basic-addon1" id="newUsername">
+            <input type="text" class="form-control" aria-describedby="basic-addon1" id="newUsername" placeholder="*Username">
         </div>
         <div class="input-group mb-3">
             <span class="input-group-text" id="basic-addon2">Email</span>
-            <input type="email" class="form-control " aria-describedby="basic-addon2" id="newEmail">
+            <input type="email" class="form-control " aria-describedby="basic-addon2" id="newEmail" placeholder="*Email">
         </div>
         <div class="input-group mb-3">
             <span class="input-group-text" id="basic-addon3">First Name</span>
-            <input type="text" class="form-control" aria-describedby="basic-addon3" id="newFirstName">
+            <input type="text" class="form-control" aria-describedby="basic-addon3" id="newFirstName" placeholder="*First Name">
         </div>
         <div class="input-group mb-3">
             <span class="input-group-text" id="basic-addon4">Last Name</span>
-            <input type="text" class="form-control" aria-describedby="basic-addon4" id="newLastName">
+            <input type="text" class="form-control" aria-describedby="basic-addon4" id="newLastName" placeholder="*Last Name">
         </div>
         <div class="input-group mb-3">
             <span class="input-group-text" >User Role</span>
@@ -116,11 +116,11 @@
       <div class="row text-center">
         <div class="input-group mb-3">
             <span class="input-group-text" id="basic-addon1">New Password</span>
-            <input type="password" class="form-control" aria-describedby="basic-addon1" id="newUserPassword">
+            <input type="password" class="form-control" aria-describedby="basic-addon1" id="newUserPassword" placeholder="*Password">
         </div>
         <div class="input-group mb-3">
             <span class="input-group-text" id="basic-addon1">Confirm Password</span>
-            <input type="password" class="form-control" aria-describedby="basic-addon1" id="newUserPasswordConfirm">
+            <input type="password" class="form-control" aria-describedby="basic-addon1" id="newUserPasswordConfirm" placeholder="*Confirm Password">
         </div>        
         </div>
       </div>
