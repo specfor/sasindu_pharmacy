@@ -28,7 +28,7 @@
 <header>
     
 
-    <nav class="navbar navbar-expand-sm sticky-top  justify-content-end " style="background-color: midnightblue">
+    <nav class="navbar navbar-expand-lg sticky-top  justify-content-ceenter " style="background-color: midnightblue">
         
         <div class="container">
 
@@ -40,7 +40,7 @@
 
 
             <div class="contect-fluid  justify-content-evenly text-primary">
-                <nav class="navbar navbar-expand-md  px-4 text-white-50">
+                <nav class="navbar navbar-expand-xl  px-4 text-white-50">
                     <div class="container-fluid px-3 text-primary">
                         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
                         <span class="navbar-toggler-icon"></span>
