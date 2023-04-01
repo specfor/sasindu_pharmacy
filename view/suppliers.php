@@ -81,11 +81,17 @@
 </div>
 
 
-<div class="container-fluid mt-5">
-    <h2 class="">All Suppliers</h2>
-    <label type="button" class="btn btn-primary mb-4 mt-3" data-bs-toggle="modal" data-bs-target="#addNewSupplier"
-           id="btn-add-new">
-        Add New Supplier</label>
+<div class="container-fluid mt-5 mb-5">
+    <div class="row justify-content-end mt-5">
+        <div class="col-6 col-sm-4 col-md-3 text-center">
+            <h4>Add New Supplier</h4>
+            <button class="btn btn-primary fw-bold" type="button" id="btn-add-new" data-bs-toggle="modal"
+                    data-bs-target="#addNewSupplier">Add Supplier</button>
+        </div>
+    </div>
+    <div class="row text-center mt-5">
+        <h2>Suppliers Details</h2>
+    </div>
     <div class="row">
         <h4>Filter results</h4>
     </div>
@@ -131,7 +137,7 @@
                 </tbody>
             </table>
             <nav aria-label="Page navigation">
-                <ul class="pagination pagination-sm justify-content-center">
+                <ul class="pagination pagination-sm justify-content-center mb-5">
                     <li class="page-item active"><a class="page-link" href="">1</a></li>
                     <li class="page-item"><a class="page-link" href="">2</a></li>
                     <li class="page-item"><a class="page-link" href="">3</a></li>

@@ -54,7 +54,7 @@
                             <a class="nav-link  text-light rounded mx-md-3" href="/dashboard/stocks">Stock</a>
                             </li>
                             <li class="nav-item">
-                            <a class="nav-link text-light rounded mx-md-3" href="/dashboard/reports">Reports</a>
+                            <a class="nav-link text-light rounded mx-md-3" href="/dashboard/suppliers">Suppliers</a>
                             </li>
                             <a class="nav-link text-light rounded px-md-3 mx-md-3 " href="/dashboard/payments">Payments</a>
                             </li>
