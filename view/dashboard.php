@@ -14,22 +14,22 @@
 
 <style>
     body {
-        background-attachment: fixed;
-        hrght:100vh;
+        height:100vh;
         background: rgb(26, 123, 218);
         background: linear-gradient(157deg, rgba(26, 123, 218, 0.5802696078431373) 0%, rgba(255, 255, 255, 0.7819502801120448) 34%, rgba(255, 255, 255, 0.7455357142857143) 58%, rgba(26, 123, 218, 0.227328431372549) 100%);
+        background-attachment: fixed;
     }
 
     .border {
         border: 5px solid black;
     }
-
     .border_s {
-        /*margin-top: 5vh;*/
-        justify-content: center;
+    /*margin-top: 5vh;*/
+    justify-content: center;
         align-items: center;
         align-self: center;
     }
+
 
     .form {
         margin: 0 auto;
