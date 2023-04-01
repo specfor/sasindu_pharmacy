@@ -2,7 +2,7 @@
 
   <div class="container-fluid text-center" style="background-color:midnightblue ;">
     <div class="row text-small mb-5 ">
-        <p class="">© 2023 copyright: <b>LogicLeap Solutions</b></p>
+        <p class="" >© 2023 copyright: A Handy Work of <a href="https://www.logicleapsolutions.lk/" target="_blank" ><b>LogicLeap Solutions</b></a></p>
     </div>
   </div>
 

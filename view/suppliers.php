@@ -29,15 +29,15 @@
             <div class="row text-center  ps-4 pe-4">
                 <div class="input-group mb-3">
                     <span class="input-group-text" id="basic-addon1">Supplier Name</span>
-                    <input type="text" class="form-control" aria-describedby="basic-addon1" id="newSupplierName">
+                    <input type="text" class="form-control" aria-describedby="basic-addon1" id="newSupplierName" placeholder="*Supplier Name">
                 </div>
                 <div class="input-group mb-3">
                     <span class="input-group-text" id="basic-addon2">Medical Referance</span>
-                    <input type="text" class="form-control " aria-describedby="basic-addon2" id="newMedRef">
+                    <input type="text" class="form-control " aria-describedby="basic-addon2" id="newMedRef" placeholder="*Medical Referance">
                 </div>
                 <div class="input-group mb-3">
                     <span class="input-group-text" id="basic-addon3">Contact Number</span>
-                    <input type="number" class="form-control" aria-describedby="basic-addon3" id="newContactNum">
+                    <input type="number" class="form-control" aria-describedby="basic-addon3" id="newContactNum" placeholder="*Contact Number">
                 </div>
             </div>
             <div class="modal-footer">
@@ -61,15 +61,15 @@
             <div class="row text-center  ps-4 pe-4">
                 <div class="input-group mb-3">
                     <span class="input-group-text" id="basic-addon1">Supplier Name</span>
-                    <input type="text" class="form-control" aria-describedby="basic-addon1" id="supplierName">
+                    <input type="text" class="form-control" aria-describedby="basic-addon1" id="supplierName" placeholder="*Supplier Name">
                 </div>
                 <div class="input-group mb-3">
                     <span class="input-group-text" id="basic-addon2">Medical Referance</span>
-                    <input type="text" class="form-control " aria-describedby="basic-addon2" id="medRef">
+                    <input type="text" class="form-control " aria-describedby="basic-addon2" id="medRef" placeholder="*Medical Referance">
                 </div>
                 <div class="input-group mb-3">
                     <span class="input-group-text" id="basic-addon3">Contact Number</span>
-                    <input type="number" class="form-control" aria-describedby="basic-addon3" id="contactNumber">
+                    <input type="number" class="form-control" aria-describedby="basic-addon3" id="contactNumber" placeholder="*Contact Number">
                 </div>
             </div>
             <div class="modal-footer">
