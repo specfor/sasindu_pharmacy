@@ -50,7 +50,7 @@ function searchItems() {
     getSuppliers(supplierName, contactNum, medicalRef)
 }
 
-async function getSuppliers(filterSupplierName, filterContactNumber, filterMedicalRef) {
+async function getSuppliers(filterSupplierName, filterContactNumber, filterMedicalRef,limitResults = 20, pageNum = 1) {
     let body = {
         'action': 'get-suppliers',
         'payload': {
@@ -66,6 +66,8 @@ async function getSuppliers(filterSupplierName, filterContactNumber, filterMedic
     if (filterMedicalRef){
         body['payload']['filters']['medical-ref'] = filterMedicalRef
     }
+    body['payload']['filters']['limit'] = limitResults
+    body['payload']['filters']['begin'] = (pageNum - 1) * limitResults
 
     let response = await sendJsonRequest('/dashboard/suppliers', body)
     if (response.status === 200) {
@@ -74,6 +76,7 @@ async function getSuppliers(filterSupplierName, filterContactNumber, filterMedic
         for (let row of data.body.suppliers) {
             await insertToSupplierTable(row['id'], row['name'], row['medical_ref'], row['contact_number'])
         }
+        addPaginationButtons(data.body['total-number-of-items'], data.body['active-page-index'])
     }
 }
 
@@ -82,6 +85,25 @@ function clearAllInputFields(){
     document.getElementById("supplierName").value = ""
     document.getElementById("medRef").value = ""
     document.getElementById("contactNumber").value = ""
+}
+
+function addPaginationButtons(totalItems, activePageIndex, itemsPerPage = 20) {
+    let paginationHolder = document.getElementById('paginationButtons')
+    let numPages = Math.floor(totalItems / itemsPerPage)
+    if (totalItems % itemsPerPage > 0)
+        numPages += 1
+    paginationHolder.innerHTML = ""
+    for (let i = 1; i <= numPages; i++) {
+        if (i == activePageIndex)
+            paginationHolder.innerHTML += `<li class="page-item active"><a onclick="laodDataOfPage()" class="page-link" href="#">${i}</a></li>`
+        else
+            paginationHolder.innerHTML += `<li class="page-item"><a onclick="laodDataOfPage()" class="page-link" href="#">${i}</a></li>`
+    }
+}
+
+function laodDataOfPage() {
+    let pageNum = event.target.innerText
+    getSuppliers('', '', '', 20, pageNum)
 }
 
 async function editSupplier() {
@@ -174,6 +196,9 @@ async function deleteSupplier() {
                 if (row.cells[0].innerText == supplierId) {
                     supplierTable.deleteRow(i)
                 }
+            }
+            if (supplierTable.innerHTML == ''){
+                getSuppliers()
             }
             alert(data.body.message)
         } else {

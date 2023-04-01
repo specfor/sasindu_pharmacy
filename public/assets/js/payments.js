@@ -1,3 +1,5 @@
+let suppliersArray
+
 window.addEventListener("load", function () {
     document.getElementById("addPayment").addEventListener("click", clearInputFields)
     document.getElementById("add-payment").addEventListener("click", sendPaymentToDB)
@@ -68,18 +70,30 @@ async function addItemToTable(paymentId, paymentMethod, chequeNo, amount, paidDa
 
 }
 
-async function getSupplierName(supplierId) {
-    let response = await sendJsonRequest('/dashboard/suppliers', {
-        'action': 'get-supplier-by-id',
-        'payload': {
-            'supplier-id': supplierId
-        }
-    })
-    if (response.status === 200) {
-        let data = await response.json()
-        return data.body['supplier-name'];
+function getSupplierName(supplierId) {
+    for (const supplier of suppliersArray) {
+        if (supplier['id'] == supplierId)
+            return supplier['name']
     }
-    return "Unknown"
+}
+
+function laodDataOfPage() {
+    let pageNum = event.target.innerText
+    getPayments(20, pageNum)
+}
+
+function addPaginationButtons(totalItems, activePageIndex, itemsPerPage = 20) {
+    let paginationHolder = document.getElementById('paginationButtons')
+    let numPages = Math.floor(totalItems / itemsPerPage)
+    if (totalItems % itemsPerPage > 0)
+        numPages += 1
+    paginationHolder.innerHTML = ""
+    for (let i = 1; i <= numPages; i++) {
+        if (i == activePageIndex)
+            paginationHolder.innerHTML += `<li class="page-item active"><a onclick="laodDataOfPage()" class="page-link" href="#">${i}</a></li>`
+        else
+            paginationHolder.innerHTML += `<li class="page-item"><a onclick="laodDataOfPage()" class="page-link" href="#">${i}</a></li>`
+    }
 }
 
 async function getSuppliers(){
@@ -90,21 +104,31 @@ async function getSuppliers(){
     if (response.status === 200) {
         let data = await response.json()
         let selectionSuppliers = document.getElementById('inputGroupSelect01')
+        suppliersArray = data.body.suppliers
         for (let supplier of data.body.suppliers) {
             selectionSuppliers.innerHTML += `<option value="${supplier['id']}">${supplier['name']}</option>`
         }
     }
 }
 
-async function getPayments() {
-    let response = await sendJsonRequest('/dashboard/payments', {'action': 'get-payments'})
+async function getPayments(limitResults = 20, pageNum = 1) {
+    let body = {
+        'action': 'get-payments',
+        'payload': {
+            "filters": {}
+        }
+    }
+    body['payload']['filters']['limit'] = limitResults
+    body['payload']['filters']['begin'] = (pageNum - 1) * limitResults
+    let response = await sendJsonRequest('/dashboard/payments', body)
     if (response.status === 200) {
         let data = await response.json()
         clearTable()
         for (const payment of data.body.payments) {
             addItemToTable(payment['id'], payment['method'], payment['cheque_number'], payment['amount'],
-                payment['payment_date'], await getSupplierName(payment['supplier_id']))
+                payment['payment_date'],  getSupplierName(payment['supplier_id']))
         }
+        addPaginationButtons(data.body['total-number-of-items'], data.body['active-page-index'])
     }
 }
 

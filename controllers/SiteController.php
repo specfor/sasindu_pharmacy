@@ -384,19 +384,29 @@ class SiteController
                 exit();
             }
             if ($req['action'] === 'get-suppliers') {
+                $itemLimit = $req['payload']['filters']['limit'] ?? 20;
+                $itemBeginIndex = $req['payload']['filters']['begin'] ?? 0;
                 $supplierName = $req['payload']['filters']['supplier-name'] ?? '';
                 $contactNumber = $req['payload']['filters']['contact-number'] ?? -1;
                 $medicalRef = $req['payload']['filters']['medical-ref'] ?? '';
                 try {
+                    $itemLimit = intval($itemLimit);
+                    $itemBeginIndex = intval($itemBeginIndex);
                     $contactNumber = intval($contactNumber);
                 } catch (Exception) {
                     $this->sendJsonResponse(Response::STATUS_CODE_SUCCESS, 'error',
                         ['message' => 'Invalid request']);
                     exit();
                 }
-                $supplierData = Suppliers::getAllSupplierDetails($supplierName, $contactNumber, $medicalRef);
+                $activePageIndex = intdiv($itemBeginIndex, $itemLimit) + 1;
+                $data = Suppliers::getAllSupplierDetails($itemBeginIndex, $itemLimit, $supplierName,
+                    $contactNumber, $medicalRef);
                 $this->sendJsonResponse(Response::STATUS_CODE_SUCCESS, 'success',
-                    ['suppliers' => $supplierData]);
+                    [
+                        'total-number-of-items' => $data['number-of-rows'],
+                        'active-page-index' => $activePageIndex,
+                        'suppliers' => $data['data']
+                    ]);
             } elseif ($req['action'] === 'get-supplier-by-id') {
                 $supplierId = $req['payload']['supplier-id'] ?? -1;
                 $supplierName = Suppliers::getSupplierName($supplierId);
@@ -458,8 +468,24 @@ class SiteController
         } elseif (Application::$app->request->isPost()) {
             $req = $this->getPostJsonBody();
             if ($req['action'] === "get-payments") {
+                $itemLimit = $req['payload']['filters']['limit'] ?? 20;
+                $itemBeginIndex = $req['payload']['filters']['begin'] ?? 0;
+                try {
+                    $itemLimit = intval($itemLimit);
+                    $itemBeginIndex = intval($itemBeginIndex);
+                }catch (Exception){
+                    $this->sendJsonResponse(Response::STATUS_CODE_SUCCESS, 'error',
+                        ['message' => 'Invalid parameter were passed.']);
+                    exit();
+                }
+                $activePageIndex = intdiv($itemBeginIndex, $itemLimit) + 1;
+                $data = Payments::getPayments($itemBeginIndex, $itemLimit);
                 $this->sendJsonResponse(Response::STATUS_CODE_SUCCESS, 'success',
-                    ['payments' => Payments::getPayments()]);
+                    [
+                        'total-number-of-items' => $data['number-of-rows'],
+                        'active-page-index' => $activePageIndex,
+                        'payments' => $data['data']
+                    ]);
             } elseif ($req['action'] === 'add-payment') {
                 $method = $req['payload']['payment-method'] ?? '';
                 $chequeNumber = $req['payload']['cheque-number'] ?? -1;

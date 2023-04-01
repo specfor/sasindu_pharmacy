@@ -8,7 +8,7 @@ class Suppliers extends DbModel
 {
     private const TABLE_NAME = 'suppliers';
 
-    public static function getAllSupplierDetails(string $supplierName = '', int $contactNumber = -1, string $medicalRef = ''): array
+    public static function getAllSupplierDetails(int $startingIndex, int $limitItems, string $supplierName = '', int $contactNumber = -1, string $medicalRef = ''): array
     {
         $sql = "SELECT * FROM " . self::TABLE_NAME;
         if ($supplierName || $contactNumber >= 0 || $medicalRef)
@@ -32,7 +32,13 @@ class Suppliers extends DbModel
         if ($medicalRef)
             $statement->bindValue(':medical_ref', $medicalRef);
         $statement->execute();
-        return $statement->fetchAll(PDO::FETCH_ASSOC);
+
+        $data = $statement->fetchAll(PDO::FETCH_ASSOC);
+        $rows = count($data);
+        $data = array_slice($data, $startingIndex, $limitItems);
+        return [
+            'data' => $data,
+            'number-of-rows' => $rows];
     }
 
     public static function getSupplierName(int $supplierId): string

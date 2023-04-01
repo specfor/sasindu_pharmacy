@@ -8,10 +8,15 @@ class Payments extends DbModel
 {
     public const TABLE_NAME = 'payments';
 
-    public static function getPayments(): bool|array
+    public static function getPayments(int $startingIndex, int $limitItems): bool|array
     {
         $statement = self::getDataFromTable(['*'], self::TABLE_NAME, appendToEndSql: "ORDER BY id DESC");
-        return $statement->fetchAll(PDO::FETCH_ASSOC);
+        $data = $statement->fetchAll(PDO::FETCH_ASSOC);
+        $rows = count($data);
+        $data = array_slice($data, $startingIndex, $limitItems);
+        return [
+            'data' => $data,
+            'number-of-rows' => $rows];
     }
 
     public static function addPayment(string $method, int $chequeNumber, float $amount, string $paymentDate, int $paidToId): bool

@@ -1,14 +1,15 @@
 let productId
 let typingTimer;
 let doneTypingInterval = 500;
+let suppliersArray
 
-window.addEventListener('load', () => {
+window.addEventListener('load', async () => {
     document.getElementById('btn-add-new-item').addEventListener('click', clearAddNewItemInputs)
     document.getElementById('btnAddItem').addEventListener('click', addItemToDatabase)
     document.getElementById('btnSaveChanges').addEventListener('click', updateItemToDatabase)
     document.getElementById('btnConfirmDeletion').addEventListener('click', deleteItem)
 
-    getSuppliers();
+    await getSuppliers();
     getItems();
 
     // Add filters
@@ -124,6 +125,9 @@ async function deleteItem() {
                 if (row.cells[0].innerText == productId) {
                     itemTable.deleteRow(i)
                 }
+            }
+            if (supplierTable.innerHTML == ''){
+                getSuppliers()
             }
             alert(data.body.message)
         } else {
@@ -258,6 +262,7 @@ async function getSuppliers() {
     })
     if (response.status === 200) {
         let suppliers = await response.json()
+        suppliersArray = suppliers.body['suppliers']
         for (const supplier of suppliers.body['suppliers']) {
             selectionSuppliers.innerHTML += `<option value="${supplier['id']}">${supplier['name']}</option>`
             selectionSuppliersUpdate.innerHTML += `<option value="${supplier['id']}">${supplier['name']}</option>`
@@ -294,7 +299,12 @@ async function getItems(filterProductName, filterProductPrice, filterSupplierId,
         let data = await response.json()
         clearTable()
         for (let row of data.body.items) {
-            let supplierName = await getSupplierName(row['supplier_id'])
+            let supplierName = 'Unknown'
+            for (const supplier of suppliersArray) {
+                if (supplier['id'] == row['supplier_id']){
+                    supplierName = supplier['name']
+                }
+            }
             await addItemToTable(row['id'], row['name'], row['quantity'], row['buy_date'], row['exp_date'],
                 supplierName, row['retail_price'])
         }
