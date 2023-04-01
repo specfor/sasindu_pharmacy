@@ -28,7 +28,7 @@
                     <input type="date" class="form-control" aria-describedby="basic-addon4" id="paid-date">
                 </div>
                 <div class="input-group mb-3">
-                    <span class="input-group-text" >Paid To</span>
+                    <span class="input-group-text">Paid To</span>
                     <select class="form-select" id="inputGroupSelect01">
                     </select>
                 </div>
@@ -51,26 +51,28 @@
         </div>
     </div>
     <div class="row text-center mt-5">
-        <h3>Payment Details</h3>
+        <h2>Payment Details</h2>
     </div>
     <div class="row ">
         <div class="col-12 ">
-            <div class="container-fluid overflow-auto m-2">
-                <table class="table table-striped-columns table-hover">
-                    <thead class="table-dark">
-                    <tr>
-                        <th scope="col">Id</th>
-                        <th scope="col">Payment Method</th>
-                        <th scope="col">Cheque Number</th>
-                        <th scope="col">Amount</th>
-                        <th scope="col">Paid Date</th>
-                        <th scope="col">Paid to</th>
-                    </tr>
-                    </thead>
-                    <tbody id="paymentTable">
+            <div class="container-fluid  m-2">
+                <div class="col overflow-auto">
+                    <table class="table table-striped-columns table-hover ">
+                        <thead class="table-dark">
+                        <tr>
+                            <th scope="col">Id</th>
+                            <th scope="col">Payment Method</th>
+                            <th scope="col">Cheque Number</th>
+                            <th scope="col">Amount</th>
+                            <th scope="col">Paid Date</th>
+                            <th scope="col">Paid to</th>
+                        </tr>
+                        </thead>
+                        <tbody id="paymentTable">
 
-                    </tbody>
-                </table>
+                        </tbody>
+                    </table>
+                </div>
                 <nav aria-label="Page navigation">
                     <ul id="paginationButtons" class="pagination pagination-sm justify-content-center">
                     </ul>

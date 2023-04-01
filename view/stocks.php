@@ -153,23 +153,25 @@
     </div>
     <div class="col-12">
         <div class="container-fluid mb-5">
-            <table class="table table-striped-columns table-hover overflow-auto">
-                <thead class="table-dark">
-                <tr>
-                    <th>Id</th>
-                    <th>Product Name</th>
-                    <th>Quantity</th>
-                    <th>Buying Date</th>
-                    <th>Expiry Date</th>
-                    <th>Supplier Name</th>
-                    <th>Price</th>
-                    <th>Actions</th>
-                </tr>
-                </thead>
-                <tbody id="itemTable">
+            <div class="col overflow-auto">
+                <table class="table table-striped-columns table-hover overflow-auto">
+                    <thead class="table-dark">
+                    <tr>
+                        <th>Id</th>
+                        <th>Product Name</th>
+                        <th>Quantity</th>
+                        <th>Buying Date</th>
+                        <th>Expiry Date</th>
+                        <th>Supplier Name</th>
+                        <th>Price</th>
+                        <th>Actions</th>
+                    </tr>
+                    </thead>
+                    <tbody id="itemTable">
 
-                </tbody>
-            </table>
+                    </tbody>
+                </table>
+            </div>
             <nav aria-label="Page navigation mb-5">
                 <ul id="paginationButtons" class="pagination pagination-sm justify-content-center">
                 </ul>

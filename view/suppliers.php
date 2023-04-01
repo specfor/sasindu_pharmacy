@@ -86,7 +86,8 @@
         <div class="col-6 col-sm-4 col-md-3 text-center">
             <h4>Add New Supplier</h4>
             <button class="btn btn-primary fw-bold" type="button" id="btn-add-new" data-bs-toggle="modal"
-                    data-bs-target="#addNewSupplier">Add Supplier</button>
+                    data-bs-target="#addNewSupplier">Add Supplier
+            </button>
         </div>
     </div>
     <div class="row text-center mt-5">
@@ -122,20 +123,22 @@
         </div>
     </div>
     <div class="col-12">
-        <div class="container-fluid overflow-auto">
-            <table class="table table-striped-columns table-hover">
-                <thead class="table-dark">
-                <tr>
-                    <th>Id</th>
-                    <th>Supplier Name</th>
-                    <th>Medical Referance</th>
-                    <th>Contact Number</th>
-                    <th>Actions</th>
-                </tr>
-                </thead>
-                <tbody id="supplierTable">
-                </tbody>
-            </table>
+        <div class="container-fluid">
+            <div class="col overflow-auto">
+                <table class="table table-striped-columns table-hover">
+                    <thead class="table-dark">
+                    <tr>
+                        <th>Id</th>
+                        <th>Supplier Name</th>
+                        <th>Medical Referance</th>
+                        <th>Contact Number</th>
+                        <th>Actions</th>
+                    </tr>
+                    </thead>
+                    <tbody id="supplierTable">
+                    </tbody>
+                </table>
+            </div>
             <nav aria-label="Page navigation">
                 <ul id="paginationButtons" class="pagination pagination-sm justify-content-center mb-5">
                 </ul>
