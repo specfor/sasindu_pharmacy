@@ -164,12 +164,26 @@ class SiteController
 
     public function dashboard(): void
     {
+        $this->checkUserPermission();
         if (Application::$app->request->isGet()) {
-            $this->checkUserPermission();
-
             $this->addNoCacheHeaders();
             $page = new Page(Page::HEADER_DEFAULT_WITH_MENU, Page::FOOTER_DEFAULT, 'dashboard', 'Dashboard');
             Application::$app->renderer->renderPage($page);
+        }elseif (Application::$app->request->isPost()) {
+            $req = $this->getPostJsonBody();
+            if (!isset($req['action'] )){
+                $this->sendJsonResponse(Response::STATUS_CODE_SUCCESS, 'error',
+                    ['message' => 'Invalid request']);
+                exit();
+            }
+            if ($req['action'] === 'check-admin'){
+                $isAdmin = false;
+                if ($_SESSION['role'] <= User::ROLE_ADMINISTRATOR){
+                    $isAdmin = true;
+                }
+                $this->sendJsonResponse(Response::STATUS_CODE_SUCCESS, 'success',
+                    ['is-admin' => $isAdmin]);
+            }
         }
     }
 

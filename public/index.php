@@ -25,6 +25,7 @@ $app = new Application($config);
 $app->router->addGetRoute('/', [SiteController::class, 'login']);
 $app->router->addPostRoute('/', [SiteController::class, 'login']);
 $app->router->addGetRoute('/dashboard', [SiteController::class, 'dashboard']);
+$app->router->addPostRoute('/dashboard', [SiteController::class, 'dashboard']);
 $app->router->addGetRoute('/dashboard/stocks', [SiteController::class, 'stocks']);
 $app->router->addPostRoute('/dashboard/stocks', [SiteController::class, 'stocks']);
 $app->router->addGetRoute('/dashboard/users', [SiteController::class, 'users']);
