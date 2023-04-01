@@ -169,16 +169,16 @@ class SiteController
             $this->addNoCacheHeaders();
             $page = new Page(Page::HEADER_DEFAULT_WITH_MENU, Page::FOOTER_DEFAULT, 'dashboard', 'Dashboard');
             Application::$app->renderer->renderPage($page);
-        }elseif (Application::$app->request->isPost()) {
+        } elseif (Application::$app->request->isPost()) {
             $req = $this->getPostJsonBody();
-            if (!isset($req['action'] )){
+            if (!isset($req['action'])) {
                 $this->sendJsonResponse(Response::STATUS_CODE_SUCCESS, 'error',
                     ['message' => 'Invalid request']);
                 exit();
             }
-            if ($req['action'] === 'check-admin'){
+            if ($req['action'] === 'check-admin') {
                 $isAdmin = false;
-                if ($_SESSION['role'] <= User::ROLE_ADMINISTRATOR){
+                if ($_SESSION['role'] <= User::ROLE_ADMINISTRATOR) {
                     $isAdmin = true;
                 }
                 $this->sendJsonResponse(Response::STATUS_CODE_SUCCESS, 'success',
@@ -481,13 +481,18 @@ class SiteController
             Application::$app->renderer->renderPage($page);
         } elseif (Application::$app->request->isPost()) {
             $req = $this->getPostJsonBody();
+            if (!isset($req['action'])) {
+                $this->sendJsonResponse(Response::STATUS_CODE_SUCCESS, 'error',
+                    ['message' => 'Invalid request']);
+                exit();
+            }
             if ($req['action'] === "get-payments") {
                 $itemLimit = $req['payload']['filters']['limit'] ?? 20;
                 $itemBeginIndex = $req['payload']['filters']['begin'] ?? 0;
                 try {
                     $itemLimit = intval($itemLimit);
                     $itemBeginIndex = intval($itemBeginIndex);
-                }catch (Exception){
+                } catch (Exception) {
                     $this->sendJsonResponse(Response::STATUS_CODE_SUCCESS, 'error',
                         ['message' => 'Invalid parameter were passed.']);
                     exit();
@@ -532,6 +537,48 @@ class SiteController
         if (Application::$app->request->isGet()) {
             $page = new Page(Page::HEADER_DEFAULT_WITH_MENU, Page::FOOTER_DEFAULT, 'expiredItems', 'Expired');
             Application::$app->renderer->renderPage($page);
+        } elseif (Application::$app->request->isPost()) {
+            $req = $this->getPostJsonBody();
+            if (!isset($req['action'])) {
+                $this->sendJsonResponse(Response::STATUS_CODE_SUCCESS, 'error',
+                    ['message' => 'Invalid request']);
+                exit();
+            }
+            if ($req['action'] === 'get-expired') {
+                try {
+                    $itemBeginIndex = intval($req['payload']['filters']['begin'] ?? 0);
+                    $itemLimit = intval($req['payload']['filters']['limit'] ?? 20);
+                } catch (Exception) {
+                    $this->sendJsonResponse(Response::STATUS_CODE_SUCCESS, 'error',
+                        ['message' => 'Invalid parameter values.']);
+                    exit();
+                }
+                $activePageIndex = intdiv($itemBeginIndex, $itemLimit) + 1;
+                $data = Stocks::getExpired($itemBeginIndex, $itemLimit);
+                $this->sendJsonResponse(Response::STATUS_CODE_SUCCESS, 'success',
+                    [
+                        'total-number-of-items' => $data['number-of-rows'],
+                        'active-page-index' => $activePageIndex,
+                        'items' => $data['data']
+                    ]);
+            } elseif ($req['action'] === 'get-expiring-soon') {
+                try {
+                    $itemBeginIndex = intval($req['payload']['filters']['begin'] ?? 0);
+                    $itemLimit = intval($req['payload']['filters']['limit'] ?? 20);
+                } catch (Exception) {
+                    $this->sendJsonResponse(Response::STATUS_CODE_SUCCESS, 'error',
+                        ['message' => 'Invalid parameter values.']);
+                    exit();
+                }
+                $activePageIndex = intdiv($itemBeginIndex, $itemLimit) + 1;
+                $data = Stocks::getSoonExpiring($itemBeginIndex, $itemLimit);
+                $this->sendJsonResponse(Response::STATUS_CODE_SUCCESS, 'success',
+                    [
+                        'total-number-of-items' => $data['number-of-rows'],
+                        'active-page-index' => $activePageIndex,
+                        'items' => $data['data']
+                    ]);
+            }
         }
     }
 

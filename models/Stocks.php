@@ -2,6 +2,8 @@
 
 namespace LogicLeap\SasinduPharmacy\models;
 
+use DateTime;
+use DateTimeZone;
 use JetBrains\PhpStorm\ArrayShape;
 use PDO;
 
@@ -87,5 +89,35 @@ class Stocks extends DbModel
     {
         $sql = "DELETE FROM " . self::TABLE_NAME . " WHERE id=$productId";
         return self::exec($sql);
+    }
+
+    public static function getExpired(int $startingIndex, int $limitItems): array
+    {
+        $dateObj = new DateTime("now", new DateTimeZone('Asia/Colombo'));
+        $today = $dateObj->format('Y-m-d');
+        $sql = "Select * from medicines where exp_date<'$today' order by exp_date desc";
+        $statement = self::prepare($sql);
+        $statement->execute();
+        $data = $statement->fetchAll(PDO::FETCH_ASSOC);
+        $rows = count($data);
+        $data = array_slice($data, $startingIndex, $limitItems);
+        return [
+            'data' => $data,
+            'number-of-rows' => $rows];
+    }
+
+    public static function getSoonExpiring(int $startingIndex, int $limitItems): array
+    {
+        $dateObj = new DateTime("now", new DateTimeZone('Asia/Colombo'));
+        $today = $dateObj->format('Y-m-d');
+        $sql = "Select * from medicines where exp_date>$today order by exp_date";
+        $statement = self::prepare($sql);
+        $statement->execute();
+        $data = $statement->fetchAll(PDO::FETCH_ASSOC);
+        $rows = count($data);
+        $data = array_slice($data, $startingIndex, $limitItems);
+        return [
+            'data' => $data,
+            'number-of-rows' => $rows];
     }
 }
