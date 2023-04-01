@@ -1,7 +1,6 @@
 <style>
     body {
-        background-size: cover;
-        background-repeat: no-repeat;
+    
     }
 
     .border {
@@ -25,7 +24,7 @@
     }
 </style>
 
-<div class="container p-5 justify-content-center border_s align-items-center">
+<div class="container p-5 justify-content-center border_s align-items-center" >
     <div class="col-12 col-md-12 justify-content-center align-items-center p-5  ">
         <form class="col-12 col-md-12 col-xl-12 justify-content-center align-items-center form bg-white p-5 rounded shadow"
         action="/" method="post">

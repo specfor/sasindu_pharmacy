@@ -114,11 +114,11 @@
 
                     <div class=" justify-content-center align-items-center mt-5">
                             <div class="d-flex flex-lg-row flex-sm-column btn-group btn-group-lg" role="group" aria-label="Large button group">
-                                <button type="button" class="btn btn-outline-primary p-3 active m-2 ft" href="/dashboard/stocks" style="min-width:10vw;">Stock Management</button>
+                                <button type="button" class="btn btn-outline-primary p-3 active m-2 ft" href="/dashboard/stocks" style="min-width:10vw;">Dashboard</button>
                                 <button type="button" class="btn btn-outline-primary p-3 m-2" href="/dashboard/suppliers"  style="min-width:10vw;">Suppliers</button>
                                 <button type="button" class="btn btn-outline-primary p-3 m-2" href="/dashboard/payments"  style="min-width:10vw;" >Peyments</button>
                                 <button type="button" class="btn btn-outline-primary p-3 m-2" href="/dashboard/payments"  style="min-width:10vw;" >Available stock</button>
-                                <button type="button" class="btn btn-outline-primary p-3 m-2 fb" href="/dashboard/payments"  style="min-width:10vw; " >Check new updates</button>
+                                <button type="button" class="btn btn-outline-primary p-3 m-2 fb" href="/dashboard/payments"  style="min-width:10vw; " >Stock Management</button>
                             </div>
                     </div>
 

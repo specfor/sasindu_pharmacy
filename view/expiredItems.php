@@ -1,4 +1,4 @@
-<div class="container-fluid mt-5 text-center">
+<div class="container mt-5 text-center">
     <h2 class="mb-4">Items about to expire</h2>
     <div class="col-12">
         <div class="container-fluid overflow-auto">

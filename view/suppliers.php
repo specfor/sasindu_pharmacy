@@ -1,3 +1,5 @@
+<div class="container">
+
 <div class="modal" tabindex="-1" id="confirmDelete" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -145,5 +147,6 @@
             </nav>
         </div>
     </div>
+</div>
 </div>
 <script src="/assets/js/suppliersPage.js"></script>

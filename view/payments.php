@@ -1,3 +1,4 @@
+<div class="container">
 <div class="modal fade" id="addNewPayment" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -81,4 +82,8 @@
         </div>
     </div>
 </div>
+
+</div>
+
+
 <script src="/assets/js/payments.js"></script>
