@@ -1,5 +1,7 @@
 window.addEventListener('load', () => {
     initUI()
+    getAboutToExpireItemCount()
+    getStockValue()
 })
 
 
@@ -24,6 +26,38 @@ async function initUI() {
     }
 }
 
+async function getAboutToExpireItemCount() {
+    let response = await sendJsonRequest('/dashboard', {
+        'action': 'get-expiring-item-count'
+    })
+    if (response.status === 200) {
+        let data = await response.json()
+        let upcomingExprieCountBtn = document.getElementById('upcomingExpireCount')
+        if (data.body['item-count'] === 0) {
+            upcomingExprieCountBtn.innerText = "No Items About to Expirie"
+        } else if (data.body['item-count'] < 100) {
+            upcomingExprieCountBtn.innerHTML =
+                `Items About To Expire<span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                ${data.body['item-count']}<span class="visually-hidden">unread messages</span></span>`
+        } else {
+            upcomingExprieCountBtn.innerHTML =
+                `A Lot To Expire<span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                ${data.body['item-count']}<span class="visually-hidden">unread messages</span></span>`
+        }
+        console.log(data)
+    }
+}
+
+async function getStockValue() {
+    let response = await sendJsonRequest('/dashboard', {
+        'action': 'get-stock-value'
+    })
+    if (response.status === 200) {
+        let data = await response.json()
+        let stockValueLabel = document.getElementById('stockValue')
+        stockValueLabel.innerText = "Rs. " + data.body['stock-value']
+    }
+}
 
 // Returns the fetch response object
 async function sendJsonRequest(url, jsonBody) {

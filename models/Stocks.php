@@ -5,6 +5,8 @@ namespace LogicLeap\SasinduPharmacy\models;
 use DateTime;
 use DateTimeZone;
 use JetBrains\PhpStorm\ArrayShape;
+use LogicLeap\SasinduPharmacy\core\Application;
+use mysql_xdevapi\Statement;
 use PDO;
 
 class Stocks extends DbModel
@@ -96,7 +98,7 @@ class Stocks extends DbModel
     {
         $dateObj = new DateTime("now", new DateTimeZone('Asia/Colombo'));
         $today = $dateObj->format('Y-m-d');
-        $sql = "Select * from medicines where exp_date<'$today'";
+        $sql = "Select * from " . self::TABLE_NAME . " where exp_date<'$today'";
 
         $filters = [];
         if (!empty($productName)) {
@@ -133,7 +135,7 @@ class Stocks extends DbModel
     {
         $dateObj = new DateTime("now", new DateTimeZone('Asia/Colombo'));
         $today = $dateObj->format('Y-m-d');
-        $sql = "Select * from medicines where exp_date>$today";
+        $sql = "Select * from " . self::TABLE_NAME . " where exp_date>$today";
 
         $filters = [];
         if (!empty($productName)) {
@@ -163,5 +165,25 @@ class Stocks extends DbModel
         return [
             'data' => $data,
             'number-of-rows' => $rows];
+    }
+
+    public static function getNumAbout2ExpireItems(): int
+    {
+        $dateObj = new DateTime("now", new DateTimeZone('Asia/Colombo'));
+        $today = $dateObj->format('Y-m-d');
+        $sql = "SELECT id FROM ".self::TABLE_NAME." WHERE exp_date>$today";
+        $statement = Application::$app->db->pdo->query($sql);
+        return $statement->rowCount();
+    }
+
+    public static function getStockValue():float{
+        $sql = "SELECT quantity, retail_price FROM ".self::TABLE_NAME;
+        $statement = Application::$app->db->pdo->query($sql);
+        $value = 0;
+        for ($i = 0; $i<$statement->rowCount(); $i++){
+            $row = $statement->fetch(PDO::FETCH_ASSOC);
+            $value += $row['quantity'] * $row['retail_price'];
+        }
+        return $value;
     }
 }

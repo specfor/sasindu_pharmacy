@@ -131,8 +131,8 @@ async function deleteItem() {
                     itemTable.deleteRow(i)
                 }
             }
-            if (supplierTable.innerHTML == ''){
-                getSuppliers()
+            if (itemTable.innerHTML == ''){
+                getItems()
             }
             alert(data.body.message)
         } else {

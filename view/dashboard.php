@@ -74,27 +74,23 @@
 
 </style>
 <div class="container  p-1 justify-content-center border_s align-items-center">
-    <div class="container p-2">
+    <div class="container mb-5 p-2">
         <div class="row p-2 mb-4 g-2" style="min-height:95vh">
             <div class="d-flex flex-row justify-content-center align-items-center position-relative ">
 
-                <div class="container position-absolute p-4" style="top:80px;">
+                <div class="container mb-5 position-absolute p-4" style="top:80px;">
                     <div class="d-flex flex-row justify-content-end mb-2 p-3 top-10 left-50">
-                        <button type="button"
-                                class="btn btn-lg btn-primary position-relative justify-sm-content-center align-items-sm-center"
-                                style="margin-right: 20px;">
-                            Stock report
-                            <span class="position-absolute top-0 start-100 translate-middle p-2 bg-danger border border-light rounded-circle">
-                              <span class="visually-hidden">New alerts</span>
-                            </span>
-                        </button>
+<!--                        <button type="button"-->
+<!--                                class="btn btn-lg btn-primary position-relative justify-sm-content-center align-items-sm-center"-->
+<!--                                style="margin-right: 20px;">-->
+<!--                            Stock report-->
+<!--                            <span class="position-absolute top-0 start-100 translate-middle p-2 bg-danger border border-light rounded-circle">-->
+<!--                              <span class="visually-hidden">New alerts</span>-->
+<!--                            </span>-->
+<!--                        </button>-->
 
-                        <button type="button" class="btn btn-lg btn-primary position-relative">
+                        <button onclick="window.location.href='/dashboard/expired'" id="upcomingExpireCount" type="button" class="btn btn-lg btn-primary position-relative">
                             upcoming expiring items
-                            <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
-                              99+
-                              <span class="visually-hidden">unread messages</span>
-                            </span>
                         </button>
                     </div>
 
@@ -117,19 +113,19 @@
                                 <h5 class="card-title text-center">Payment management </h5>
                                 <p class="card-text">With supporting text below as a natural lead-in to additional
                                     content.</p>
-                                <a href="#" class="btn btn-primary">Go somewhere</a>
+                                <a href="/dashboard/payments" class="btn btn-primary">Payments</a>
                             </div>
                         </div>
                         <div class="card m-3">
                             <div class="card-header text-center ">
-                                <div class="text-success h3">SUPPLIERS</div>
+                                <div class="text-success h3">Your Stock Value</div>
                             </div>
                             <div class="card-body d-flex flex-column justify-content-evenly"
                                  style="width:20vw; min-height: 25vh;">
-                                <h5 class="card-title text-center">Recent suppliers from latest stock</h5>
-                                <p class="card-text">With supporting text below as a natural lead-in to additional
-                                    content.</p>
-                                <a href="#" class="btn btn-primary">Go somewhere</a>
+                                <h4 id="stockValue" class="card-title text-center"></h4>
+                                <p class="card-text">Visit stock page to know more about your stock and manage it.
+                                Keep a look at items about to expire.</p>
+                                <a href="/dashboard/stocks" class="btn btn-primary">Stock</a>
                             </div>
                         </div>
                         <div class="card m-3 ">
@@ -139,9 +135,8 @@
                             <div class="card-body d-flex flex-column justify-content-evenly"
                                  style="width:20vw; min-height: 25vh;">
                                 <h5 class="card-title text-center ">Monthly report</h5>
-                                <p class="card-text">With supporting text below as a natural lead-in to additional
-                                    content.</p>
-                                <a href="#" class="btn btn-primary ">Go somewhere</a>
+                                <p class="card-text">Get monthly reports by visiting reports tab.</p>
+                                <a href="/dashboard/reports" class="btn btn-primary ">Reports</a>
                             </div>
                         </div>
                     </div>

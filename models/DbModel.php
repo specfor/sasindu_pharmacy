@@ -18,7 +18,7 @@ abstract class DbModel
         return Application::$app->db->pdo->prepare($sql);
     }
 
-    protected static function exec(string $sql)
+    protected static function exec(string $sql):int|false
     {
         return Application::$app->db->pdo->exec($sql);
     }

@@ -183,6 +183,15 @@ class SiteController
                 }
                 $this->sendJsonResponse(Response::STATUS_CODE_SUCCESS, 'success',
                     ['is-admin' => $isAdmin]);
+            }elseif($req['action'] === 'get-expiring-item-count'){
+                $this->sendJsonResponse(Response::STATUS_CODE_SUCCESS, 'success',
+                    ['item-count' => Stocks::getNumAbout2ExpireItems()]);
+            }elseif($req['action'] === 'get-stock-value'){
+                $this->sendJsonResponse(Response::STATUS_CODE_SUCCESS, 'success',
+                    ['stock-value' => Stocks::getStockValue()]);
+            }else{
+                $this->sendJsonResponse(Response::STATUS_CODE_SUCCESS, 'error',
+                    ['message' => 'Invalid request']);
             }
         }
     }
