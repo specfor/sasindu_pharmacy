@@ -30,11 +30,12 @@
 
     <nav class="navbar navbar-expand-lg sticky-top  justify-content-ceenter " style="background-color: midnightblue">
         
-        <div class="container">
+        <div class="container-fluid">
 
         <a class="navbar-brand text-white pb-0 ps-3" href="#">
                 
-            <h4>Stock Management System</h4>
+            <h4>Wickramasekara Pharmacy & Medical Center-Deiyandara</h4>
+            <h6 class="h6">Stock Management System</h6>
         
         </a>
 

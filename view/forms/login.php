@@ -32,7 +32,7 @@
     <div class="col-12 col-md-12 justify-content-center align-items-center ">
         <form class="col-12 col-md-12 col-xl-12 justify-content-center align-items-center form bg-white p-5 rounded shadow"
               action="/" method="post" style="min-width:50px;">
-            <h3 class="text-center mb-3">Stock Management System</h3>
+            <h3 class="text-center mb-3">Wickramasekara Pharmacy & Medical Center</h3>
             <!-- i want to center this div-->
             <div class="mb-3" style="min-width:150px">
                 <label for="exampleInputEmail1" class="form-label">Username</label>
