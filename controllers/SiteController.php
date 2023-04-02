@@ -142,7 +142,7 @@ class SiteController
         if (!isset($_SESSION['role']) || !isset($_SESSION['userId'])) {
             $success = false;
         }
-        if ($requireAdmin && !User::isAdmin($_SESSION['userId'], $_SESSION['role'])) {
+        if ($requireAdmin && !User::isAdmin($_SESSION['role'])) {
             $success = false;
         }
         if (Application::$app->request->isGet()) {

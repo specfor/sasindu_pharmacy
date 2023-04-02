@@ -215,13 +215,12 @@ class User extends DbModel
     }
 
     /**
-     * @param int $userId User id of the user.
      * @param int $role Role id of the User.
      * @return bool Return true if user is an admin, false otherwise.
      */
-    public static function isAdmin(int $userId, int $role): bool
+    public static function isAdmin(int $role): bool
     {
-        if ($role != User::ROLE_SUPER_ADMINISTRATOR && $userId != User::ROLE_ADMINISTRATOR) {
+        if ($role != User::ROLE_SUPER_ADMINISTRATOR && $role != User::ROLE_ADMINISTRATOR) {
             return false;
         }
         return true;
