@@ -22,7 +22,7 @@ async function addUserToTable(userId, username, email, firstname, lastname, user
     newRow.insertCell(2).innerText = email
     newRow.insertCell(3).innerText = firstname
     newRow.insertCell(4).innerText = lastname
-    newRow.insertCell(5).innerText = userRole
+    newRow.insertCell(5).innerText = userRoles[userRole]
     newRow.insertCell(6).innerHTML = `<div class="input-group mb-3">
   <button onclick="editUser()" class="edit btn btn-primary fw-bold" type="button" id="btn-edit-${userId}" data-bs-toggle="modal" data-bs-target="#editUserModal">Edit User</button>
   <button onclick="prepareChangePass()" class="edit btn btn-primary fw-bold" type="button" id="btn-edit-${userId}" data-bs-toggle="modal" data-bs-target="#changePasswordModal">Change User Password</button>
