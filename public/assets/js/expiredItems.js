@@ -51,8 +51,17 @@ window.addEventListener('load', async () => {
         typingTimer = setTimeout(() => {
             searchItems('expiring')
         }, doneTypingInterval);
-
     });
+    expiringPriceFilter.addEventListener('change', ()=>{
+        if (expiringPriceFilter.value < 0){
+            expiringPriceFilter.value =""
+        }
+    })
+    expiredPriceFilter.addEventListener('change', ()=>{
+        if (expiredPriceFilter.value < 0){
+            expiredPriceFilter.value =""
+        }
+    })
     expiringSupplierFilter.addEventListener('change', () => {
         searchItems('expiring')
     });

@@ -43,16 +43,10 @@ class Stocks extends DbModel
         }
 
         $sql .= " ORDER BY id DESC";
-        echo $sql;
-        error_log($sql);
-        try{
-            $statement = self::prepare($sql);
-            if (!empty($productName))
-                $statement->bindValue(':productName', $productName);
-            $statement->execute();
-        }catch (\Exception $exception){
-            error_log($exception->getMessage());
-        }
+        $statement = self::prepare($sql);
+        if (!empty($productName))
+            $statement->bindValue(':productName', $productName);
+        $statement->execute();
         $data = $statement->fetchAll(PDO::FETCH_ASSOC);
         $rows = count($data);
         $data = array_slice($data, $startingIndex, $limitItems);
@@ -97,8 +91,8 @@ class Stocks extends DbModel
         return self::exec($sql);
     }
 
-    public static function getExpired(int $startingIndex, int $limitItems, string $productName="",
-                                      int $price = -1, int $supplierId =-1): array
+    public static function getExpired(int $startingIndex, int $limitItems, string $productName = "",
+                                      int $price = -1, int $supplierId = -1): array
     {
         $dateObj = new DateTime("now", new DateTimeZone('Asia/Colombo'));
         $today = $dateObj->format('Y-m-d');
@@ -118,9 +112,9 @@ class Stocks extends DbModel
             $filters[] = " retail_price > $priceMin AND retail_price < $priceMax";
         }
         if (!empty($filters)) {
-            $sql .= ' AND '. implode(' AND', $filters);
+            $sql .= ' AND ' . implode(' AND', $filters);
         }
-        $sql.= " order by exp_date desc";
+        $sql .= " order by exp_date desc";
 
         $statement = self::prepare($sql);
         if (!empty($productName))
@@ -134,8 +128,8 @@ class Stocks extends DbModel
             'number-of-rows' => $rows];
     }
 
-    public static function getSoonExpiring(int $startingIndex, int $limitItems, string $productName="",
-                                           int $price =-1, int $supplierId=-1): array
+    public static function getSoonExpiring(int $startingIndex, int $limitItems, string $productName = "",
+                                           int $price = -1, int $supplierId = -1): array
     {
         $dateObj = new DateTime("now", new DateTimeZone('Asia/Colombo'));
         $today = $dateObj->format('Y-m-d');
@@ -155,9 +149,9 @@ class Stocks extends DbModel
             $filters[] = " retail_price > $priceMin AND retail_price < $priceMax";
         }
         if (!empty($filters)) {
-            $sql .= ' AND '. implode(' AND', $filters);
+            $sql .= ' AND ' . implode(' AND', $filters);
         }
-        $sql.= " order by exp_date";
+        $sql .= " order by exp_date";
 
         $statement = self::prepare($sql);
         if (!empty($productName))

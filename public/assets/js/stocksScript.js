@@ -38,6 +38,11 @@ window.addEventListener('load', async () => {
         typingTimer = setTimeout(searchItems, doneTypingInterval);
 
     });
+    priceFilter.addEventListener('change', ()=>{
+        if (priceFilter.value < 0){
+            priceFilter.value =""
+        }
+    })
     supplierFilter.addEventListener('change', () => {
         searchItems()
     });
