@@ -9,42 +9,81 @@ window.addEventListener('load', async () => {
     getExpiredItems();
 
     // Add filters
-    // let productNameFilter = document.getElementById('productNameFilter')
-    // let priceFilter = document.getElementById('priceFilter')
-    // let supplierFilter = document.getElementById('suppliersFilter')
-    // document.getElementById('btnClearFilterProductName').addEventListener('click', () => {
-    //     productNameFilter.value = ''
-    //     searchItems()
-    // })
-    // document.getElementById('btnClearFilterPrice').addEventListener('click', () => {
-    //     priceFilter.value = ''
-    //     searchItems()
-    // })
-    // document.getElementById('btnClearFilterSupplier').addEventListener('click', () => {
-    //     supplierFilter.value = -1
-    //     searchItems()
-    // })
-    // productNameFilter.addEventListener('keyup', () => {
-    //     clearTimeout(typingTimer);
-    //     typingTimer = setTimeout(searchItems, doneTypingInterval);
-    //
-    // });
-    // priceFilter.addEventListener('keyup', () => {
-    //     clearTimeout(typingTimer);
-    //     typingTimer = setTimeout(searchItems, doneTypingInterval);
-    //
-    // });
-    // supplierFilter.addEventListener('change', () => {
-    //     searchItems()
-    // });
+    let expiringProductNameFilter = document.getElementById('expiringProductNameFilter')
+    let expiringPriceFilter = document.getElementById('expiringPriceFilter')
+    let expiringSupplierFilter = document.getElementById('expiringSuppliersFilter')
+    let expiredProductNameFilter = document.getElementById('expiredProductNameFilter')
+    let expiredPriceFilter = document.getElementById('expiredPriceFilter')
+    let expiredSupplierFilter = document.getElementById('expiredSuppliersFilter')
+    document.getElementById('btnClearFilterProductNameExpiring').addEventListener('click', () => {
+        expiringProductNameFilter.value = ''
+        searchItems('expiring')
+    })
+    document.getElementById('btnClearFilterPriceExpiring').addEventListener('click', () => {
+        expiringPriceFilter.value = ''
+        searchItems('expiring')
+    })
+    document.getElementById('btnClearFilterSupplierExpiring').addEventListener('click', () => {
+        expiringSupplierFilter.value = -1
+        searchItems('expiring')
+    })
+    document.getElementById('btnClearFilterProductNameExpired').addEventListener('click', () => {
+        expiredProductNameFilter.value = ''
+        searchItems('expired')
+    })
+    document.getElementById('btnClearFilterPriceExpired').addEventListener('click', () => {
+        expiredPriceFilter.value = ''
+        searchItems('expired')
+    })
+    document.getElementById('btnClearFilterSupplierExpired').addEventListener('click', () => {
+        expiredSupplierFilter.value = -1
+        searchItems('expired')
+    })
+    expiringProductNameFilter.addEventListener('keyup', () => {
+        clearTimeout(typingTimer);
+        typingTimer = setTimeout(() => {
+            searchItems('expiring')
+        }, doneTypingInterval);
+
+    });
+    expiringPriceFilter.addEventListener('keyup', () => {
+        clearTimeout(typingTimer);
+        typingTimer = setTimeout(() => {
+            searchItems('expiring')
+        }, doneTypingInterval);
+
+    });
+    expiringSupplierFilter.addEventListener('change', () => {
+        searchItems('expiring')
+    });
+    expiredProductNameFilter.addEventListener('keyup', () => {
+        clearTimeout(typingTimer);
+        typingTimer = setTimeout(() => {
+            searchItems('expired')
+        }, doneTypingInterval);
+
+    });
+    expiredPriceFilter.addEventListener('keyup', () => {
+        clearTimeout(typingTimer);
+        typingTimer = setTimeout(() => {
+            searchItems('expired')
+        }, doneTypingInterval);
+
+    });
+    expiredSupplierFilter.addEventListener('change', () => {
+        searchItems('expired')
+    });
 })
 
-function searchItems() {
-    let productName = document.getElementById('productNameFilter').value
-    let price = document.getElementById('priceFilter').value
-    let supplierId = document.getElementById('suppliersFilter').value
+function searchItems(tableName) {
+    let productName = document.getElementById(tableName + 'ProductNameFilter').value
+    let price = document.getElementById(tableName + 'PriceFilter').value
+    let supplierId = document.getElementById(tableName + 'SuppliersFilter').value
 
-    getExpiringItems(productName, price, supplierId)
+    if (tableName === "expiring")
+        getExpiringItems(productName, price, supplierId)
+    else
+        getExpiredItems(productName, price, supplierId)
 }
 
 function clearTable(tableName) {
@@ -66,12 +105,20 @@ async function addItemToTable(tableName, productName, quantity, buyDate, expDate
 }
 
 async function getSuppliers() {
+    let selectionSuppliersExpiring = document.getElementById('expiringSuppliersFilter')
+    let selectionSuppliersExpired = document.getElementById('expiredSuppliersFilter')
+
+
     let response = await sendJsonRequest('/dashboard/suppliers', {
         'action': 'get-suppliers'
     })
     if (response.status === 200) {
         let suppliers = await response.json()
         suppliersArray = suppliers.body['suppliers']
+        for (const supplier of suppliers.body['suppliers']) {
+            selectionSuppliersExpiring.innerHTML += `<option value="${supplier['id']}">${supplier['name']}</option>`
+            selectionSuppliersExpired.innerHTML += `<option value="${supplier['id']}">${supplier['name']}</option>`
+        }
     }
 }
 
@@ -101,7 +148,6 @@ async function getExpiringItems(filterProductName, filterProductPrice, filterSup
     let response = await sendJsonRequest('/dashboard/expired', body)
     if (response.status === 200) {
         let data = await response.json()
-        console.log(data)
         clearTable('expiring')
         for (let row of data.body.items) {
             let supplierName = 'Unknown'
@@ -113,7 +159,7 @@ async function getExpiringItems(filterProductName, filterProductPrice, filterSup
             await addItemToTable('expiring', row['name'], row['quantity'], row['buy_date'], row['exp_date'],
                 supplierName, row['retail_price'])
         }
-        addPaginationButtons('Expiring',data.body['total-number-of-items'], data.body['active-page-index'])
+        addPaginationButtons('Expiring', data.body['total-number-of-items'], data.body['active-page-index'])
     }
 }
 
@@ -144,7 +190,6 @@ async function getExpiredItems(filterProductName, filterProductPrice, filterSupp
     let response = await sendJsonRequest('/dashboard/expired', body)
     if (response.status === 200) {
         let data = await response.json()
-        console.log(data)
         clearTable('expired')
         for (let row of data.body.items) {
             let supplierName = 'Unknown'
@@ -156,22 +201,21 @@ async function getExpiredItems(filterProductName, filterProductPrice, filterSupp
             await addItemToTable('expired', row['name'], row['quantity'], row['buy_date'], row['exp_date'],
                 supplierName, row['retail_price'])
         }
-        addPaginationButtons('Expired',data.body['total-number-of-items'], data.body['active-page-index'])
+        addPaginationButtons('Expired', data.body['total-number-of-items'], data.body['active-page-index'])
     }
 }
 
 
 function laodDataOfPage(tableName) {
-    console.log(tableName)
     let pageNum = event.target.innerText
-    if (tableName === 'expiring')
+    if (tableName === 'Expiring')
         getExpiringItems('', '', '', 20, pageNum)
     else
         getExpiredItems('', '', '', 20, pageNum)
 }
 
 function addPaginationButtons(tableName, totalItems, activePageIndex, itemsPerPage = 20) {
-    let paginationHolder = document.getElementById('paginationButtons'+tableName)
+    let paginationHolder = document.getElementById('paginationButtons' + tableName)
     let numPages = Math.floor(totalItems / itemsPerPage)
     if (totalItems % itemsPerPage > 0)
         numPages += 1
@@ -179,9 +223,9 @@ function addPaginationButtons(tableName, totalItems, activePageIndex, itemsPerPa
 
     for (let i = 1; i <= numPages; i++) {
         if (i == activePageIndex)
-            paginationHolder.innerHTML += `<li class="page-item active"><a onclick="laodDataOfPage('${tableName}')" class="page-link" href="#">${i}</a></li>`
+            paginationHolder.innerHTML += `<li class="page-item active"><a onclick="laodDataOfPage('${tableName}')" class="page-link" href="#${tableName}Items">${i}</a></li>`
         else
-            paginationHolder.innerHTML += `<li class="page-item"><a onclick="laodDataOfPage('${tableName}')" class="page-link" href="#">${i}</a></li>`
+            paginationHolder.innerHTML += `<li class="page-item"><a onclick="laodDataOfPage('${tableName}')" class="page-link" href="#${tableName}Items">${i}</a></li>`
     }
 }
 

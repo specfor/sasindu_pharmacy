@@ -61,7 +61,7 @@
     </div>
     <div class="row ">
         <div class="col-12 ">
-            <div class="container-fluid  m-2">
+            <div class="container-fluid text-center m-2">
                 <div class="col overflow-auto">
                     <table class="table table-striped-columns table-hover ">
                         <thead class="table-dark">

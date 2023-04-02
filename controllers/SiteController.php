@@ -546,6 +546,9 @@ class SiteController
             }
             if ($req['action'] === 'get-expired') {
                 try {
+                    $itemName = $req['payload']['filters']['product-name'] ?? "";
+                    $itemPrice = intval($req['payload']['filters']['price'] ?? -1);
+                    $supplierId = intval($req['payload']['filters']['supplier-id'] ?? -1);
                     $itemBeginIndex = intval($req['payload']['filters']['begin'] ?? 0);
                     $itemLimit = intval($req['payload']['filters']['limit'] ?? 20);
                 } catch (Exception) {
@@ -554,7 +557,7 @@ class SiteController
                     exit();
                 }
                 $activePageIndex = intdiv($itemBeginIndex, $itemLimit) + 1;
-                $data = Stocks::getExpired($itemBeginIndex, $itemLimit);
+                $data = Stocks::getExpired($itemBeginIndex, $itemLimit, $itemName, $itemPrice, $supplierId);
                 $this->sendJsonResponse(Response::STATUS_CODE_SUCCESS, 'success',
                     [
                         'total-number-of-items' => $data['number-of-rows'],
@@ -563,6 +566,9 @@ class SiteController
                     ]);
             } elseif ($req['action'] === 'get-expiring-soon') {
                 try {
+                    $itemName = $req['payload']['filters']['product-name'] ?? "";
+                    $itemPrice = intval($req['payload']['filters']['price'] ?? -1);
+                    $supplierId = intval($req['payload']['filters']['supplier-id'] ?? -1);
                     $itemBeginIndex = intval($req['payload']['filters']['begin'] ?? 0);
                     $itemLimit = intval($req['payload']['filters']['limit'] ?? 20);
                 } catch (Exception) {
@@ -571,7 +577,7 @@ class SiteController
                     exit();
                 }
                 $activePageIndex = intdiv($itemBeginIndex, $itemLimit) + 1;
-                $data = Stocks::getSoonExpiring($itemBeginIndex, $itemLimit);
+                $data = Stocks::getSoonExpiring($itemBeginIndex, $itemLimit, $itemName, $itemPrice, $supplierId);
                 $this->sendJsonResponse(Response::STATUS_CODE_SUCCESS, 'success',
                     [
                         'total-number-of-items' => $data['number-of-rows'],

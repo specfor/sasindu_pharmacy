@@ -140,7 +140,7 @@
       <button id="addNewUser" class="btn btn-primary mt-3 mb-3"  data-bs-toggle="modal" data-bs-target="#addNewUserModal">Add New User</button>
       <div> 
       </div>    
-    <div class="row ">
+    <div class="row text-center">
         <div class="col-12 ">
             <div class="container-fluid overflow-auto m-2">
                 <table class="table table-striped-columns table-hover">

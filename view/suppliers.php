@@ -130,7 +130,7 @@
         </div>
     </div>
     <div class="col-12">
-        <div class="container-fluid">
+        <div class="container-fluid text-center">
             <div class="col overflow-auto">
                 <table class="table table-striped-columns table-hover">
                     <thead class="table-dark">

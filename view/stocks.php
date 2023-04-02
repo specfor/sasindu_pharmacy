@@ -164,7 +164,7 @@
                 </div>
             </div>
         </div>
-        <div class="col-12">
+        <div class="col-12 text-center">
             <div class="container-fluid mb-5">
                 <div class="col overflow-auto">
                     <table class="table table-striped-columns table-hover overflow-auto">
