@@ -135,7 +135,7 @@ class Stocks extends DbModel
     {
         $dateObj = new DateTime("now", new DateTimeZone('Asia/Colombo'));
         $today = $dateObj->format('Y-m-d');
-        $sql = "Select * from " . self::TABLE_NAME . " where exp_date>$today";
+        $sql = "Select * from " . self::TABLE_NAME . " where exp_date>'$today'";
 
         $filters = [];
         if (!empty($productName)) {
