@@ -1,15 +1,15 @@
 let userId
 let userRoles
 
-window.addEventListener("load", function () {
+window.addEventListener("load", async function () {
     document.getElementById("addNewUser").addEventListener("click", clearAllInputs)
     document.getElementById("addUser").addEventListener("click", sendUserData2DB)
     document.getElementById('update').addEventListener('click', updateUserToDatabase)
     document.getElementById('changePass').addEventListener('click', changePass)
     document.getElementById('btnConfirmDeletion').addEventListener('click', deleteUser)
 
+    await getUserRoles()
     getUserData()
-    getUserRoles()
 })
 
 async function addUserToTable(userId, username, email, firstname, lastname, userRole) {
