@@ -98,7 +98,7 @@ class Stocks extends DbModel
     {
         $dateObj = new DateTime("now", new DateTimeZone('Asia/Colombo'));
         $today = $dateObj->format('Y-m-d');
-        $sql = "Select * from " . self::TABLE_NAME . " where exp_date<'$today'";
+        $sql = "Select * from " . self::TABLE_NAME . " where exp_date<='$today'";
 
         $filters = [];
         if (!empty($productName)) {
@@ -171,7 +171,7 @@ class Stocks extends DbModel
     {
         $dateObj = new DateTime("now", new DateTimeZone('Asia/Colombo'));
         $today = $dateObj->format('Y-m-d');
-        $sql = "SELECT id FROM ".self::TABLE_NAME." WHERE exp_date>$today";
+        $sql = "SELECT id FROM ".self::TABLE_NAME." WHERE exp_date>'$today'";
         $statement = Application::$app->db->pdo->query($sql);
         return $statement->rowCount();
     }
