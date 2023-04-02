@@ -111,8 +111,7 @@
                             <div class="card-body d-flex flex-column justify-content-evenly"
                                  style="width:20vw; min-height: 25vh;">
                                 <h5 class="card-title text-center">Payment management </h5>
-                                <p class="card-text">With supporting text below as a natural lead-in to additional
-                                    content.</p>
+                                <p class="card-text">Visit payments page to see all about payments.</p>
                                 <a href="/dashboard/payments" class="btn btn-primary">Payments</a>
                             </div>
                         </div>
