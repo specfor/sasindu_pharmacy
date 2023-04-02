@@ -36,14 +36,21 @@ class Database
             exit();
         }
 
+        if(!is_file("./../isDB.file")){
+            $this->createDatabase();
+            $f = fopen('./../isDB.file', 'w+');
+            fclose($f);
+        }
+
         try {
            $this->connectDatabase();
             // set the PDO error mode to exception
             $this->pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
         } catch (PDOException $e) {
             // This part runs when there is no database.
-            $this->createDatabase();
+
         }
+
     }
 
     /**
