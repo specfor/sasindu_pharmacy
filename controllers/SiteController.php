@@ -183,13 +183,13 @@ class SiteController
                 }
                 $this->sendJsonResponse(Response::STATUS_CODE_SUCCESS, 'success',
                     ['is-admin' => $isAdmin]);
-            }elseif($req['action'] === 'get-expiring-item-count'){
+            } elseif ($req['action'] === 'get-expiring-item-count') {
                 $this->sendJsonResponse(Response::STATUS_CODE_SUCCESS, 'success',
                     ['item-count' => Stocks::getNumAbout2ExpireItems()]);
-            }elseif($req['action'] === 'get-stock-value'){
+            } elseif ($req['action'] === 'get-stock-value') {
                 $this->sendJsonResponse(Response::STATUS_CODE_SUCCESS, 'success',
                     ['stock-value' => Stocks::getStockValue()]);
-            }else{
+            } else {
                 $this->sendJsonResponse(Response::STATUS_CODE_SUCCESS, 'error',
                     ['message' => 'Invalid request']);
             }
@@ -498,16 +498,21 @@ class SiteController
             if ($req['action'] === "get-payments") {
                 $itemLimit = $req['payload']['filters']['limit'] ?? 20;
                 $itemBeginIndex = $req['payload']['filters']['begin'] ?? 0;
+                $method = $req['payload']['filters']['method'] ?? '';
+                $bankName = $req['payload']['filters']['bank-name'] ?? '';
+                $paidToId = $req['payload']['filters']['paid-to-id'] ?? -1;
+                $paidDate = $req['payload']['filters']['paid-date'] ?? '';
                 try {
                     $itemLimit = intval($itemLimit);
                     $itemBeginIndex = intval($itemBeginIndex);
+                    $paidToId = intval($paidToId);
                 } catch (Exception) {
                     $this->sendJsonResponse(Response::STATUS_CODE_SUCCESS, 'error',
                         ['message' => 'Invalid parameter were passed.']);
                     exit();
                 }
                 $activePageIndex = intdiv($itemBeginIndex, $itemLimit) + 1;
-                $data = Payments::getPayments($itemBeginIndex, $itemLimit);
+                $data = Payments::getPayments($itemBeginIndex, $itemLimit, $bankName, $method, $paidToId, $paidDate);
                 $this->sendJsonResponse(Response::STATUS_CODE_SUCCESS, 'success',
                     [
                         'total-number-of-items' => $data['number-of-rows'],
@@ -518,6 +523,7 @@ class SiteController
                 $method = $req['payload']['payment-method'] ?? '';
                 $chequeNumber = $req['payload']['cheque-number'] ?? -1;
                 $amount = $req['payload']['amount'] ?? '';
+                $bank = $req['payload']['bank-name'] ?? '';
                 $paidDate = $req['payload']['paid-date'] ?? '';
                 $paidToId = $req['payload']['paid-to-id'] ?? '';
                 try {
@@ -529,7 +535,7 @@ class SiteController
                         ['message' => "Invalid parameter values were given."]);
                     exit();
                 }
-                if (Payments::addPayment($method, $chequeNumber, $amount, $paidDate, $paidToId)) {
+                if (Payments::addPayment($method, $chequeNumber, $bank, $amount, $paidDate, $paidToId)) {
                     $this->sendJsonResponse(Response::STATUS_CODE_SUCCESS, 'success',
                         ['message' => "Payment added to the database successfully."]);
                 } else {

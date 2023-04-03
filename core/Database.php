@@ -111,6 +111,7 @@ class Database
         $sql = "CREATE TABLE payments (
                     id int NOT NULL AUTO_INCREMENT PRIMARY KEY,
                     method varchar(255) NOT NULL,
+                    bank varchar(255) NOT NULL,
                     cheque_number int,
                     amount float(2) NOT NULL,
                     payment_date date NOT NULL,
