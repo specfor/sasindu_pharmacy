@@ -176,7 +176,7 @@ class Stocks extends DbModel
         return $statement->rowCount();
     }
 
-    public static function getStockValue():float{
+    public static function getStockValue():string{
         $sql = "SELECT quantity, retail_price FROM ".self::TABLE_NAME;
         $statement = Application::$app->db->pdo->query($sql);
         $value = 0;
@@ -184,6 +184,7 @@ class Stocks extends DbModel
             $row = $statement->fetch(PDO::FETCH_ASSOC);
             $value += $row['quantity'] * $row['retail_price'];
         }
+	$value = number_format($value, 2);
         return $value;
     }
 }
